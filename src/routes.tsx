@@ -10,17 +10,14 @@ const RoutesContainer = () => {
             <Routes>
                 {isProduction ? (
                     <>
-                        <Route path=":chekInterestCode/apply" element={<></>} />
+                        <Route path=":applyCode/apply" element={<></>} />
                     </>
                 ) : (
                     <>
                         <Route path="*" element={<Navigate to="/" replace />} />
                         <Route path="/" element={<>Hi</>} />
 
-                        <Route
-                            path="company/:companyId/:chekInterestCode/apply"
-                            element={<></>}
-                        />
+                        <Route path=":applyCode/apply" element={<></>} />
                     </>
                 )}
             </Routes>

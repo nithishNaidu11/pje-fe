@@ -6,8 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { PushNotification } from 'containers';
-
 import './config';
 
 const theme = createTheme({
@@ -26,7 +24,6 @@ const App = () => {
         <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
                 <RoutesContainer />
-                <PushNotification />
             </QueryClientProvider>
         </ThemeProvider>
     );

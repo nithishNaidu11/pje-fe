@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { JobQueryCheckInterestContainer } from 'containers/JobQueryCheckInterestContainer';
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // import { NotFound } from './containers';
 
@@ -10,14 +13,20 @@ const RoutesContainer = () => {
             <Routes>
                 {isProduction ? (
                     <>
-                        <Route path=":applyCode/apply" element={<></>} />
+                        <Route
+                            path=":applyCode/"
+                            element={<JobQueryCheckInterestContainer />}
+                        />
                     </>
                 ) : (
                     <>
                         <Route path="*" element={<Navigate to="/" replace />} />
                         <Route path="/" element={<>Hi</>} />
 
-                        <Route path=":applyCode/apply" element={<></>} />
+                        <Route
+                            path=":applyCode/"
+                            element={<JobQueryCheckInterestContainer />}
+                        />
                     </>
                 )}
             </Routes>

@@ -14,9 +14,16 @@ export const PushNotification = () => {
             console.log("The user's subscription state is now:", isSubscribed);
         });
     }, []);
+
+    const f = {
+        textAlign: 'red'
+    };
     return (
         <>
-            <div className="onesignal-customlink-container"></div>
+            <div
+                className="onesignal-customlink-container"
+                style={{ ...f }}
+            ></div>
         </>
     );
 };

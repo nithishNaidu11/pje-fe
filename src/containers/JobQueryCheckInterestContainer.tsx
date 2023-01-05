@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
@@ -14,26 +14,46 @@ import {
     useGetFormFields,
     useGetOpenJobQuery,
     useMarkInterested,
-    useIsMobile
+    useIsMobile,
+    useSubmitAnswers
 } from 'hooks';
 
 import SuccessIcon from './Success.png';
+
+import { ChatWindow } from '../components/bootstrap-chat-bot';
+import { Conversation } from 'interfaces';
+import TextField from '@mui/material/TextField';
+import { useShortlistedWorkers } from 'hooks/apiHooks/jobQuery/useShortlistedWorkers';
 
 export const JobQueryCheckInterestContainer = () => {
     const formFields = useGetFormFields();
 
     const isMobile = useIsMobile();
-    const { applyCode } = useParams();
+    const { shortcode } = useParams();
+    const location = useLocation();
 
     const { data: jobQuery } = useGetOpenJobQuery({
-        jobQueryId: applyCode,
-        enabled: !!applyCode
+        shortcode,
+        enabled: !!shortcode
     });
 
     const markInterested = useMarkInterested();
+    const submitAnswers = useSubmitAnswers();
+    const shortlistWorkers = useShortlistedWorkers();
 
     const [open, setOpen] = React.useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = React.useState(false);
+    const [showChat, setShowChat] = React.useState(false);
+    const [isWorkerShortlisted, setIsWorkerShortlisted] = React.useState(false);
+    const [worker, setWorker] = React.useState({
+        fullName: '',
+        mobileNumber: ''
+    });
+
+    React.useEffect(() => {
+        setIsWorkerShortlisted(!location.pathname.startsWith('/job/'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleClose = () => {
         setOpen(false);
@@ -42,18 +62,19 @@ export const JobQueryCheckInterestContainer = () => {
     const onMarkInterestStatus = (
         interestStatus: 'INTERESTED' | 'NOT_INTERESTED'
     ) => {
-        if (applyCode) {
+        if (shortcode) {
             setOpen(true);
             markInterested.mutate(
                 {
                     companyId: jobQuery.companyId,
-                    chekInterestCode: applyCode,
+                    shortcode,
                     interestStatus
                 },
                 {
                     onSuccess: () => {
                         setOpen(false);
                         setShowSuccessMessage(true);
+                        setShowChat(true);
                     },
                     onError: () => {
                         setOpen(false);
@@ -61,6 +82,57 @@ export const JobQueryCheckInterestContainer = () => {
                 }
             );
         }
+    };
+
+    const onSubmitAnswers = (currentConversation: Conversation) => {
+        const answers = Object.keys(currentConversation).reduce((acc, key) => {
+            acc = {
+                ...acc,
+                [currentConversation[key].key]:
+                    currentConversation[key].question.answer?.value
+            };
+            return acc;
+        }, {});
+
+        if (shortcode) {
+            submitAnswers.mutate(
+                {
+                    companyId: jobQuery.companyId,
+                    jobQueryId: jobQuery.jobQueryId,
+                    shortcode,
+                    answers: answers
+                },
+                {
+                    onSuccess: () => {
+                        setOpen(false);
+                        setShowSuccessMessage(true);
+                        setShowChat(true);
+                    },
+                    onError: () => {
+                        setOpen(false);
+                    }
+                }
+            );
+        }
+    };
+
+    const onShortlistWorker = () => {
+        shortlistWorkers.mutate(
+            {
+                companyId: jobQuery.companyId,
+                jobQueryId: jobQuery.jobQueryId,
+                workers: [worker]
+            },
+            {
+                onSuccess: () => {
+                    setOpen(false);
+                    setIsWorkerShortlisted(true);
+                },
+                onError: () => {
+                    setOpen(false);
+                }
+            }
+        );
     };
 
     return (
@@ -111,112 +183,195 @@ export const JobQueryCheckInterestContainer = () => {
                                     display="flex"
                                     justifyContent="center"
                                 >
-                                    <PushNotification />
+                                    <PushNotification shortcode={shortcode} />
                                 </Grid>
                             </Grid>
                         ) : (
                             <>
-                                <Paper
-                                    sx={{ p: 2 }}
-                                    elevation={isMobile ? 0 : 2}
-                                >
-                                    <Typography variant="h5" mb={2}>
-                                        {jobQuery.title}
-                                    </Typography>
-                                    <Typography component="p" variant="body2">
-                                        {jobQuery.header}
-                                    </Typography>
-                                    {markInterested.isLoading && (
-                                        <Backdrop
-                                            sx={{
-                                                color: '#fff',
-                                                zIndex: theme =>
-                                                    theme.zIndex.drawer + 1
-                                            }}
-                                            open={open}
-                                            onClick={handleClose}
-                                        >
-                                            <CircularProgress color="inherit" />
-                                        </Backdrop>
-                                    )}
-
-                                    <>
-                                        <JobQueryDetails
-                                            jobQuery={jobQuery}
-                                            formFields={formFields.data}
-                                        />
-                                        <Typography variant="h6" my={2}>
-                                            Are you interested?
+                                {isWorkerShortlisted ? (
+                                    <Paper
+                                        sx={{ p: 2 }}
+                                        elevation={isMobile ? 0 : 2}
+                                    >
+                                        <Typography variant="h5" mb={2}>
+                                            {jobQuery.title}
                                         </Typography>
+                                        <Typography
+                                            component="p"
+                                            variant="body2"
+                                        >
+                                            {jobQuery.header}
+                                        </Typography>
+                                        {markInterested.isLoading && (
+                                            <Backdrop
+                                                sx={{
+                                                    color: '#fff',
+                                                    zIndex: theme =>
+                                                        theme.zIndex.drawer + 1
+                                                }}
+                                                open={open}
+                                                onClick={handleClose}
+                                            >
+                                                <CircularProgress color="inherit" />
+                                            </Backdrop>
+                                        )}
 
+                                        <>
+                                            <JobQueryDetails
+                                                jobQuery={jobQuery}
+                                                formFields={formFields.data}
+                                            />
+                                            <Typography variant="h6" my={2}>
+                                                Are you interested?
+                                            </Typography>
+
+                                            <Grid
+                                                container
+                                                justifyContent="end"
+                                                spacing={2}
+                                            >
+                                                {isMobile ? (
+                                                    <>
+                                                        <Grid item xs={12}>
+                                                            <Button
+                                                                variant="contained"
+                                                                onClick={() =>
+                                                                    onMarkInterestStatus(
+                                                                        'INTERESTED'
+                                                                    )
+                                                                }
+                                                                fullWidth
+                                                            >
+                                                                YES, INTERESTED
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid
+                                                            item
+                                                            md={6}
+                                                            xs={12}
+                                                        >
+                                                            <Button
+                                                                variant="outlined"
+                                                                onClick={() =>
+                                                                    onMarkInterestStatus(
+                                                                        'NOT_INTERESTED'
+                                                                    )
+                                                                }
+                                                                fullWidth
+                                                            >
+                                                                NO, NOT
+                                                                INTERESTED
+                                                            </Button>
+                                                        </Grid>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Grid item md={6}>
+                                                            <Button
+                                                                variant="outlined"
+                                                                onClick={() =>
+                                                                    onMarkInterestStatus(
+                                                                        'NOT_INTERESTED'
+                                                                    )
+                                                                }
+                                                                fullWidth
+                                                            >
+                                                                NO, NOT
+                                                                INTERESTED
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid item md={6}>
+                                                            <Button
+                                                                variant="contained"
+                                                                onClick={() =>
+                                                                    onMarkInterestStatus(
+                                                                        'INTERESTED'
+                                                                    )
+                                                                }
+                                                                fullWidth
+                                                            >
+                                                                YES, INTERESTED
+                                                            </Button>
+                                                        </Grid>
+                                                    </>
+                                                )}
+                                            </Grid>
+                                        </>
+                                    </Paper>
+                                ) : (
+                                    <>
                                         <Grid
                                             container
-                                            justifyContent="end"
                                             spacing={2}
+                                            justifyContent="center"
                                         >
-                                            {isMobile ? (
-                                                <>
-                                                    <Grid item xs={12}>
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={() =>
-                                                                onMarkInterestStatus(
-                                                                    'INTERESTED'
-                                                                )
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            YES, INTERESTED
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item md={6} xs={12}>
-                                                        <Button
-                                                            variant="outlined"
-                                                            onClick={() =>
-                                                                onMarkInterestStatus(
-                                                                    'NOT_INTERESTED'
-                                                                )
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            NO, NOT INTERESTED
-                                                        </Button>
-                                                    </Grid>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Grid item md={6}>
-                                                        <Button
-                                                            variant="outlined"
-                                                            onClick={() =>
-                                                                onMarkInterestStatus(
-                                                                    'NOT_INTERESTED'
-                                                                )
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            NO, NOT INTERESTED
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item md={6}>
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={() =>
-                                                                onMarkInterestStatus(
-                                                                    'INTERESTED'
-                                                                )
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            YES, INTERESTED
-                                                        </Button>
-                                                    </Grid>
-                                                </>
-                                            )}
+                                            <Grid item md={12} xs={8}>
+                                                <TextField
+                                                    required
+                                                    fullWidth
+                                                    label="Full name"
+                                                    name="fullName"
+                                                    value={
+                                                        worker.fullName || ''
+                                                    }
+                                                    onChange={e => {
+                                                        setWorker(worker => {
+                                                            return {
+                                                                ...worker,
+                                                                fullName:
+                                                                    e.target
+                                                                        .value
+                                                            };
+                                                        });
+                                                    }}
+                                                />
+                                            </Grid>
+                                            <Grid item md={12} xs={8}>
+                                                <TextField
+                                                    required
+                                                    fullWidth
+                                                    label="Mobile Number"
+                                                    name="mobileNumber"
+                                                    value={
+                                                        worker.mobileNumber ||
+                                                        ''
+                                                    }
+                                                    onChange={e => {
+                                                        setWorker(worker => {
+                                                            return {
+                                                                ...worker,
+                                                                mobileNumber:
+                                                                    e.target
+                                                                        .value
+                                                            };
+                                                        });
+                                                    }}
+                                                />
+                                            </Grid>
+                                            <Grid item md={12} xs={8}>
+                                                <Button
+                                                    fullWidth
+                                                    variant="contained"
+                                                    onClick={onShortlistWorker}
+                                                    disabled={
+                                                        !worker.fullName ||
+                                                        !worker.mobileNumber
+                                                    }
+                                                >
+                                                    SUBMIT
+                                                </Button>
+                                            </Grid>
                                         </Grid>
                                     </>
-                                </Paper>
+                                )}
                             </>
+                        )}
+                        {showChat && (
+                            <ChatWindow
+                                setOpen={setShowChat}
+                                conversation={jobQuery.questions}
+                                onSubmit={onSubmitAnswers}
+                            />
                         )}
                     </Grid>
                 </Grid>

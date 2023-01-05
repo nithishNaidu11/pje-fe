@@ -1,21 +1,22 @@
 import { useMutation } from '@tanstack/react-query';
-import { markInterest } from 'api/jobQuery';
+import { subscribe } from 'api/worker';
 import { ApiError } from 'interfaces';
 
-type Params = {
-    companyId: string;
+interface Props {
+    event: string;
+    playerId: string;
     shortcode: string;
-    interestStatus: 'INTERESTED' | 'NOT_INTERESTED';
-};
+}
 
-export const useMarkInterested = () => {
-    return useMutation<unknown, ApiError, Params>(
-        ({ companyId, shortcode, interestStatus }: Params) => {
-            return markInterest
+export const useSubscribe = () => {
+    return useMutation<unknown, ApiError, Props>(
+        ({ event, playerId, shortcode }: Props) => {
+            return subscribe
                 .post({
-                    params: { shortcode, companyId },
+                    params: { shortcode },
                     body: {
-                        status: interestStatus
+                        event,
+                        playerId
                     }
                 })
                 .then((response: unknown) => {

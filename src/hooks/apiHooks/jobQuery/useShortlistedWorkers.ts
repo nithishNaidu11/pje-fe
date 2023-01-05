@@ -1,21 +1,22 @@
 import { useMutation } from '@tanstack/react-query';
-import { markInterest } from 'api/jobQuery';
+import { shortlistWorkers } from 'api/jobQuery';
 import { ApiError } from 'interfaces';
 
 type Params = {
     companyId: string;
-    shortcode: string;
-    interestStatus: 'INTERESTED' | 'NOT_INTERESTED';
+    jobQueryId: string;
+
+    workers: any;
 };
 
-export const useMarkInterested = () => {
+export const useShortlistedWorkers = () => {
     return useMutation<unknown, ApiError, Params>(
-        ({ companyId, shortcode, interestStatus }: Params) => {
-            return markInterest
+        ({ companyId, jobQueryId, workers }: Params) => {
+            return shortlistWorkers
                 .post({
-                    params: { shortcode, companyId },
+                    params: { jobQueryId, companyId },
                     body: {
-                        status: interestStatus
+                        workers
                     }
                 })
                 .then((response: unknown) => {

@@ -16,3 +16,15 @@ export {
 } from './jobQuery.interface';
 
 export { type Worker } from './worker.interface';
+
+export {
+    type QuestionOption,
+    type SingleConversation,
+    type Conversation,
+    type ChatContainerProps,
+    type Position,
+    type ChatIconProps,
+    type PositionClassMapProps,
+    type ChatWindowProps,
+    type QuestionProps
+} from './chatBot.interface';

@@ -3,18 +3,18 @@ import { openJobQuery } from 'api/jobQuery';
 import { SingleJobQuery } from 'interfaces';
 
 interface Props {
-    jobQueryId?: string;
+    shortcode?: string;
     enabled: boolean;
 }
 
-export const useGetOpenJobQuery = ({ jobQueryId, enabled = true }: Props) => {
+export const useGetOpenJobQuery = ({ shortcode, enabled = true }: Props) => {
     return useQuery({
-        queryKey: ['openJobQuery', jobQueryId],
+        queryKey: ['openJobQuery', shortcode],
         queryFn: () => {
             return openJobQuery
                 .post({
                     params: {
-                        jobQueryId
+                        shortcode
                     }
                 })
                 .then((response: any): { jobQuery: SingleJobQuery } => {

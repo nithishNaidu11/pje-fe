@@ -10,10 +10,7 @@ import './config';
 
 const theme = createTheme({
     typography: {
-        allVariants: {
-            fontFamily: 'Lato',
-            textTransform: 'none'
-        }
+        fontFamily: 'Lato, Arial'
     }
 });
 

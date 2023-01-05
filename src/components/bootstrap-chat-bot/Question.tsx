@@ -1,16 +1,25 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { QuestionOption } from 'interfaces';
 
 import { QuestionOptions } from './QuestionOptions';
+
+interface QuestionProps {
+    msg: string;
+    options: QuestionOption[];
+    parentKey: string;
+    onAnswerClick: (_: { key: string; value: string }) => void;
+    answerValue?: string;
+}
 
 export const Question = ({
     msg,
     options,
     parentKey,
     onAnswerClick,
-    answer
-}: any) => {
+    answerValue
+}: QuestionProps) => {
     return (
         <>
             <Grid container justifyContent="start" mb={2}>
@@ -36,7 +45,7 @@ export const Question = ({
                     options={options}
                     parentKey={parentKey}
                     onAnswerClick={onAnswerClick}
-                    answer={answer}
+                    answerValue={answerValue}
                 />
             </Grid>
         </>

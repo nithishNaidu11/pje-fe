@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { ApiError, FormFields } from 'interfaces';
 import ErrorTracker from 'utils/ErrorTracker';
 
-type SuccessData = FormFields | any;
+type SuccessData = FormFields;
 
 interface GetReactQueryProps {
-    queryKey: any;
+    queryKey: string[];
     requestUrl: any;
     params?: { [key: string]: string | null | undefined };
     enabled?: boolean;

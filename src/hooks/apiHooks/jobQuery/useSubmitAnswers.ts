@@ -6,7 +6,7 @@ type Params = {
     companyId: string;
     jobQueryId: string;
     shortcode: string;
-    answers: any;
+    answers: { [key: string]: string };
 };
 
 export const useSubmitAnswers = () => {

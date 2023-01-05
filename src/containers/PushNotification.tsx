@@ -45,6 +45,7 @@ export const PushNotification = ({ shortcode }: Props) => {
                 }
             });
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const f = {

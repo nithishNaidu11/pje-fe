@@ -55,3 +55,8 @@ export interface QuestionProps {
     onAnswerClick: any;
     answer?: string;
 }
+
+export interface AnswerProps {
+    label: string;
+    value: string;
+}

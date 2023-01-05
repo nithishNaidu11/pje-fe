@@ -1,12 +1,20 @@
 import { Button, Grid } from '@mui/material';
 
+interface QuestionOptionProps {
+    label: string;
+    parentKey: string;
+    value: string;
+    onOptionClick: (_: string, __: string) => void;
+    isAnswer: boolean;
+}
+
 export const QuestionOption = ({
     label,
     parentKey,
     value,
     onOptionClick,
     isAnswer = false
-}: any) => {
+}: QuestionOptionProps) => {
     return (
         <Grid item>
             <Button

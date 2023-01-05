@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Answer } from './Answer';
+import { AnswerBadge } from './AnswerBadge';
 import { Question } from './Question';
 import { ChatWindowProps, type Conversation } from 'interfaces';
 import { getViewport } from './helper';
@@ -120,7 +120,7 @@ export const ChatWindow = ({
                                             ].question.options
                                         }
                                         onAnswerClick={onSelectAnswer}
-                                        answer={
+                                        answerValue={
                                             currentConversation[
                                                 questionKey as keyof Conversation
                                             ].question.answer?.value
@@ -130,7 +130,7 @@ export const ChatWindow = ({
                                     {currentConversation[
                                         questionKey as keyof Conversation
                                     ].question.answer && (
-                                        <Answer
+                                        <AnswerBadge
                                             answer={
                                                 currentConversation[
                                                     questionKey as keyof Conversation

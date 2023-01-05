@@ -1,8 +1,13 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { AnswerProps } from 'interfaces';
 
-export const Answer = ({ answer }: any) => {
+interface AnswerBadgeProps {
+    answer?: AnswerProps;
+}
+
+export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
     return (
         <Grid container justifyContent="end" mb={2}>
             <Box
@@ -19,7 +24,7 @@ export const Answer = ({ answer }: any) => {
                     variant="body2"
                     component="span"
                 >
-                    {answer.label}
+                    {answer?.label}
                 </Typography>
             </Box>
         </Grid>

@@ -1,16 +1,27 @@
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 export const Answer = ({ answer }: any) => {
     return (
-        <div className="d-flex flex-row justify-content-end mb-4">
-            <div
-                className="p-3 border"
+        <Grid container justifyContent="end" mb={2}>
+            <Box
+                p={1.5}
                 style={{
                     borderRadius: '15px',
                     backgroundColor: '#fbfbfb',
-                    borderBottomRightRadius: 0
+                    borderBottomRightRadius: 0,
+                    border: '1px solid #bdbdbd'
                 }}
             >
-                <p className="small mb-0">{answer.label}</p>
-            </div>
-        </div>
+                <Typography
+                    gutterBottom={false}
+                    variant="body2"
+                    component="span"
+                >
+                    {answer.label}
+                </Typography>
+            </Box>
+        </Grid>
     );
 };

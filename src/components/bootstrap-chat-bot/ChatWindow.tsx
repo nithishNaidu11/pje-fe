@@ -1,19 +1,16 @@
 import React from 'react';
 
-import {
-    MDBCol,
-    MDBCard,
-    MDBCardHeader,
-    MDBCardBody,
-    MDBIcon,
-    MDBCollapse,
-    MDBBtn
-} from 'mdb-react-ui-kit';
-
 import { Answer } from './Answer';
 import { Question } from './Question';
 import { ChatWindowProps, type Conversation } from 'interfaces';
 import { getViewport } from './helper';
+import { ConfirmationDialog } from './ConfirmationDialog';
+
+import Card from '@mui/material/Card';
+
+import CardContent from '@mui/material/CardContent';
+import Collapse from '@mui/material/Collapse';
+import { ChatHeader } from './ChatHeader';
 
 export const ChatWindow = ({
     setOpen,
@@ -23,7 +20,6 @@ export const ChatWindow = ({
     type ConversationKeysProps = Array<keyof typeof conversation>;
 
     const conversationKeys: ConversationKeysProps = Object.keys(conversation);
-
     const firstQuestion = {
         [conversationKeys[0]]: conversation[conversationKeys[0]]
     };
@@ -34,13 +30,14 @@ export const ChatWindow = ({
             ...firstQuestion
         });
     const [areQuestionsOver, setAreQuestionsOver] = React.useState(false);
+    const [showConfirmation, setShowConfirmation] = React.useState(false);
 
     const currentConversationKeys: ConversationKeysProps =
         Object.keys(currentConversation);
 
-    const toggleCollapseCardBody = () => setShowChatBody(!showChatBody);
+    const toggleCollapseChatBody = () => setShowChatBody(!showChatBody);
 
-    const onAnswerClick = ({ key, value }: { key: string; value: string }) => {
+    const onSelectAnswer = ({ key, value }: { key: string; value: string }) => {
         const answer = currentConversation[key].question.options.find(
             (option: { label: string; value: string; next: string | null }) =>
                 option.value === value
@@ -70,78 +67,41 @@ export const ChatWindow = ({
             setCurrentConversation({ ...modifiedConversation });
             setAreQuestionsOver(true);
         }
+        onSubmit(modifiedConversation);
     };
 
     return (
-        <MDBCol
-            md="8"
-            lg="6"
-            xl="4"
-            xs="12"
-            className="position-absolute bottom-0 end-0 "
-            style={{
-                transform:
-                    getViewport() === 'xs'
-                        ? 'none'
-                        : 'translateX(-5%) translateY(-5%)',
-                zIndex: 1000,
-                height: showChatBody
-                    ? getViewport() === 'xs'
-                        ? '100vh'
-                        : 'calc(100vh - 40px)'
-                    : 'inherit'
-            }}
-        >
-            <MDBCard
-                id="chat1"
-                style={{
-                    borderRadius: '15px',
-                    height: 'inherit',
-                    overflowY: 'scroll'
+        <>
+            <Card
+                sx={{
+                    width: getViewport() === 'xs' ? '100%' : 345,
+                    position: 'absolute',
+                    right: getViewport() === 'xs' ? 0 : 50,
+                    bottom: getViewport() === 'xs' ? 0 : 20,
+                    zIndex: 1000,
+                    // transform:
+                    //     getViewport() === 'xs'
+                    //         ? 'none'
+                    //         : 'translateX(-5%) translateY(-5%)',
+                    height: showChatBody
+                        ? getViewport() === 'xs'
+                            ? '100vh'
+                            : 'calc(100vh - 40px)'
+                        : 'inherit'
                 }}
+                elevation={4}
             >
-                <MDBCardHeader
-                    className="d-flex justify-content-between align-items-center p-3 text-white border-bottom-0"
-                    style={{
-                        borderTopLeftRadius: '15px',
-                        borderTopRightRadius: '15px',
-                        backgroundColor: '#3445a2'
-                    }}
-                >
-                    <MDBBtn
-                        style={{
-                            backgroundColor: '#3445a2',
-                            boxShadow: 'none'
-                        }}
-                        tag="a"
-                        floating
-                        onClick={toggleCollapseCardBody}
-                    >
-                        <MDBIcon
-                            fas
-                            icon={showChatBody ? 'angle-down' : 'angle-up'}
-                        />
-                    </MDBBtn>
-
-                    <p className="mb-0 fw-bold">Chat Bot</p>
-                    <MDBBtn
-                        tag="a"
-                        floating
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                        style={{
-                            backgroundColor: '#3445a2',
-                            boxShadow: 'none'
-                        }}
-                    >
-                        <MDBIcon fas icon="times" />
-                    </MDBBtn>
-                </MDBCardHeader>
-
-                <MDBCollapse show={showChatBody}>
-                    <MDBCardBody
-                        style={{
+                <ChatHeader
+                    toggleCollapseChatBody={toggleCollapseChatBody}
+                    showChatBody={showChatBody}
+                    areQuestionsOver={areQuestionsOver}
+                    setOpen={setOpen}
+                    setShowConfirmation={setShowConfirmation}
+                />
+                <Collapse orientation="vertical" in={showChatBody}>
+                    <CardContent
+                        sx={{
+                            maxHeight: 'calc(100vh - 100px)',
                             overflowY: 'scroll'
                         }}
                     >
@@ -159,7 +119,7 @@ export const ChatWindow = ({
                                                 questionKey as keyof Conversation
                                             ].question.options
                                         }
-                                        onAnswerClick={onAnswerClick}
+                                        onAnswerClick={onSelectAnswer}
                                         answer={
                                             currentConversation[
                                                 questionKey as keyof Conversation
@@ -181,7 +141,16 @@ export const ChatWindow = ({
                                 </React.Fragment>
                             );
                         })}
-                        {areQuestionsOver && (
+
+                        <ConfirmationDialog
+                            open={showConfirmation}
+                            setOpen={setShowConfirmation}
+                            onSubmit={() => {
+                                setOpen(false);
+                                setShowConfirmation(false);
+                            }}
+                        />
+                        {/* {areQuestionsOver && (
                             <div className="d-grid gap-2 col-12 mx-auto">
                                 <MDBBtn
                                     mx-auto
@@ -201,10 +170,10 @@ export const ChatWindow = ({
                                     END CONVERSATION
                                 </MDBBtn>
                             </div>
-                        )}
-                    </MDBCardBody>
-                </MDBCollapse>
-            </MDBCard>
-        </MDBCol>
+                        )} */}
+                    </CardContent>
+                </Collapse>
+            </Card>
+        </>
     );
 };

@@ -15,7 +15,7 @@ export {
     type CreateSingleJobQuery
 } from './jobQuery.interface';
 
-export { type Worker } from './worker.interface';
+export { type Worker, type ShortlistWorkerProps } from './worker.interface';
 
 export {
     type QuestionOption,

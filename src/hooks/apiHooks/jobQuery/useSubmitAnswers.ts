@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { shortlistWorkers } from 'api/jobQuery';
+import { submitAnswers } from 'api/jobQuery';
 import { ApiError } from 'interfaces';
 
 type Params = {
@@ -12,7 +12,7 @@ type Params = {
 export const useSubmitAnswers = () => {
     return useMutation<unknown, ApiError, Params>(
         ({ companyId, jobQueryId, shortcode, answers }: Params) => {
-            return shortlistWorkers
+            return submitAnswers
                 .post({
                     params: { jobQueryId, companyId },
                     body: {

@@ -140,4 +140,10 @@ export interface Worker {
         fullName: string;
     } | null;
     auditMetadata: AuditMetadata;
+    shortcode?: string;
+}
+
+export interface ShortlistWorkerProps {
+    fullName: string;
+    mobileNumber: string;
 }

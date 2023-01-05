@@ -1,4 +1,5 @@
-import React from 'react';
+import Grid from '@mui/material/Grid';
+
 import { QuestionOption } from './QuestionOption';
 
 export const QuestionOptions = ({
@@ -12,7 +13,7 @@ export const QuestionOptions = ({
     };
 
     return (
-        <div className="d-flex">
+        <Grid container spacing={1}>
             {options.map((option: any) => (
                 <QuestionOption
                     label={option.label}
@@ -23,6 +24,6 @@ export const QuestionOptions = ({
                     isAnswer={option.value === answer}
                 />
             ))}
-        </div>
+        </Grid>
     );
 };

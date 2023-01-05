@@ -60,16 +60,6 @@ export const JobQueryDetails = ({
         <>
             {mapObj && Object.keys(mapObj).length && (
                 <Grid container width={isDialog ? '540px' : 'inherit'}>
-                    {/* <Grid item md={12} mt={3}>
-                        <Typography
-                            gutterBottom={false}
-                            variant="h6"
-                            component="div"
-                            fontWeight={600}
-                        >
-                            {jobQuery.name}
-                        </Typography>
-                    </Grid> */}
                     <Grid item md={12} mt={3}>
                         <JobQueryDetailsField
                             fieldName={'Customer'}

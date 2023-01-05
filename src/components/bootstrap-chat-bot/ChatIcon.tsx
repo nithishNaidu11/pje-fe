@@ -2,7 +2,6 @@ import {
     ChatIconProps,
     PositionClassMapProps
 } from 'interfaces/chatBot.interface';
-import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 
 const positionClassMap: PositionClassMapProps = {
     bottomRight: 'position-absolute bottom-0 end-0 translate-middle',
@@ -14,24 +13,22 @@ const positionClassMap: PositionClassMapProps = {
 };
 
 export const ChatIcon = ({
-    icon,
-    size = 'lg',
     position = 'bottomRight',
-    open = false,
-    onClick
+    open = false
 }: ChatIconProps) => {
     return (
         <div className={positionClassMap[position]}>
             {!open && (
-                <MDBBtn
-                    color="primary"
-                    tag="a"
-                    floating
-                    size={size}
-                    onClick={onClick}
-                >
-                    <MDBIcon fas icon={icon} />
-                </MDBBtn>
+                <></>
+                // <MDBBtn
+                //     color="primary"
+                //     tag="a"
+                //     floating
+                //     size={size}
+                //     onClick={onClick}
+                // >
+                //     <MDBIcon fas icon={icon} />
+                // </MDBBtn>
             )}
         </div>
     );

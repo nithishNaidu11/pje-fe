@@ -1,16 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
 import { shortlistWorkers } from 'api/jobQuery';
-import { ApiError } from 'interfaces';
+import { ApiError, ShortlistWorkerProps, Worker } from 'interfaces';
 
 type Params = {
     companyId: string;
     jobQueryId: string;
+    workers: ShortlistWorkerProps[];
+};
 
-    workers: any;
+type Response = {
+    workers: Worker[];
 };
 
 export const useShortlistedWorkers = () => {
-    return useMutation<unknown, ApiError, Params>(
+    return useMutation<Response, ApiError, Params>(
         ({ companyId, jobQueryId, workers }: Params) => {
             return shortlistWorkers
                 .post({
@@ -19,7 +22,7 @@ export const useShortlistedWorkers = () => {
                         workers
                     }
                 })
-                .then((response: unknown) => {
+                .then((response: Response): Response => {
                     return response;
                 })
                 .catch((error: ApiError): Promise<ApiError> => {

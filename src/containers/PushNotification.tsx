@@ -29,6 +29,13 @@ export const PushNotification = ({ shortcode }: Props) => {
                 appId
             });
         }
+
+        // OneSignal.setSubscription(false).then(res => {
+        //     OneSignal.isPushNotificationsEnabled().then(res => {
+        //         console.log(res);
+        //     });
+        // });
+
         OneSignal.on('subscriptionChange', function (isSubscribed) {
             OneSignal.getUserId().then((userId?: string | null | undefined) => {
                 if (userId) {

@@ -1,3 +1,7 @@
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 import { QuestionOptions } from './QuestionOptions';
 
 export const Question = ({
@@ -9,34 +13,32 @@ export const Question = ({
 }: any) => {
     return (
         <>
-            <div className="d-flex flex-row justify-content-start mb-4">
-                {/* <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                    alt="avatar 1"
-                    style={{
-                        width: '45px',
-                        height: '100%'
-                    }}
-                /> */}
-                <div
-                    className="p-3"
+            <Grid container justifyContent="start" mb={2}>
+                <Box
+                    p={1.5}
                     style={{
                         borderRadius: '15px',
                         backgroundColor: 'rgb(104,134,255,.2)',
                         borderBottomLeftRadius: 0
                     }}
                 >
-                    <p className="small mb-0">{msg}</p>
-                </div>
-            </div>
-            <div className="d-flex flex-row justify-content-start mb-4">
+                    <Typography
+                        gutterBottom={false}
+                        variant="body2"
+                        component="span"
+                    >
+                        {msg}
+                    </Typography>
+                </Box>
+            </Grid>
+            <Grid container justifyContent="start" mb={4}>
                 <QuestionOptions
                     options={options}
                     parentKey={parentKey}
                     onAnswerClick={onAnswerClick}
                     answer={answer}
                 />
-            </div>
+            </Grid>
         </>
     );
 };

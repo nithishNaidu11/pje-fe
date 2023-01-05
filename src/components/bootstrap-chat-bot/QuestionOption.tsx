@@ -1,4 +1,4 @@
-import { MDBBtn } from 'mdb-react-ui-kit';
+import { Button, Grid } from '@mui/material';
 
 export const QuestionOption = ({
     label,
@@ -8,23 +8,24 @@ export const QuestionOption = ({
     isAnswer = false
 }: any) => {
     return (
-        <MDBBtn
-            size="lg"
-            outline
-            className="me-1"
-            style={{
-                borderRadius: '5px',
-                borderColor: '#3445a2',
-                border: isAnswer ? 'inherit' : 'solid 1px',
-                color: isAnswer ? 'white' : '#3445a2',
-                backgroundColor: isAnswer ? '#3445a2' : 'inherit',
-                textTransform: 'none'
-            }}
-            onClick={() => {
-                onOptionClick(parentKey, value);
-            }}
-        >
-            {label}
-        </MDBBtn>
+        <Grid item>
+            <Button
+                variant="outlined"
+                className="me-1"
+                style={{
+                    borderRadius: '5px',
+                    borderColor: '#3445a2',
+                    border: isAnswer ? 'inherit' : 'solid 1px',
+                    color: isAnswer ? 'white' : '#3445a2',
+                    backgroundColor: isAnswer ? '#3445a2' : 'inherit',
+                    textTransform: 'none'
+                }}
+                onClick={() => {
+                    onOptionClick(parentKey, value);
+                }}
+            >
+                {label}
+            </Button>
+        </Grid>
     );
 };

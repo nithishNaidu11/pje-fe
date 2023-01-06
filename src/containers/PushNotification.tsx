@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Button } from '@mui/material';
 import { SUBSCRIBE_EVENT } from 'Enum';
 import { useSubscribe } from 'hooks/apiHooks/worker';
 import React from 'react';
@@ -23,18 +24,20 @@ export const PushNotification = ({ shortcode }: Props) => {
             });
     };
 
+    const onUnsubscribeClick = () => {
+        OneSignal.setSubscription(false).then(res => {
+            OneSignal.isPushNotificationsEnabled().then(res => {
+                console.log(res);
+            });
+        });
+    };
+
     React.useEffect(() => {
         if (appId) {
             OneSignal?.init({
                 appId
             });
         }
-
-        // OneSignal.setSubscription(false).then(res => {
-        //     OneSignal.isPushNotificationsEnabled().then(res => {
-        //         console.log(res);
-        //     });
-        // });
 
         OneSignal.on('subscriptionChange', function (isSubscribed) {
             OneSignal.getUserId().then((userId?: string | null | undefined) => {
@@ -53,6 +56,13 @@ export const PushNotification = ({ shortcode }: Props) => {
     };
     return (
         <>
+            <Button
+                component="span"
+                onClick={onUnsubscribeClick}
+                sx={{ position: 'absolute', top: 0 }}
+            >
+                Unsubscribe
+            </Button>
             <div
                 style={{ textAlign: 'center' }}
                 className="onesignal-customlink-container"

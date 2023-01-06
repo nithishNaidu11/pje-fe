@@ -54,7 +54,7 @@ export const JobQueryShortlistWorkerForm = ({
                         setIsWorkerShortlisted(true);
                         navigate(`/${data.workers[0]?.shortcode}`);
                     } else {
-                        setError('Worker is already shorlisted');
+                        setError('You are already shorlisted!');
                     }
                 },
                 onError: () => {

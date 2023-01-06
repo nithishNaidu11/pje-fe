@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
@@ -21,9 +21,8 @@ import {
 import SuccessIcon from './Success.png';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
-import { Conversation, ShortlistWorkerProps, Worker } from 'interfaces';
+import { Conversation } from 'interfaces';
 
-import { useShortlistedWorkers } from 'hooks/apiHooks/jobQuery/useShortlistedWorkers';
 import { JobQueryShortlistWorkerForm } from 'components/jobQuery';
 import Divider from '@mui/material/Divider';
 
@@ -33,20 +32,14 @@ export const JobQueryCheckInterestContainer = () => {
     const isMobile = useIsMobile();
     const { shortcode } = useParams();
     const location = useLocation();
-    const navigate = useNavigate();
 
     const markInterested = useMarkInterested();
     const submitAnswers = useSubmitAnswers();
-    const shortlistWorkers = useShortlistedWorkers();
 
     const [open, setOpen] = React.useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = React.useState(false);
     const [showChat, setShowChat] = React.useState(false);
     const [isWorkerShortlisted, setIsWorkerShortlisted] = React.useState(false);
-    const [worker, setWorker] = React.useState({
-        fullName: '',
-        mobileNumber: ''
-    });
 
     React.useEffect(() => {
         setIsWorkerShortlisted(!location.pathname.startsWith('/job/'));
@@ -116,35 +109,6 @@ export const JobQueryCheckInterestContainer = () => {
                 }
             );
         }
-    };
-
-    const onShortlistWorker = () => {
-        shortlistWorkers.mutate(
-            {
-                companyId: jobQuery.companyId,
-                jobQueryId: jobQuery.jobQueryId,
-                workers: [worker]
-            },
-            {
-                onSuccess: (data: { workers: Worker[] }) => {
-                    setOpen(false);
-                    setIsWorkerShortlisted(true);
-                    navigate(`/${data.workers[0]?.shortcode}`);
-                },
-                onError: () => {
-                    setOpen(false);
-                }
-            }
-        );
-    };
-
-    const onWorkerChange = (modifiedWorker: Partial<ShortlistWorkerProps>) => {
-        setWorker(worker => {
-            return {
-                ...worker,
-                ...modifiedWorker
-            };
-        });
     };
 
     return (
@@ -366,11 +330,16 @@ export const JobQueryCheckInterestContainer = () => {
                                                 <Divider />
                                             </Grid>
                                         </Grid>
-                                        <JobQueryShortlistWorkerForm
-                                            worker={worker}
-                                            onChange={onWorkerChange}
-                                            onSubmit={onShortlistWorker}
-                                        />
+                                        {jobQuery && (
+                                            <JobQueryShortlistWorkerForm
+                                                companyId={jobQuery.companyId}
+                                                jobQueryId={jobQuery.jobQueryId}
+                                                setIsWorkerShortlisted={
+                                                    setIsWorkerShortlisted
+                                                }
+                                                setOpen={setOpen}
+                                            />
+                                        )}
                                     </>
                                 )}
                             </>

@@ -3,19 +3,66 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import { ShortlistWorkerProps } from 'interfaces';
+import { ShortlistWorkerProps, Worker } from 'interfaces';
+import Alert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
+import { useShortlistedWorkers } from 'hooks';
 
 interface JobQueryShortlistWorkerFormProps {
-    worker: ShortlistWorkerProps;
-    onChange: (_: Partial<ShortlistWorkerProps>) => void;
-    onSubmit: VoidFunction;
+    companyId: string;
+    jobQueryId: string;
+    setIsWorkerShortlisted: (_: boolean) => void;
+    setOpen: (_: boolean) => void;
 }
 
 export const JobQueryShortlistWorkerForm = ({
-    worker,
-    onChange,
-    onSubmit
+    companyId,
+    jobQueryId,
+    setIsWorkerShortlisted,
+    setOpen
 }: JobQueryShortlistWorkerFormProps) => {
+    const navigate = useNavigate();
+    const shortlistWorkers = useShortlistedWorkers();
+
+    const [worker, setWorker] = React.useState({
+        fullName: '',
+        mobileNumber: ''
+    });
+    const [error, setError] = React.useState('');
+
+    const onChange = (modifiedWorker: Partial<ShortlistWorkerProps>) => {
+        setWorker(worker => {
+            return {
+                ...worker,
+                ...modifiedWorker
+            };
+        });
+    };
+
+    const onShortlistWorker = () => {
+        setError('');
+        shortlistWorkers.mutate(
+            {
+                companyId,
+                jobQueryId,
+                workers: [worker]
+            },
+            {
+                onSuccess: (data: { workers: Worker[] }) => {
+                    setOpen(false);
+                    if (data.workers.length) {
+                        setIsWorkerShortlisted(true);
+                        navigate(`/${data.workers[0]?.shortcode}`);
+                    } else {
+                        setError('Worker is already shorlisted');
+                    }
+                },
+                onError: () => {
+                    setOpen(false);
+                }
+            }
+        );
+    };
     return (
         <Grid container spacing={2} justifyContent="center">
             <Grid item md={12} xs={8}>
@@ -50,11 +97,14 @@ export const JobQueryShortlistWorkerForm = ({
                 <Button
                     fullWidth
                     variant="contained"
-                    onClick={onSubmit}
+                    onClick={onShortlistWorker}
                     disabled={!worker.fullName || !worker.mobileNumber}
                 >
                     SUBMIT
                 </Button>
+            </Grid>
+            <Grid item md={12} xs={8}>
+                {error && <Alert severity="error">{error}</Alert>}
             </Grid>
         </Grid>
     );

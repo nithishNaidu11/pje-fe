@@ -23,11 +23,8 @@ export const ConfirmationDialog = ({
             onClose={() => {
                 setOpen(false);
             }}
-            aria-labelledby="responsive-dialog-title"
         >
-            <DialogTitle id="responsive-dialog-title">
-                {'Confirm Exit?'}
-            </DialogTitle>
+            <DialogTitle>{'Confirm Exit?'}</DialogTitle>
             <DialogContent>
                 <DialogContentText style={{ whiteSpace: 'pre-line' }}>
                     On exiting, all chat history will be cleared

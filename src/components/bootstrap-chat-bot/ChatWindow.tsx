@@ -66,6 +66,7 @@ export const ChatWindow = ({
         } else {
             setCurrentConversation({ ...modifiedConversation });
             setAreQuestionsOver(true);
+            setOpen(false);
         }
         onSubmit(modifiedConversation);
     };

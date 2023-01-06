@@ -11,6 +11,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import { ChatHeader } from './ChatHeader';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export const ChatWindow = ({
     setOpen,
@@ -106,6 +109,27 @@ export const ChatWindow = ({
                             overflowY: 'scroll'
                         }}
                     >
+                        <Grid container justifyContent="center" mb={2}>
+                            <Box
+                                p={1.5}
+                                style={{
+                                    borderRadius: '15px',
+                                    backgroundColor: '#e0e0e0',
+                                    border: '1px solid #6886ff'
+                                }}
+                            >
+                                <Typography
+                                    gutterBottom={false}
+                                    variant="body2"
+                                    component="span"
+                                >
+                                    {`Hello , Thank you for showing interest in
+                                    the job. Complete your application by
+                                    answering the below questions`}
+                                </Typography>
+                            </Box>
+                        </Grid>
+
                         {currentConversationKeys.map((questionKey, index) => {
                             return (
                                 <React.Fragment key={index}>

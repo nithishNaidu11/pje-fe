@@ -7,19 +7,24 @@ import { ShortlistWorkerProps, Worker } from 'interfaces';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
 import { useShortlistedWorkers } from 'hooks';
+import { JobQueryCompanyDetails } from './JobQueryCompanyDetails';
 
 interface JobQueryShortlistWorkerFormProps {
     companyId: string;
     jobQueryId: string;
     setIsWorkerShortlisted: (_: boolean) => void;
-    setOpen: (_: boolean) => void;
+    setShowLoader: (_: boolean) => void;
+    companyName: string;
+    companyLogo: string;
 }
 
 export const JobQueryShortlistWorkerForm = ({
     companyId,
     jobQueryId,
     setIsWorkerShortlisted,
-    setOpen
+    setShowLoader,
+    companyName,
+    companyLogo
 }: JobQueryShortlistWorkerFormProps) => {
     const navigate = useNavigate();
     const shortlistWorkers = useShortlistedWorkers();
@@ -49,7 +54,7 @@ export const JobQueryShortlistWorkerForm = ({
             },
             {
                 onSuccess: (data: { workers: Worker[] }) => {
-                    setOpen(false);
+                    setShowLoader(false);
                     if (data.workers.length) {
                         setIsWorkerShortlisted(true);
                         navigate(`/${data.workers[0]?.shortcode}`);
@@ -58,13 +63,19 @@ export const JobQueryShortlistWorkerForm = ({
                     }
                 },
                 onError: () => {
-                    setOpen(false);
+                    setShowLoader(false);
                 }
             }
         );
     };
     return (
         <Grid container spacing={2} justifyContent="center">
+            <Grid item md={12} xs={8}>
+                <JobQueryCompanyDetails
+                    companyName={companyName}
+                    companyLogo={companyLogo}
+                />
+            </Grid>
             <Grid item md={12} xs={8}>
                 <TextField
                     required

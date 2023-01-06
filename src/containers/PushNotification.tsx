@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button } from '@mui/material';
-import { SUBSCRIBE_EVENT } from 'Enum';
-import { useSubscribe } from 'hooks/apiHooks/worker';
 import React from 'react';
 
 import OneSignal from 'react-onesignal';
+
+import { SUBSCRIBE_EVENT } from 'Enum';
+import { useSubscribe } from 'hooks/apiHooks/worker';
+import Grid from '@mui/material/Grid';
 
 interface Props {
     shortcode?: string;
@@ -43,15 +43,12 @@ export const PushNotification = ({ shortcode }: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const f = {
-        textAlign: 'red'
-    };
     return (
-        <>
+        <Grid item md={12} display="flex" justifyContent="center">
             <div
                 style={{ textAlign: 'center' }}
                 className="onesignal-customlink-container"
             ></div>
-        </>
+        </Grid>
     );
 };

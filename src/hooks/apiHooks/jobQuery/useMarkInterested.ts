@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { markInterest } from 'api/jobQuery';
+import { JOB_QUERY_MARK_STATUS } from 'Enum';
 import { ApiError } from 'interfaces';
 
 type Params = {
     companyId: string;
     shortcode: string;
-    interestStatus: 'INTERESTED' | 'NOT_INTERESTED';
+    interestStatus: JOB_QUERY_MARK_STATUS;
 };
 
 export const useMarkInterested = () => {

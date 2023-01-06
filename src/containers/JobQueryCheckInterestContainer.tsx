@@ -2,11 +2,11 @@ import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import Backdrop from '@mui/material/Backdrop';
-import Button from '@mui/material/Button';
+
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+
 import { PushNotification } from 'containers';
 
 import { JobQueryDetails } from '../components/jobQuery/JobQueryDetails';
@@ -18,25 +18,26 @@ import {
     useSubmitAnswers
 } from 'hooks';
 
-import SuccessIcon from './Success.png';
-
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { Conversation } from 'interfaces';
 
-import { JobQueryShortlistWorkerForm } from 'components/jobQuery';
-import Divider from '@mui/material/Divider';
+import {
+    JobQueryCheckInterestFooter,
+    JobQueryCheckInterestHeader,
+    JobQueryShortlistWorkerForm,
+    JobQuerySuccessView
+} from 'components/jobQuery';
+import { JOB_QUERY_MARK_STATUS } from 'Enum';
 
 export const JobQueryCheckInterestContainer = () => {
     const formFields = useGetFormFields();
-
     const isMobile = useIsMobile();
     const { shortcode } = useParams();
     const location = useLocation();
-
     const markInterested = useMarkInterested();
     const submitAnswers = useSubmitAnswers();
 
-    const [open, setOpen] = React.useState(false);
+    const [showLoader, setShowLoader] = React.useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = React.useState(false);
     const [showChat, setShowChat] = React.useState(false);
     const [isWorkerShortlisted, setIsWorkerShortlisted] = React.useState(false);
@@ -52,14 +53,12 @@ export const JobQueryCheckInterestContainer = () => {
     });
 
     const handleClose = () => {
-        setOpen(false);
+        setShowLoader(false);
     };
 
-    const onMarkInterestStatus = (
-        interestStatus: 'INTERESTED' | 'NOT_INTERESTED'
-    ) => {
+    const onMarkInterestStatus = (interestStatus: JOB_QUERY_MARK_STATUS) => {
         if (shortcode) {
-            setOpen(true);
+            setShowLoader(true);
             markInterested.mutate(
                 {
                     companyId: jobQuery.companyId,
@@ -68,12 +67,12 @@ export const JobQueryCheckInterestContainer = () => {
                 },
                 {
                     onSuccess: () => {
-                        setOpen(false);
+                        setShowLoader(false);
                         setShowSuccessMessage(true);
                         if (interestStatus === 'INTERESTED') setShowChat(true);
                     },
                     onError: () => {
-                        setOpen(false);
+                        setShowLoader(false);
                     }
                 }
             );
@@ -100,11 +99,11 @@ export const JobQueryCheckInterestContainer = () => {
                 },
                 {
                     onSuccess: () => {
-                        setOpen(false);
+                        setShowLoader(false);
                         setShowSuccessMessage(true);
                     },
                     onError: () => {
-                        setOpen(false);
+                        setShowLoader(false);
                     }
                 }
             );
@@ -123,221 +122,62 @@ export const JobQueryCheckInterestContainer = () => {
                 >
                     <Grid item md={5} xs={12}>
                         {showSuccessMessage ? (
-                            <Grid
-                                container
-                                justifyContent="center"
-                                alignContent="center"
-                            >
-                                <Grid
-                                    item
-                                    md={12}
-                                    display="flex"
-                                    justifyContent="center"
-                                >
-                                    <img
-                                        src={SuccessIcon}
-                                        alt="success"
-                                        style={{
-                                            width: 136,
-                                            height: 136
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid
-                                    item
-                                    md={12}
-                                    display="flex"
-                                    justifyContent="center"
-                                >
-                                    <Typography
-                                        variant="h6"
-                                        p={2}
-                                        textAlign="center"
-                                    >
-                                        Thank for you registering your response.
-                                    </Typography>
-                                </Grid>
-                                <Grid
-                                    item
-                                    md={12}
-                                    display="flex"
-                                    justifyContent="center"
-                                >
-                                    <PushNotification shortcode={shortcode} />
-                                </Grid>
-                            </Grid>
+                            <>
+                                <JobQuerySuccessView />
+                                <PushNotification shortcode={shortcode} />
+                            </>
                         ) : (
                             <>
+                                {markInterested.isLoading && (
+                                    <Backdrop
+                                        sx={{
+                                            color: '#fff',
+                                            zIndex: theme =>
+                                                theme.zIndex.drawer + 1
+                                        }}
+                                        open={showLoader}
+                                        onClick={handleClose}
+                                    >
+                                        <CircularProgress color="inherit" />
+                                    </Backdrop>
+                                )}
                                 {isWorkerShortlisted ? (
                                     <Paper
                                         sx={{ p: 2 }}
                                         elevation={isMobile ? 0 : 2}
                                     >
-                                        <Grid
-                                            container
-                                            pb={4}
-                                            justifyContent="center"
-                                        >
-                                            <Grid item md={12} xs={12}>
-                                                <img
-                                                    width={40}
-                                                    height={40}
-                                                    src={jobQuery.companyLogo}
-                                                ></img>
-                                            </Grid>
-                                            <Grid item md={12} xs={12}>
-                                                <Typography
-                                                    variant="subtitle1"
-                                                    mb={2}
-                                                    gutterBottom={false}
-                                                >
-                                                    {jobQuery.companyName}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item md={12} xs={12}>
-                                                <Divider />
-                                            </Grid>
-                                        </Grid>
-                                        <Typography variant="h5" mb={2}>
-                                            {jobQuery.title}
-                                        </Typography>
-                                        <Typography
-                                            component="p"
-                                            variant="body2"
-                                        >
-                                            {jobQuery.header}
-                                        </Typography>
-                                        {markInterested.isLoading && (
-                                            <Backdrop
-                                                sx={{
-                                                    color: '#fff',
-                                                    zIndex: theme =>
-                                                        theme.zIndex.drawer + 1
-                                                }}
-                                                open={open}
-                                                onClick={handleClose}
-                                            >
-                                                <CircularProgress color="inherit" />
-                                            </Backdrop>
-                                        )}
-
-                                        <>
-                                            <JobQueryDetails
-                                                jobQuery={jobQuery}
-                                                formFields={formFields.data}
-                                            />
-                                            <Typography variant="h6" my={2}>
-                                                Are you interested?
-                                            </Typography>
-
-                                            <Grid
-                                                container
-                                                justifyContent="end"
-                                                spacing={2}
-                                            >
-                                                {isMobile ? (
-                                                    <>
-                                                        <Grid item xs={12}>
-                                                            <Button
-                                                                variant="contained"
-                                                                onClick={() =>
-                                                                    onMarkInterestStatus(
-                                                                        'INTERESTED'
-                                                                    )
-                                                                }
-                                                                fullWidth
-                                                            >
-                                                                YES, INTERESTED
-                                                            </Button>
-                                                        </Grid>
-                                                        <Grid
-                                                            item
-                                                            md={6}
-                                                            xs={12}
-                                                        >
-                                                            <Button
-                                                                variant="outlined"
-                                                                onClick={() =>
-                                                                    onMarkInterestStatus(
-                                                                        'NOT_INTERESTED'
-                                                                    )
-                                                                }
-                                                                fullWidth
-                                                            >
-                                                                NO, NOT
-                                                                INTERESTED
-                                                            </Button>
-                                                        </Grid>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Grid item md={6}>
-                                                            <Button
-                                                                variant="outlined"
-                                                                onClick={() =>
-                                                                    onMarkInterestStatus(
-                                                                        'NOT_INTERESTED'
-                                                                    )
-                                                                }
-                                                                fullWidth
-                                                            >
-                                                                NO, NOT
-                                                                INTERESTED
-                                                            </Button>
-                                                        </Grid>
-                                                        <Grid item md={6}>
-                                                            <Button
-                                                                variant="contained"
-                                                                onClick={() =>
-                                                                    onMarkInterestStatus(
-                                                                        'INTERESTED'
-                                                                    )
-                                                                }
-                                                                fullWidth
-                                                            >
-                                                                YES, INTERESTED
-                                                            </Button>
-                                                        </Grid>
-                                                    </>
-                                                )}
-                                            </Grid>
-                                        </>
+                                        <JobQueryCheckInterestHeader
+                                            companyName={jobQuery.companyName}
+                                            companyLogo={jobQuery.companyLogo}
+                                            title={jobQuery.title}
+                                            header={jobQuery.header}
+                                        />
+                                        <JobQueryDetails
+                                            jobQuery={jobQuery}
+                                            formFields={formFields.data}
+                                        />
+                                        <JobQueryCheckInterestFooter
+                                            onMarkInterestStatus={
+                                                onMarkInterestStatus
+                                            }
+                                        />
                                     </Paper>
                                 ) : (
                                     <>
-                                        <Grid
-                                            container
-                                            pb={4}
-                                            justifyContent="center"
-                                        >
-                                            <Grid item md={12} xs={8}>
-                                                <img
-                                                    width={40}
-                                                    height={40}
-                                                    src={jobQuery.companyLogo}
-                                                ></img>
-                                            </Grid>
-                                            <Grid item md={12} xs={8}>
-                                                <Typography
-                                                    variant="subtitle1"
-                                                    mb={2}
-                                                    gutterBottom={false}
-                                                >
-                                                    {jobQuery.companyName}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item md={12} xs={8}>
-                                                <Divider />
-                                            </Grid>
-                                        </Grid>
                                         {jobQuery && (
                                             <JobQueryShortlistWorkerForm
+                                                companyName={
+                                                    jobQuery.companyName
+                                                }
+                                                companyLogo={
+                                                    jobQuery.companyLogo
+                                                }
                                                 companyId={jobQuery.companyId}
                                                 jobQueryId={jobQuery.jobQueryId}
                                                 setIsWorkerShortlisted={
                                                     setIsWorkerShortlisted
                                                 }
-                                                setOpen={setOpen}
+                                                setShowLoader={setShowLoader}
                                             />
                                         )}
                                     </>

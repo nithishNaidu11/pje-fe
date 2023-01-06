@@ -24,14 +24,6 @@ export const PushNotification = ({ shortcode }: Props) => {
             });
     };
 
-    const onUnsubscribeClick = () => {
-        OneSignal.setSubscription(false).then(res => {
-            OneSignal.isPushNotificationsEnabled().then(res => {
-                console.log(res);
-            });
-        });
-    };
-
     React.useEffect(() => {
         if (appId) {
             OneSignal?.init({
@@ -56,13 +48,6 @@ export const PushNotification = ({ shortcode }: Props) => {
     };
     return (
         <>
-            <Button
-                component="span"
-                onClick={onUnsubscribeClick}
-                sx={{ position: 'absolute', top: 0 }}
-            >
-                Unsubscribe
-            </Button>
             <div
                 style={{ textAlign: 'center' }}
                 className="onesignal-customlink-container"

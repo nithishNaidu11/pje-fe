@@ -5,36 +5,24 @@ import Backdrop from '@mui/material/Backdrop';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 
 import { PushNotification } from 'containers';
 
-import { JobQueryDetails } from '../components/jobQuery/JobQueryDetails';
-import {
-    useGetFormFields,
-    useGetOpenJobQuery,
-    useMarkInterested,
-    useIsMobile,
-    useSubmitAnswers
-} from 'hooks';
+import { useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { Conversation } from 'interfaces';
 
 import {
-    JobQueryCheckInterestFooter,
-    JobQueryCheckInterestHeader,
+    JobQueryCheckInterestForm,
     JobQueryShortlistWorkerForm,
     JobQuerySuccessView
 } from 'components/jobQuery';
-import { JOB_QUERY_MARK_STATUS } from 'Enum';
 
 export const JobQueryCheckInterestContainer = () => {
-    const formFields = useGetFormFields();
-    const isMobile = useIsMobile();
     const { shortcode } = useParams();
     const location = useLocation();
-    const markInterested = useMarkInterested();
+
     const submitAnswers = useSubmitAnswers();
 
     const [showLoader, setShowLoader] = React.useState(false);
@@ -54,29 +42,6 @@ export const JobQueryCheckInterestContainer = () => {
 
     const handleClose = () => {
         setShowLoader(false);
-    };
-
-    const onMarkInterestStatus = (interestStatus: JOB_QUERY_MARK_STATUS) => {
-        if (shortcode) {
-            setShowLoader(true);
-            markInterested.mutate(
-                {
-                    companyId: jobQuery.companyId,
-                    shortcode,
-                    interestStatus
-                },
-                {
-                    onSuccess: () => {
-                        setShowLoader(false);
-                        setShowSuccessMessage(true);
-                        if (interestStatus === 'INTERESTED') setShowChat(true);
-                    },
-                    onError: () => {
-                        setShowLoader(false);
-                    }
-                }
-            );
-        }
     };
 
     const onSubmitAnswers = (currentConversation: Conversation) => {
@@ -112,7 +77,7 @@ export const JobQueryCheckInterestContainer = () => {
 
     return (
         <>
-            {jobQuery && formFields?.data && (
+            {jobQuery && (
                 <Grid
                     id="parent"
                     container
@@ -128,7 +93,7 @@ export const JobQueryCheckInterestContainer = () => {
                             </>
                         ) : (
                             <>
-                                {markInterested.isLoading && (
+                                {showLoader && (
                                     <Backdrop
                                         sx={{
                                             color: '#fff',
@@ -141,27 +106,16 @@ export const JobQueryCheckInterestContainer = () => {
                                         <CircularProgress color="inherit" />
                                     </Backdrop>
                                 )}
-                                {isWorkerShortlisted ? (
-                                    <Paper
-                                        sx={{ p: 2 }}
-                                        elevation={isMobile ? 0 : 2}
-                                    >
-                                        <JobQueryCheckInterestHeader
-                                            companyName={jobQuery.companyName}
-                                            companyLogo={jobQuery.companyLogo}
-                                            title={jobQuery.title}
-                                            header={jobQuery.header}
-                                        />
-                                        <JobQueryDetails
-                                            jobQuery={jobQuery}
-                                            formFields={formFields.data}
-                                        />
-                                        <JobQueryCheckInterestFooter
-                                            onMarkInterestStatus={
-                                                onMarkInterestStatus
-                                            }
-                                        />
-                                    </Paper>
+                                {isWorkerShortlisted && shortcode ? (
+                                    <JobQueryCheckInterestForm
+                                        jobQuery={jobQuery}
+                                        shortcode={shortcode}
+                                        setShowLoader={setShowLoader}
+                                        setShowSuccessMessage={
+                                            setShowSuccessMessage
+                                        }
+                                        setShowChat={setShowChat}
+                                    />
                                 ) : (
                                     <>
                                         {jobQuery && (

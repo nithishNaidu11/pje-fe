@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { JobQueryCheckInterestContainer } from 'containers/JobQueryCheckInterestContainer';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Grid, Typography } from '@mui/material';
+import { PushNotification } from 'containers';
 
 const RoutesContainer = () => {
     const renderRoutes = () => {
@@ -10,7 +10,24 @@ const RoutesContainer = () => {
             <Routes>
                 <>
                     <Route path="*" element={<Navigate to="/" replace />} />
-                    <Route path="/" element={<>Hi</>} />
+                    <Route
+                        path="/"
+                        element={
+                            <Grid
+                                container
+                                justifyContent="center"
+                                alignItems="center"
+                                height="100vh"
+                            >
+                                <Grid>
+                                    <Typography variant="h4">
+                                        Welcome to Hunar Job Portal
+                                    </Typography>
+                                    <PushNotification />
+                                </Grid>
+                            </Grid>
+                        }
+                    />
 
                     <Route
                         path=":shortcode/"

@@ -35,10 +35,18 @@ export const ChatWindow = ({
     const [areQuestionsOver, setAreQuestionsOver] = React.useState(false);
     const [showConfirmation, setShowConfirmation] = React.useState(false);
 
+    const ref = React.useRef<HTMLDivElement>();
+
     const currentConversationKeys: ConversationKeysProps =
         Object.keys(currentConversation);
 
     const toggleCollapseChatBody = () => setShowChatBody(!showChatBody);
+
+    const scrollToBottom = () => {
+        if (ref && ref.current) {
+            ref.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     const onSelectAnswer = ({ key, value }: { key: string; value: string }) => {
         const answer = currentConversation[key].question.options.find(
@@ -73,6 +81,10 @@ export const ChatWindow = ({
         }
         onSubmit(modifiedConversation);
     };
+
+    React.useEffect(() => {
+        scrollToBottom();
+    }, [currentConversation]);
 
     return (
         <>
@@ -166,7 +178,7 @@ export const ChatWindow = ({
                                 </React.Fragment>
                             );
                         })}
-
+                        <div ref={ref as React.RefObject<HTMLDivElement>}></div>
                         <ConfirmationDialog
                             open={showConfirmation}
                             setOpen={setShowConfirmation}

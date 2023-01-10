@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
 import Backdrop from '@mui/material/Backdrop';
 
@@ -24,6 +24,7 @@ export const JobQueryCheckInterestContainer = () => {
     const location = useLocation();
 
     const submitAnswers = useSubmitAnswers();
+    const [searchParams] = useSearchParams();
 
     const [showLoader, setShowLoader] = React.useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = React.useState(false);
@@ -34,6 +35,12 @@ export const JobQueryCheckInterestContainer = () => {
         setIsWorkerShortlisted(!location.pathname.startsWith('/job/'));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    React.useEffect(() => {
+        if (searchParams.has('s') && searchParams.get('s') === 'b') {
+            setShowChat(true);
+        }
+    }, [searchParams, setShowChat]);
 
     const { data: jobQuery } = useGetOpenJobQuery({
         shortcode,

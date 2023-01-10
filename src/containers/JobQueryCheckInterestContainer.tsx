@@ -39,6 +39,7 @@ export const JobQueryCheckInterestContainer = () => {
     React.useEffect(() => {
         if (searchParams.has('s') && searchParams.get('s') === 'b') {
             setShowChat(true);
+            setShowSuccessMessage(true);
         }
     }, [searchParams, setShowChat]);
 

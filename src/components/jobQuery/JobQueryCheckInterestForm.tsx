@@ -57,8 +57,11 @@ export const JobQueryCheckInterestForm = ({
     return (
         <Paper sx={{ p: 2 }} elevation={isMobile ? 0 : 2}>
             <JobQueryCheckInterestHeader
-                companyName={jobQuery.companyName}
-                companyLogo={jobQuery.companyLogo}
+                companyName={jobQuery.companyName || 'Hunar'}
+                companyLogo={
+                    jobQuery.companyLogo ||
+                    'https://storage.googleapis.com/public_bocket/hunar-logo512.png'
+                }
                 title={jobQuery.title}
                 header={jobQuery.header}
             />

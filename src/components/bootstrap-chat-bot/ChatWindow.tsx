@@ -101,7 +101,7 @@ export const ChatWindow = ({
                     //         : 'translateX(-5%) translateY(-5%)',
                     height: showChatBody
                         ? getViewport() === 'xs'
-                            ? '100vh'
+                            ? '100%'
                             : 'calc(100vh - 40px)'
                         : 'inherit'
                 }}

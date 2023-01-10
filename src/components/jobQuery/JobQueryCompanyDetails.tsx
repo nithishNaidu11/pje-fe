@@ -13,11 +13,17 @@ export const JobQueryCompanyDetails = ({
 }: JobQueryCompanyDetailsProps) => {
     return (
         <Grid container pb={4} justifyContent="center">
-            <Grid item md={12} xs={12}>
+            <Grid item md={12} xs={12} display="flex" justifyContent="center">
                 <img width={40} height={40} src={companyLogo}></img>
             </Grid>
             <Grid item md={12} xs={12}>
-                <Typography variant="subtitle1" mb={2} gutterBottom={false}>
+                <Typography
+                    variant="subtitle1"
+                    mb={2}
+                    gutterBottom={false}
+                    display="flex"
+                    justifyContent="center"
+                >
                     {companyName}
                 </Typography>
             </Grid>

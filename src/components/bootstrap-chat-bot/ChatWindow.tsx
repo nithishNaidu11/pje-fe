@@ -117,7 +117,7 @@ export const ChatWindow = ({
                 <Collapse orientation="vertical" in={showChatBody}>
                     <CardContent
                         sx={{
-                            maxHeight: 'calc(100vh - 100px)',
+                            maxHeight: 'calc(100vh - 140px)',
                             overflowY: 'scroll'
                         }}
                     >

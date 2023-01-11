@@ -129,10 +129,12 @@ export const JobQueryCheckInterestContainer = () => {
                                         {jobQuery && (
                                             <JobQueryShortlistWorkerForm
                                                 companyName={
-                                                    jobQuery.companyName
+                                                    jobQuery.companyName ||
+                                                    'Hunar'
                                                 }
                                                 companyLogo={
-                                                    jobQuery.companyLogo
+                                                    jobQuery.companyLogo ||
+                                                    'https://storage.googleapis.com/public_bocket/hunar-logo512.png'
                                                 }
                                                 companyId={jobQuery.companyId}
                                                 jobQueryId={jobQuery.jobQueryId}

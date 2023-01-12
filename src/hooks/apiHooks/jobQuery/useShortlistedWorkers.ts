@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { shortlistWorkers } from 'api/jobQuery';
-import { ApiError, ShortlistWorkerProps, Worker } from 'interfaces';
+import { type ApiError, ShortlistWorkerProps, Worker } from 'interfaces';
 
 type Params = {
     companyId: string;

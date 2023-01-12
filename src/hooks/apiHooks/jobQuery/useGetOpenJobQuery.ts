@@ -21,6 +21,7 @@ export const useGetOpenJobQuery = ({ shortcode, enabled = true }: Props) => {
                     return response;
                 });
         },
+        refetchOnWindowFocus: false,
         enabled
     });
 };

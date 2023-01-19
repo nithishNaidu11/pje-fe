@@ -61,10 +61,10 @@ export const JobQueryDetails = ({
             {mapObj && Object.keys(mapObj).length && (
                 <Grid container width={isDialog ? '540px' : 'inherit'}>
                     <Grid item md={12} mt={3}>
-                        <JobQueryDetailsField
+                        {/* <JobQueryDetailsField
                             fieldName={'Customer'}
                             fieldValue={jobQuery.customer.legalEntityName}
-                        />
+                        /> */}
                         {!!jobQuery.jobRole && (
                             <JobQueryDetailsField
                                 fieldName={'Role'}

@@ -1,6 +1,8 @@
 /**
  * ErrorTracker provides utility to track errors in the app.
  */
+import { AxiosError } from 'axios';
+import * as Sentry from '@sentry/browser';
 
 interface Props {
     dsn?: string;
@@ -29,7 +31,15 @@ export class ErrorTracker {
         // By including and configuring Sentry, the SDK will automatically attach
         // global handlers to capture uncaught exceptions and unhandled rejections.
         // @see https://docs.sentry.io/platforms/javascript/
-
+        Sentry.init({
+            dsn: options.dsn || '',
+            environment: options.environment || '',
+            release: options.release || '',
+            enabled: options.environment !== 'local'
+        });
+        Sentry.configureScope(scope => {
+            scope.setTag('service', 'worker-crm');
+        });
         ErrorTracker._isInitiated = true;
     };
 
@@ -39,8 +49,9 @@ export class ErrorTracker {
      */
     static captureException = (err: unknown) => {
         if (ErrorTracker._isInitiated && err instanceof Error) {
-            // eslint-disable-next-line no-console
-            console.log(err);
+            const axiosError = err as AxiosError;
+            if (axiosError.config) Sentry.setExtra('error', axiosError.config);
+            Sentry.captureException(err);
         }
     };
 }

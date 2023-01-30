@@ -7,14 +7,14 @@ interface UpdatedAxiosRequestConfig extends AxiosRequestConfig {
 
 Axios.interceptors.request.use(
     (config: UpdatedAxiosRequestConfig) => {
-        const authHeaders = localStorage.token
-            ? { Authorization: `Token ${JSON.parse(localStorage.token)}` }
-            : {};
+        // const authHeaders = localStorage.token
+        //     ? { Authorization: `Token ${JSON.parse(localStorage.token)}` }
+        //     : {};
         return {
             baseURL: process.env.REACT_APP_API_ENDPPOINT,
             ...config,
             headers: {
-                ...authHeaders,
+                // ...authHeaders,
                 ...config.headers
             },
             data:
@@ -36,10 +36,10 @@ Axios.interceptors.response.use(
     },
     error => {
         ErrorTracker.captureException(error);
-        if (error.response.status === 401) {
-            localStorage.removeItem('token');
-            window.location.reload();
-        }
+        // if (error.response.status === 401) {
+        //     localStorage.removeItem('token');
+        //     window.location.reload();
+        // }
         if (error.response.data.errors) {
             return Promise.reject(DataUtils.camelize(error.response.data));
         } else {

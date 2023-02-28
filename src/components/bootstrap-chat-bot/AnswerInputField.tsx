@@ -4,7 +4,7 @@ import { Select } from 'components/common/Select';
 import { QuestionOptions } from './QuestionOptions';
 
 const getSelectedOption = (options: Options, value: string | undefined) => {
-    return value ? options.filter(option => option.value === value)[0] : null;
+    return value ? options.find(option => option.value === value) : null;
 };
 
 const DROPDOWN_LIMIT = 5;
@@ -24,7 +24,7 @@ export const AnswerInputField = ({
     parentKey,
     answerValue
 }: AnswerInputFieldProps) => {
-    switch (questionType) {
+    switch (questionType.toUpperCase()) {
         case FIELD_TYPE.YES_NO:
         case FIELD_TYPE.SINGLE_SELECT:
             return options.length <= DROPDOWN_LIMIT ? (

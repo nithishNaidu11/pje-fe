@@ -28,12 +28,6 @@ export interface ChatIconProps {
 
 export type PositionClassMapProps = { [key in Position]: string };
 
-export interface ChatWindowProps {
-    setOpen: (_: boolean) => void;
-    conversation: Conversation;
-    onSubmit: any;
-}
-
 export interface AnswerProps {
     label: string;
     value: string;

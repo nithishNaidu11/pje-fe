@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnswerBadge } from './AnswerBadge';
 import { Question } from './Question';
-import { ChatWindowProps, type Conversation } from 'interfaces';
+import { type Conversation } from 'interfaces';
 import { getViewport } from './helper';
 import { ConfirmationDialog } from './ConfirmationDialog';
 
@@ -14,6 +14,12 @@ import { ChatHeader } from './ChatHeader';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
+export interface ChatWindowProps {
+    setOpen: (_: boolean) => void;
+    conversation: Conversation;
+    onSubmit: any;
+}
 
 export const ChatWindow = ({
     setOpen,

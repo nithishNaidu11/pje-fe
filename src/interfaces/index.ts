@@ -27,6 +27,5 @@ export {
     type Position,
     type ChatIconProps,
     type PositionClassMapProps,
-    type ChatWindowProps,
     type AnswerProps
 } from './chatBot.interface';

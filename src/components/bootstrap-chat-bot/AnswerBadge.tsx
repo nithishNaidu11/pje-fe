@@ -22,6 +22,7 @@ export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
                     gutterBottom={false}
                     variant="body2"
                     component="span"
+                    maxWidth={'100vh'}
                 >
                     {answer}
                 </Typography>

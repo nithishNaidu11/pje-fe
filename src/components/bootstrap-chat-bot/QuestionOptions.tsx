@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 
 import { QuestionOption } from './QuestionOption';
-import { QuestionOption as QuestionOptionProps } from 'interfaces';
+import { QuestionOptionProps } from 'interfaces';
 
 interface QuestionOptionsProps {
     options: QuestionOptionProps[];

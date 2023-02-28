@@ -62,7 +62,7 @@ export const JobQueryCheckInterestContainer = () => {
             return acc;
         }, {});
 
-        if (shortcode) {
+        if (shortcode && jobQuery) {
             submitAnswers.mutate(
                 {
                     companyId: jobQuery.companyId,

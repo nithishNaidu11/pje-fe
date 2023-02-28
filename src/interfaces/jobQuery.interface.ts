@@ -1,4 +1,26 @@
-import { JOBQUERY_WORKER_STATUS } from 'Enum';
+import { Option } from './option.interface';
+import { JOBQUERY_WORKER_STATUS, FIELD_TYPE } from 'Enum';
+
+export interface QuestionOptionProps extends Option {
+    next: string | null;
+}
+
+export interface QuestionProps {
+    msg: string;
+    options: QuestionOptionProps[];
+    answer?: QuestionOptionProps;
+    optionsKey?: string;
+}
+
+export type QuestionsProps = {
+    [key: string]: {
+        id: string;
+        key: string;
+        next: string | null;
+        question: QuestionProps;
+        type: FIELD_TYPE;
+    };
+};
 
 export interface JobQueryFilters {
     gender?: string[] | null;
@@ -51,6 +73,9 @@ export interface CreateJobQueryFields {
 
 export interface JobQueryFields {
     jobQueryId: string;
+    companyId: string;
+    companyName: string | null;
+    companyLogo: string | null;
     title: string;
     name: string;
     customerId: string;
@@ -77,6 +102,7 @@ export interface JobQueryFields {
         legalEntityName: string;
         alias: string;
     };
+    questions: QuestionsProps;
 }
 
 export interface CreateSingleJobQuery extends CreateJobQueryFields {

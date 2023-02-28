@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-app-env --env-file=envConfig/${BUILD_ENV}.env start",
-    "local": "react-app-env --env-file=envConfig/local.env start",
+    "local": "PORT=3001 react-app-env --env-file=envConfig/local.env start",
     "build": "react-app-env --env-file=envConfig/${BUILD_ENV}.env build && echo '/* /index.html  200' | cat >build/_redirects ",
     "build:production": "BUILD_ENV=production yarn run build",
     "test": "react-app-env test",

@@ -1,13 +1,15 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { QuestionOption } from 'interfaces';
+import { FIELD_TYPE } from 'Enum';
+import { QuestionOptionProps } from 'interfaces';
 
-import { QuestionOptions } from './QuestionOptions';
+import { AnswerInputField } from './AnswerInputField';
 
 interface QuestionProps {
     msg: string;
-    options: QuestionOption[];
+    type: FIELD_TYPE;
+    options: QuestionOptionProps[];
     parentKey: string;
     onAnswerClick: (_: { key: string; value: string }) => void;
     answerValue?: string;
@@ -15,6 +17,7 @@ interface QuestionProps {
 
 export const Question = ({
     msg,
+    type,
     options,
     parentKey,
     onAnswerClick,
@@ -41,8 +44,9 @@ export const Question = ({
                 </Box>
             </Grid>
             <Grid container justifyContent="start" mb={4}>
-                <QuestionOptions
+                <AnswerInputField
                     options={options}
+                    questionType={type}
                     parentKey={parentKey}
                     onAnswerClick={onAnswerClick}
                     answerValue={answerValue}

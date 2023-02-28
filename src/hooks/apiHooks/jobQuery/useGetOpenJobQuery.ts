@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { openJobQuery } from 'api/jobQuery';
-import { SingleJobQuery } from 'interfaces';
+import { SingleJobQueryResponse } from 'interfaces';
 
 interface Props {
     shortcode?: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const useGetOpenJobQuery = ({ shortcode, enabled = true }: Props) => {
-    return useQuery({
+    return useQuery<SingleJobQueryResponse>({
         queryKey: ['openJobQuery', shortcode],
         queryFn: () => {
             return openJobQuery
@@ -17,7 +17,7 @@ export const useGetOpenJobQuery = ({ shortcode, enabled = true }: Props) => {
                         shortcode
                     }
                 })
-                .then((response: any): { jobQuery: SingleJobQuery } => {
+                .then((response: any) => {
                     return response;
                 });
         },

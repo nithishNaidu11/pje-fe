@@ -12,13 +12,15 @@ export {
     type JobQueryFilters,
     type SingleJobQuery,
     type WorkerStatusCountProps,
-    type CreateSingleJobQuery
+    type CreateSingleJobQuery,
+    type QuestionProps,
+    type QuestionsProps,
+    type QuestionOptionProps
 } from './jobQuery.interface';
 
 export { type Worker, type ShortlistWorkerProps } from './worker.interface';
 
 export {
-    type QuestionOption,
     type SingleConversation,
     type Conversation,
     type ChatContainerProps,
@@ -26,6 +28,5 @@ export {
     type ChatIconProps,
     type PositionClassMapProps,
     type ChatWindowProps,
-    type QuestionProps,
     type AnswerProps
 } from './chatBot.interface';

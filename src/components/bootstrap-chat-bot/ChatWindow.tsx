@@ -143,35 +143,27 @@ export const ChatWindow = ({
                         </Grid>
 
                         {currentConversationKeys.map((questionKey, index) => {
+                            const currentQuestion =
+                                currentConversation[questionKey];
                             return (
                                 <React.Fragment key={index}>
                                     <Question
-                                        msg={
-                                            currentConversation[
-                                                questionKey as keyof Conversation
-                                            ].question.msg
-                                        }
+                                        msg={currentQuestion.question.msg}
+                                        type={currentQuestion.type}
                                         options={
-                                            currentConversation[
-                                                questionKey as keyof Conversation
-                                            ].question.options
+                                            currentQuestion.question.options
                                         }
                                         onAnswerClick={onSelectAnswer}
                                         answerValue={
-                                            currentConversation[
-                                                questionKey as keyof Conversation
-                                            ].question.answer?.value
+                                            currentQuestion.question.answer
+                                                ?.value
                                         }
                                         parentKey={questionKey as string}
                                     />
-                                    {currentConversation[
-                                        questionKey as keyof Conversation
-                                    ].question.answer && (
+                                    {currentQuestion.question.answer && (
                                         <AnswerBadge
                                             answer={
-                                                currentConversation[
-                                                    questionKey as keyof Conversation
-                                                ].question.answer
+                                                currentQuestion.question.answer
                                             }
                                         />
                                     )}

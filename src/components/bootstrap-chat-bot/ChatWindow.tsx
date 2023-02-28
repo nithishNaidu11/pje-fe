@@ -14,6 +14,7 @@ import { ChatHeader } from './ChatHeader';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { FIELD_TYPE } from 'Enum';
 
 type ConversationKeysProps = Array<keyof Conversations>;
 
@@ -54,23 +55,36 @@ export const ChatWindow = ({
         }
     };
 
-    const onSelectAnswer = ({ key, value }: { key: string; value: string }) => {
-        const answer = currentConversation[key].question.options.find(
-            (option: { label: string; value: string; next: string | null }) =>
-                option.value === value
-        )?.value;
+    const onAnswerClick = ({ key, value }: { key: string; value: string }) => {
+        const currentQuestion = currentConversation[key];
+        let answer = undefined;
+        if (
+            currentQuestion.type === FIELD_TYPE.SINGLE_SELECT ||
+            currentQuestion.type === FIELD_TYPE.YES_NO
+        ) {
+            answer = currentQuestion.question.options.find(
+                (option: {
+                    label: string;
+                    value: string;
+                    next: string | null;
+                }) => option.value === value
+            )?.value;
+        } else {
+            answer = value;
+        }
+
         const modifiedConversation = {
             ...currentConversation,
             [key]: {
-                ...currentConversation[key],
+                ...currentQuestion,
                 question: {
-                    ...currentConversation[key].question,
+                    ...currentQuestion.question,
                     answer
                 }
             }
         };
 
-        const nextQuestionKey: string | null = currentConversation[key].next;
+        const nextQuestionKey: string | null = currentQuestion.next;
 
         if (nextQuestionKey) {
             const nextQuestion = {
@@ -159,7 +173,7 @@ export const ChatWindow = ({
                                         options={
                                             currentQuestion.question.options
                                         }
-                                        onAnswerClick={onSelectAnswer}
+                                        onAnswerClick={onAnswerClick}
                                         answerValue={
                                             currentQuestion.question.answer
                                         }

@@ -2,6 +2,7 @@ import { FIELD_TYPE } from 'Enum';
 import { Options, QuestionOptionProps } from 'interfaces';
 import { Select } from 'components/common/Select';
 import { QuestionOptions } from './QuestionOptions';
+import { FreeText } from './FreeText';
 
 const getSelectedOption = (options: Options, value: string | undefined) => {
     return value ? options.find(option => option.value === value) : null;
@@ -50,6 +51,14 @@ export const AnswerInputField = ({
                             value
                         });
                     }}
+                />
+            );
+        case FIELD_TYPE.FREE_TEXT:
+            return (
+                <FreeText
+                    parentKey={parentKey}
+                    onAnswerClick={onAnswerClick}
+                    answerValue={answerValue}
                 />
             );
         default:

@@ -1,8 +1,8 @@
 import { QuestionProps, QuestionsProps } from './jobQuery.interface';
 
-export interface QuestionAnswerProps extends QuestionProps {
+export type QuestionAnswerProps = QuestionProps & {
     answer?: string;
-}
+};
 
 export type SingleConversation = QuestionsProps[string] & {
     question: QuestionAnswerProps;

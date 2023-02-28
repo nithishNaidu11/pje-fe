@@ -22,10 +22,8 @@ export { type Worker, type ShortlistWorkerProps } from './worker.interface';
 
 export {
     type SingleConversation,
-    type Conversation,
-    type ChatContainerProps,
+    type Conversations,
     type Position,
     type ChatIconProps,
-    type PositionClassMapProps,
-    type AnswerProps
+    type PositionClassMapProps
 } from './chatBot.interface';

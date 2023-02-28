@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { AnswerProps } from 'interfaces';
 
 interface AnswerBadgeProps {
-    answer?: AnswerProps;
+    answer?: string;
 }
 
 export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
@@ -24,7 +23,7 @@ export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
                     variant="body2"
                     component="span"
                 >
-                    {answer?.label}
+                    {answer}
                 </Typography>
             </Box>
         </Grid>

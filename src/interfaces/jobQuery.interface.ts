@@ -8,11 +8,10 @@ export interface QuestionOptionProps extends Option {
 export interface QuestionProps {
     msg: string;
     options: QuestionOptionProps[];
-    answer?: QuestionOptionProps;
     optionsKey?: string;
 }
 
-export type QuestionsProps = {
+export interface QuestionsProps {
     [key: string]: {
         id: string;
         key: string;
@@ -20,7 +19,7 @@ export type QuestionsProps = {
         question: QuestionProps;
         type: FIELD_TYPE;
     };
-};
+}
 
 export interface JobQueryFilters {
     gender?: string[] | null;

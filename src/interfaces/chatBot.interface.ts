@@ -1,14 +1,14 @@
-import { QuestionsProps } from './jobQuery.interface';
+import { QuestionProps, QuestionsProps } from './jobQuery.interface';
 
-export type SingleConversation = QuestionsProps[string];
+export interface QuestionAnswerProps extends QuestionProps {
+    answer?: string;
+}
 
-export type Conversation = {
-    [key: string]: SingleConversation;
+export type SingleConversation = QuestionsProps[string] & {
+    question: QuestionAnswerProps;
 };
 
-export interface ChatContainerProps {
-    icon: string;
-}
+export type Conversations = Record<string, SingleConversation>;
 
 export type Position =
     | 'bottomLeft'
@@ -27,8 +27,3 @@ export interface ChatIconProps {
 }
 
 export type PositionClassMapProps = { [key in Position]: string };
-
-export interface AnswerProps {
-    label: string;
-    value: string;
-}

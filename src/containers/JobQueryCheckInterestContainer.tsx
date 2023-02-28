@@ -11,7 +11,7 @@ import { PushNotification } from 'containers';
 import { useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
-import { Conversation } from 'interfaces';
+import { Conversations } from 'interfaces';
 
 import {
     JobQueryCheckInterestForm,
@@ -52,12 +52,12 @@ export const JobQueryCheckInterestContainer = () => {
         setShowLoader(false);
     };
 
-    const onSubmitAnswers = (currentConversation: Conversation) => {
+    const onSubmitAnswers = (currentConversation: Conversations) => {
         const answers = Object.keys(currentConversation).reduce((acc, key) => {
             acc = {
                 ...acc,
                 [currentConversation[key].key]:
-                    currentConversation[key].question.answer?.value
+                    currentConversation[key].question.answer
             };
             return acc;
         }, {});

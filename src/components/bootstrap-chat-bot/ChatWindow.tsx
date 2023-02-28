@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnswerBadge } from './AnswerBadge';
 import { Question } from './Question';
-import { type Conversation } from 'interfaces';
+import { type Conversations } from 'interfaces';
 import { getViewport } from './helper';
 import { ConfirmationDialog } from './ConfirmationDialog';
 
@@ -15,9 +15,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+type ConversationKeysProps = Array<keyof Conversations>;
+
 export interface ChatWindowProps {
     setOpen: (_: boolean) => void;
-    conversation: Conversation;
+    conversation: Conversations;
     onSubmit: any;
 }
 
@@ -26,8 +28,6 @@ export const ChatWindow = ({
     conversation,
     onSubmit
 }: ChatWindowProps) => {
-    type ConversationKeysProps = Array<keyof typeof conversation>;
-
     const conversationKeys: ConversationKeysProps = Object.keys(conversation);
     const firstQuestion = {
         [conversationKeys[0]]: conversation[conversationKeys[0]]
@@ -35,7 +35,7 @@ export const ChatWindow = ({
 
     const [showChatBody, setShowChatBody] = React.useState(true);
     const [currentConversation, setCurrentConversation] =
-        React.useState<Conversation>({
+        React.useState<Conversations>({
             ...firstQuestion
         });
     const [areQuestionsOver, setAreQuestionsOver] = React.useState(false);
@@ -58,7 +58,7 @@ export const ChatWindow = ({
         const answer = currentConversation[key].question.options.find(
             (option: { label: string; value: string; next: string | null }) =>
                 option.value === value
-        );
+        )?.value;
         const modifiedConversation = {
             ...currentConversation,
             [key]: {
@@ -162,7 +162,6 @@ export const ChatWindow = ({
                                         onAnswerClick={onSelectAnswer}
                                         answerValue={
                                             currentQuestion.question.answer
-                                                ?.value
                                         }
                                         parentKey={questionKey as string}
                                     />

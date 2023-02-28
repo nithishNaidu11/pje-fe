@@ -1,7 +1,7 @@
 import { FIELD_TYPE } from 'Enum';
-import { Conversation } from './interfaces/chatBot.interface';
+import { Conversations } from './interfaces/chatBot.interface';
 
-export const data: Conversation = {
+export const data: Conversations = {
     bikeCreate: {
         type: FIELD_TYPE.SINGLE_SELECT,
         id: 'bike-create',

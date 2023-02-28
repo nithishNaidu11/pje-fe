@@ -1,10 +1,14 @@
 import React from 'react';
 import { data } from 'data';
-import { ChatContainerProps, Conversation } from 'interfaces';
+import { Conversations } from 'interfaces';
 import { ChatIcon } from './ChatIcon';
 import { ChatWindow } from './ChatWindow';
 
-const conversation: Conversation = data;
+const conversation: Conversations = data;
+
+interface ChatContainerProps {
+    icon: string;
+}
 
 export const ChatContainer = ({ icon }: ChatContainerProps) => {
     const [isChatWindowOpen, setisChatWindowOpen] = React.useState(false);

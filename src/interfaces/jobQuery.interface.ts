@@ -2,7 +2,7 @@ import { Option } from './option.interface';
 import { JOBQUERY_WORKER_STATUS, FIELD_TYPE } from 'Enum';
 
 export interface QuestionOptionProps extends Option {
-    next: string | null;
+    next?: string | null;
 }
 
 export interface QuestionProps {

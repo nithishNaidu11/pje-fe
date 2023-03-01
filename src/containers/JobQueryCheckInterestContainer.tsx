@@ -56,7 +56,6 @@ export const JobQueryCheckInterestContainer = () => {
         return Object.entries(jobQuery.profileUpdateQuestions).reduce(
             (acc, [key, val]) => {
                 if (val.question.optionsKey) {
-                    // @ts-expect-error null expected in types but not used
                     val.question.options =
                         formFields[
                             DataUtils.toCamel(

@@ -1,8 +1,10 @@
 import { ALLOWED_EXTENSION, FIELD_TYPE } from 'Enum';
 import { Options, QuestionOptionProps } from 'interfaces';
-import { Select, UploadButton } from 'components/common';
+import { DatePicker, Select, UploadButton } from 'components/common';
 import { QuestionOptions } from './QuestionOptions';
 import { FreeText } from './FreeText';
+import { TimeUtils } from 'utils';
+import Box from '@mui/material/Box';
 
 const getSelectedOption = (options: Options, value: string | undefined) => {
     return value ? options.find(option => option.value === value) : null;
@@ -83,6 +85,27 @@ export const AnswerInputField = ({
                         ALLOWED_EXTENSION.DOCX
                     ]}
                 />
+            );
+        case FIELD_TYPE.DATE:
+            return (
+                <Box sx={{ maxWidth: '120px' }}>
+                    <DatePicker
+                        label=""
+                        size="small"
+                        inputFormat="yyyy-MM-dd"
+                        onChange={selectedDate => {
+                            if (!selectedDate) return;
+                            onAnswerClick({
+                                key: parentKey,
+                                value: TimeUtils.format(
+                                    selectedDate,
+                                    'YYYY-MM-DD'
+                                )
+                            });
+                        }}
+                        value={answerValue}
+                    />
+                </Box>
             );
         default:
             return <></>;

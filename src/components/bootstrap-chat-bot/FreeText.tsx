@@ -3,7 +3,7 @@ import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { TextArea } from 'components/common/TextArea';
+import { TextArea } from 'components/common';
 import { Box } from '@mui/material';
 
 interface FreeTextProps {

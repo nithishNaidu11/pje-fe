@@ -83,6 +83,27 @@ export const JobQueryCheckInterestContainer = () => {
         }
     };
 
+    const onFileUpload = (_file: File) => {
+        // uploadDocument.mutate(
+        //     {
+        //         companyId,
+        //         documentType: DOCUMENT_TYPE.CV,
+        //         file: file,
+        //         workerId: workerData?.workerId
+        //     },
+        //     {
+        //         onSuccess() {
+        //             setIsFileUploaded(true);
+        //         },
+        //         onError(err) {
+        //             showError({ message: err.errors.displayError });
+        //         }
+        //     }
+        // );
+    };
+
+    const questions = jobQuery?.profileUpdateQuestions ?? {};
+
     return (
         <>
             {jobQuery && (
@@ -151,8 +172,10 @@ export const JobQueryCheckInterestContainer = () => {
                         {showChat && (
                             <ChatWindow
                                 setOpen={setShowChat}
-                                conversation={jobQuery.questions}
+                                conversation={questions}
                                 onSubmit={onSubmitAnswers}
+                                onFileUpload={onFileUpload}
+                                isFileUploading={false}
                             />
                         )}
                     </Grid>

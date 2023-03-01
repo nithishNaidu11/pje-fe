@@ -12,6 +12,8 @@ interface QuestionProps {
     options: QuestionOptionProps[];
     parentKey: string;
     onAnswerClick: (_: { key: string; value: string }) => void;
+    onFileUpload: (_: File) => void;
+    isFileUploading: boolean;
     answerValue?: string;
 }
 
@@ -21,6 +23,8 @@ export const Question = ({
     options,
     parentKey,
     onAnswerClick,
+    onFileUpload,
+    isFileUploading,
     answerValue
 }: QuestionProps) => {
     return (
@@ -49,6 +53,8 @@ export const Question = ({
                     questionType={type}
                     parentKey={parentKey}
                     onAnswerClick={onAnswerClick}
+                    onFileUpload={onFileUpload}
+                    isFileUploading={isFileUploading}
                     answerValue={answerValue}
                 />
             </Grid>

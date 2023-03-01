@@ -28,6 +28,8 @@ export const ChatContainer = ({ icon }: ChatContainerProps) => {
                     setOpen={setisChatWindowOpen}
                     conversation={conversation}
                     onSubmit={() => undefined}
+                    onFileUpload={() => undefined}
+                    isFileUploading={false}
                 />
             )}
         </>

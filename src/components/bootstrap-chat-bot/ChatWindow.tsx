@@ -21,13 +21,17 @@ type ConversationKeysProps = Array<keyof Conversations>;
 export interface ChatWindowProps {
     setOpen: (_: boolean) => void;
     conversation: Conversations;
-    onSubmit: any;
+    isFileUploading: boolean;
+    onSubmit: (currentConversation: Conversations) => void;
+    onFileUpload: (_: File) => void;
 }
 
 export const ChatWindow = ({
     setOpen,
     conversation,
-    onSubmit
+    isFileUploading,
+    onSubmit,
+    onFileUpload
 }: ChatWindowProps) => {
     const conversationKeys: ConversationKeysProps = Object.keys(conversation);
     const firstQuestion = {
@@ -99,7 +103,11 @@ export const ChatWindow = ({
             setAreQuestionsOver(true);
             setOpen(false);
         }
-        onSubmit(modifiedConversation);
+        if (
+            currentQuestion.type.toUpperCase() !== FIELD_TYPE.FILE_UPLOAD_LINK
+        ) {
+            onSubmit(modifiedConversation);
+        }
     };
 
     React.useEffect(() => {
@@ -174,6 +182,8 @@ export const ChatWindow = ({
                                             currentQuestion.question.options
                                         }
                                         onAnswerClick={onAnswerClick}
+                                        onFileUpload={onFileUpload}
+                                        isFileUploading={isFileUploading}
                                         answerValue={
                                             currentQuestion.question.answer
                                         }

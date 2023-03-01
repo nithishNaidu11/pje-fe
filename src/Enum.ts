@@ -129,3 +129,12 @@ export enum FIELD_TYPE {
     DATE = 'DATE',
     FILE_UPLOAD_LINK = 'FILE_UPLOAD_LINK'
 }
+
+export enum ALLOWED_EXTENSION {
+    PNG = '.png',
+    JPEG = '.jpeg',
+    JPG = '.jpg',
+    PDF = '.pdf',
+    DOC = '.doc',
+    DOCX = '.docx'
+}

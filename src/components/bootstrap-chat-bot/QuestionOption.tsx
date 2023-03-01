@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, useTheme } from '@mui/material';
 
 interface QuestionOptionProps {
     label: string;
@@ -15,17 +15,21 @@ export const QuestionOption = ({
     onOptionClick,
     isAnswer = false
 }: QuestionOptionProps) => {
+    const {
+        palette: { chatBot }
+    } = useTheme();
+
     return (
         <Grid item>
             <Button
                 variant="outlined"
-                className="me-1"
                 style={{
                     borderRadius: '5px',
-                    borderColor: '#3445a2',
-                    border: isAnswer ? 'inherit' : 'solid 1px',
-                    color: isAnswer ? 'white' : '#3445a2',
-                    backgroundColor: isAnswer ? '#3445a2' : 'inherit',
+                    borderColor: chatBot.color.questionInput,
+                    color: isAnswer ? 'white' : chatBot.color.questionInput,
+                    backgroundColor: isAnswer
+                        ? chatBot.color.questionInput
+                        : 'inherit',
                     textTransform: 'none'
                 }}
                 onClick={() => {

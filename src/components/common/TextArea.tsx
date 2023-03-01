@@ -20,6 +20,7 @@ interface TextAreaProps {
     error?: boolean;
     helpText?: string;
     resize?: 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline';
+    color?: string;
 }
 
 export const TextArea = ({
@@ -35,7 +36,8 @@ export const TextArea = ({
     minLength,
     error,
     helpText = '',
-    resize = 'both'
+    resize = 'both',
+    color
 }: TextAreaProps) => {
     const theme = useTheme();
 
@@ -81,7 +83,7 @@ export const TextArea = ({
                 maxRows={maxRows}
                 style={{
                     width: '180px',
-                    borderColor: grey[400],
+                    borderColor: color ?? grey[400],
                     borderRadius: 4,
                     padding: '12px',
                     fontFamily: 'Lato',

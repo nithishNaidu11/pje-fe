@@ -8,6 +8,7 @@ interface DatePickerProps {
     id?: string;
     size?: 'small' | 'medium' | undefined;
     onChange?: (_: Date | null) => void;
+    onAccept?: (_: Date | null) => void;
     minDate?: Date;
     value?: string | null;
     label: string;
@@ -18,6 +19,7 @@ interface DatePickerProps {
 export const DatePicker = (props: DatePickerProps) => {
     const {
         onChange = () => undefined,
+        onAccept = () => undefined,
         minDate,
         value = null,
         label,
@@ -36,6 +38,7 @@ export const DatePicker = (props: DatePickerProps) => {
                 label={label}
                 inputFormat={inputFormat}
                 onChange={onChange}
+                onAccept={onAccept}
                 minDate={minDate}
                 value={value}
                 renderInput={params => (

@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -27,14 +28,15 @@ export const Question = ({
     isFileUploading,
     answerValue
 }: QuestionProps) => {
+    const theme = useTheme();
     return (
         <>
             <Grid container justifyContent="start" mb={2}>
                 <Box
                     p={1.5}
-                    style={{
+                    sx={{
                         borderRadius: '15px',
-                        backgroundColor: 'rgb(104,134,255,.2)',
+                        backgroundColor: theme.palette.chatBot.bgColor.question,
                         borderBottomLeftRadius: 0
                     }}
                 >

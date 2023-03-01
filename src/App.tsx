@@ -4,15 +4,10 @@ import RoutesContainer from './routes';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from 'theme';
 
 import './config';
-
-const theme = createTheme({
-    typography: {
-        fontFamily: 'Lato, Arial'
-    }
-});
 
 const queryClient = new QueryClient();
 

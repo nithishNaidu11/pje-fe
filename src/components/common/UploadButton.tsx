@@ -14,6 +14,7 @@ import { ALLOWED_EXTENSION } from 'Enum';
 interface UploadButtonProps {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     isLoading?: boolean;
+    color?: string;
     title?: string;
     name: string;
     value?: string;
@@ -27,6 +28,7 @@ export const UploadButton = ({
     onChange,
     isLoading = false,
     title = 'UPLOAD',
+    color,
     name,
     value,
     required = false,
@@ -38,6 +40,7 @@ export const UploadButton = ({
         display: 'none'
     });
     const theme = useTheme();
+    color = color ?? theme.palette.primary.main;
 
     const getFormattedValue = (value: string, requiredLength: number) => {
         const firstPart = value?.slice(
@@ -166,7 +169,7 @@ export const UploadButton = ({
                                         border: disabled ? 'none' : '1px solid',
                                         borderColor: disabled
                                             ? 'disabled'
-                                            : theme.palette.primary.main,
+                                            : color,
                                         textTransform: 'uppercase',
                                         py: 1,
                                         px: 2,
@@ -181,7 +184,7 @@ export const UploadButton = ({
                                         variant="body2"
                                         noWrap
                                         component="div"
-                                        color={disabled ? grey[500] : 'primary'}
+                                        color={disabled ? grey[500] : color}
                                     >
                                         {title}
                                     </Typography>

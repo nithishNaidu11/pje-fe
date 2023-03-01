@@ -1,16 +1,21 @@
+import React from 'react';
+
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
 import { ALLOWED_EXTENSION, FIELD_TYPE } from 'Enum';
 import { Options, QuestionOptionProps } from 'interfaces';
-import { DatePicker, Select, UploadButton } from 'components/common';
+import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
 import { QuestionOptions } from './QuestionOptions';
-import { FreeText } from './FreeText';
 import { TimeUtils } from 'utils';
-import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material';
 
 const getSelectedOption = (options: Options, value: string | undefined) => {
     return value ? options.find(option => option.value === value) : null;
 };
 
-const DROPDOWN_LIMIT = 5;
+const DROPDOWN_LIMIT = 2;
 
 interface AnswerInputFieldProps {
     options: QuestionOptionProps[];
@@ -31,6 +36,9 @@ export const AnswerInputField = ({
     isFileUploading,
     answerValue
 }: AnswerInputFieldProps) => {
+    const [value, setValue] = React.useState(answerValue);
+    const theme = useTheme();
+
     switch (questionType.toUpperCase()) {
         case FIELD_TYPE.YES_NO:
         case FIELD_TYPE.SINGLE_SELECT:
@@ -45,6 +53,7 @@ export const AnswerInputField = ({
                 <Select
                     size="small"
                     options={options}
+                    sx={{ minWidth: '50%' }}
                     label=""
                     value={getSelectedOption(options, answerValue)}
                     onChange={(_, selectedOptions) => {
@@ -61,15 +70,33 @@ export const AnswerInputField = ({
             );
         case FIELD_TYPE.FREE_TEXT:
             return (
-                <FreeText
-                    parentKey={parentKey}
-                    onAnswerClick={onAnswerClick}
-                    answerValue={answerValue}
-                />
+                <Box sx={{ position: 'relative' }}>
+                    <TextArea
+                        onChange={e => setValue(e.target.value)}
+                        value={value}
+                        placeholder=""
+                        color={theme.palette.chatBot.color.questionInput}
+                    />
+                    <IconButton
+                        sx={{
+                            position: 'absolute',
+                            bottom: -6,
+                            right: -32,
+                            color: theme.palette.chatBot.color.questionInput
+                        }}
+                        onClick={() => {
+                            if (!value) return;
+                            onAnswerClick({ key: parentKey, value });
+                        }}
+                    >
+                        <CheckBoxIcon />
+                    </IconButton>
+                </Box>
             );
         case FIELD_TYPE.FILE_UPLOAD_LINK:
             return (
                 <UploadButton
+                    color={theme.palette.chatBot.color.questionInput}
                     name="file_upload"
                     isLoading={isFileUploading}
                     title={answerValue ? 'REUPLOAD' : 'UPLOAD'}
@@ -95,6 +122,12 @@ export const AnswerInputField = ({
                         inputFormat="yyyy-MM-dd"
                         onChange={selectedDate => {
                             if (!selectedDate) return;
+                            setValue(
+                                TimeUtils.format(selectedDate, 'YYYY-MM-DD')
+                            );
+                        }}
+                        onAccept={selectedDate => {
+                            if (!selectedDate) return;
                             onAnswerClick({
                                 key: parentKey,
                                 value: TimeUtils.format(
@@ -103,7 +136,7 @@ export const AnswerInputField = ({
                                 )
                             });
                         }}
-                        value={answerValue}
+                        value={value}
                     />
                 </Box>
             );

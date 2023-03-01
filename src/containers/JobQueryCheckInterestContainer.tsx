@@ -8,10 +8,12 @@ import Grid from '@mui/material/Grid';
 
 import { PushNotification } from 'containers';
 
-import { useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
+import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { Conversations } from 'interfaces';
+import { FIELD_TYPE, FORM_FIELD } from 'Enum';
+import { DataUtils } from 'utils';
 
 import {
     JobQueryCheckInterestForm,
@@ -43,24 +45,48 @@ export const JobQueryCheckInterestContainer = () => {
         }
     }, [searchParams, setShowChat]);
 
+    const { data: formFields } = useGetFormFields();
     const { data: jobQuery } = useGetOpenJobQuery({
         shortcode,
         enabled: !!shortcode
     });
+
+    const questions = React.useMemo(() => {
+        if (!jobQuery || !formFields) return {};
+        return Object.entries(jobQuery.profileUpdateQuestions).reduce(
+            (acc, [key, val]) => {
+                if (val.question.optionsKey) {
+                    // @ts-expect-error null expected in types but not used
+                    val.question.options =
+                        formFields[
+                            DataUtils.toCamel(
+                                val.question.optionsKey
+                            ) as FORM_FIELD
+                        ];
+                }
+                return { ...acc, [key]: val };
+            },
+            {}
+        );
+    }, [formFields, jobQuery]);
 
     const handleClose = () => {
         setShowLoader(false);
     };
 
     const onSubmitAnswers = (currentConversation: Conversations) => {
-        const answers = Object.keys(currentConversation).reduce((acc, key) => {
-            acc = {
-                ...acc,
-                [currentConversation[key].key]:
-                    currentConversation[key].question.answer
-            };
-            return acc;
-        }, {});
+        const answers = Object.values(currentConversation).reduce(
+            (acc, val) => {
+                if (val.type.toUpperCase() === FIELD_TYPE.FILE_UPLOAD_LINK) {
+                    return acc;
+                }
+                return {
+                    ...acc,
+                    [val.key]: val.question.answer
+                };
+            },
+            {}
+        );
 
         if (shortcode && jobQuery) {
             submitAnswers.mutate(
@@ -101,8 +127,6 @@ export const JobQueryCheckInterestContainer = () => {
         //     }
         // );
     };
-
-    const questions = jobQuery?.profileUpdateQuestions ?? {};
 
     return (
         <>

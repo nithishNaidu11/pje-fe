@@ -15,14 +15,14 @@ export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
                     borderRadius: '15px',
                     backgroundColor: '#fbfbfb',
                     borderBottomRightRadius: 0,
-                    border: '1px solid #bdbdbd'
+                    border: '1px solid #bdbdbd',
+                    maxWidth: '80%'
                 }}
             >
                 <Typography
                     gutterBottom={false}
                     variant="body2"
                     component="span"
-                    maxWidth={'100vh'}
                 >
                     {answer}
                 </Typography>

@@ -67,11 +67,7 @@ export const ChatWindow = ({
             currentQuestion.type === FIELD_TYPE.YES_NO
         ) {
             answer = currentQuestion.question.options.find(
-                (option: {
-                    label: string;
-                    value: string;
-                    next: string | null;
-                }) => option.value === value
+                option => option.value === value
             )?.value;
         } else {
             answer = value;

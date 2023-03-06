@@ -12,10 +12,10 @@ interface QuestionProps {
     type: QUESTION_TYPE;
     options: QuestionOptionProps[];
     parentKey: string;
-    onAnswerClick: (_: { key: string; value: string }) => void;
-    onFileUpload: (_: File) => void;
     isFileUploading: boolean;
     answerValue?: string;
+    onAnswerClick: (_: { key: string; value: string }) => void;
+    onFileUpload: (_: File) => void;
 }
 
 export const Question = ({
@@ -23,10 +23,10 @@ export const Question = ({
     type,
     options,
     parentKey,
-    onAnswerClick,
-    onFileUpload,
     isFileUploading,
-    answerValue
+    answerValue,
+    onAnswerClick,
+    onFileUpload
 }: QuestionProps) => {
     const theme = useTheme();
     return (

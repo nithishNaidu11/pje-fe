@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { ConversationsProps, QuestionsProps } from 'interfaces';
-import { QUESTION_TYPE, FORM_FIELD } from 'Enum';
+import { QUESTION_TYPE, FORM_FIELD, DOCUMENT_TYPE } from 'Enum';
 import { DataUtils } from 'utils';
 
 import {
@@ -20,6 +21,7 @@ import {
     JobQueryShortlistWorkerForm,
     JobQuerySuccessView
 } from 'components/jobQuery';
+import { useUploadDocument } from 'hooks/apiHooks/jobQuery/useUploadDocument';
 
 export const JobQueryCheckInterestContainer = () => {
     const { shortcode } = useParams();
@@ -50,6 +52,7 @@ export const JobQueryCheckInterestContainer = () => {
         shortcode,
         enabled: !!shortcode
     });
+    const uploadDocument = useUploadDocument();
 
     const profileQuestionIds = React.useMemo(
         () =>

@@ -3,15 +3,18 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { useTheme } from '@mui/material/styles';
+
+import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
+import { QuestionOptions } from './QuestionOptions';
 
 import { ALLOWED_EXTENSION, QUESTION_TYPE } from 'Enum';
 import { QuestionOptionProps } from 'interfaces';
-import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
-import { QuestionOptions } from './QuestionOptions';
+
 import { TimeUtils } from 'utils';
-import { useTheme } from '@mui/material/styles';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
+
 import { useFormUtils } from 'hooks';
 
 const DROPDOWN_LIMIT = 5;
@@ -59,14 +62,16 @@ export const AnswerInputField = ({
                         options,
                         fieldValue: answerValue
                     })}
-                    onChange={(_, selectedOptions) => {
-                        if (selectedOptions == null) return;
-                        const value = Array.isArray(selectedOptions)
-                            ? selectedOptions[0].value
-                            : selectedOptions.value;
+                    onChange={(_, selectedOption) => {
+                        if (
+                            selectedOption == null ||
+                            Array.isArray(selectedOption)
+                        )
+                            return;
+
                         onAnswerClick({
                             key: parentKey,
-                            value
+                            value: selectedOption.value
                         });
                     }}
                 />
@@ -84,15 +89,16 @@ export const AnswerInputField = ({
                         fieldValue: answerValue?.split(', ') ?? []
                     })}
                     onChange={(_, selectedOptions) => {
-                        if (selectedOptions == null) return;
-                        const value = Array.isArray(selectedOptions)
-                            ? selectedOptions
-                                  .map(option => option.value)
-                                  .join(', ')
-                            : selectedOptions.value;
+                        if (
+                            selectedOptions == null ||
+                            !Array.isArray(selectedOptions)
+                        )
+                            return;
                         onAnswerClick({
                             key: parentKey,
-                            value
+                            value: selectedOptions
+                                .map(option => option.value)
+                                .join(', ')
                         });
                     }}
                 />
@@ -171,7 +177,7 @@ export const AnswerInputField = ({
             );
         case QUESTION_TYPE.DATE:
             return (
-                <Box sx={{ maxWidth: '120px' }}>
+                <Box sx={{ width: '80%' }}>
                     <DatePicker
                         label=""
                         size="small"

@@ -140,3 +140,7 @@ export enum ALLOWED_EXTENSION {
     DOC = '.doc',
     DOCX = '.docx'
 }
+
+export enum DOCUMENT_TYPE {
+    'CV' = 'cv'
+}

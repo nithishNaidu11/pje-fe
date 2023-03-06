@@ -1,20 +1,21 @@
 import React from 'react';
 
-import { AnswerBadge } from './AnswerBadge';
-import { Question } from './Question';
-import { type ConversationsProps } from 'interfaces';
-import { getViewport } from './helper';
-import { ConfirmationDialog } from './ConfirmationDialog';
-
 import Card from '@mui/material/Card';
-
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
-import { ChatHeader } from './ChatHeader';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
+import { AnswerBadge } from './AnswerBadge';
+import { Question } from './Question';
+import { getViewport } from './helper';
+import { ConfirmationDialog } from './ConfirmationDialog';
+import { ChatHeader } from './ChatHeader';
+
 import { QUESTION_TYPE } from 'Enum';
+
+import { type ConversationsProps } from 'interfaces';
 
 type ConversationKeysProps = Array<keyof ConversationsProps>;
 
@@ -61,18 +62,6 @@ export const ChatWindow = ({
 
     const onAnswerClick = ({ key, value }: { key: string; value: string }) => {
         const currentQuestion = currentConversation[key];
-        let answer = undefined;
-        if (
-            currentQuestion.type === QUESTION_TYPE.SINGLE_SELECT ||
-            currentQuestion.type === QUESTION_TYPE.YES_NO
-        ) {
-            console.log(currentQuestion);
-            answer = currentQuestion.question.options.find(
-                option => option.value === value
-            )?.value;
-        } else {
-            answer = value;
-        }
 
         const modifiedConversation = {
             ...currentConversation,
@@ -80,7 +69,7 @@ export const ChatWindow = ({
                 ...currentQuestion,
                 question: {
                     ...currentQuestion.question,
-                    answer
+                    answer: value
                 }
             }
         };
@@ -100,10 +89,7 @@ export const ChatWindow = ({
             setAreQuestionsOver(true);
             setOpen(false);
         }
-        if (
-            currentQuestion.type.toUpperCase() !==
-            QUESTION_TYPE.FILE_UPLOAD_LINK
-        ) {
+        if (QUESTION_TYPE.FILE_UPLOAD_LINK) {
             onSubmit(modifiedConversation);
         }
     };
@@ -121,10 +107,6 @@ export const ChatWindow = ({
                     right: getViewport() === 'xs' ? 0 : 50,
                     bottom: getViewport() === 'xs' ? 0 : 20,
                     zIndex: 1000,
-                    // transform:
-                    //     getViewport() === 'xs'
-                    //         ? 'none'
-                    //         : 'translateX(-5%) translateY(-5%)',
                     height: showChatBody
                         ? getViewport() === 'xs'
                             ? '100%'

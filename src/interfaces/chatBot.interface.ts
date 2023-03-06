@@ -1,7 +1,7 @@
 import { QuestionProps, QuestionsProps } from './jobQuery.interface';
 
 export type QuestionAnswerProps = QuestionProps & {
-    answer?: string;
+    answer?: string | string[];
 };
 
 export type SingleConversation = QuestionsProps[string] & {

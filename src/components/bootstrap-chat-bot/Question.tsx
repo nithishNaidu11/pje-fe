@@ -13,8 +13,8 @@ interface QuestionProps {
     options: QuestionOptionProps[];
     parentKey: string;
     isFileUploading: boolean;
-    answerValue?: string;
-    onAnswerClick: (_: { key: string; value: string }) => void;
+    answerValue?: string | string[];
+    onAnswerClick: (_: { key: string; value: string | string[] }) => void;
     onFileUpload: (_: File) => void;
 }
 

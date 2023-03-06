@@ -23,20 +23,20 @@ interface AnswerInputFieldProps {
     options: QuestionOptionProps[];
     questionType: QUESTION_TYPE;
     parentKey: string;
-    onAnswerClick: (_: { key: string; value: string }) => void;
-    onFileUpload: (_: File) => void;
     isFileUploading: boolean;
-    answerValue?: string;
+    answerValue?: string | string[];
+    onAnswerClick: (_: { key: string; value: string | string[] }) => void;
+    onFileUpload: (_: File) => void;
 }
 
 export const AnswerInputField = ({
     questionType,
     options = [],
-    onAnswerClick,
-    onFileUpload,
     parentKey,
     isFileUploading,
-    answerValue
+    answerValue,
+    onAnswerClick,
+    onFileUpload
 }: AnswerInputFieldProps) => {
     const { getSelectedOption, getMultiSelectedOptions } = useFormUtils();
     const [value, setValue] = React.useState(answerValue);
@@ -84,10 +84,14 @@ export const AnswerInputField = ({
                     options={options}
                     sx={{ minWidth: '50%', width: '80%' }}
                     label=""
-                    value={getMultiSelectedOptions({
-                        options,
-                        fieldValue: answerValue?.split(', ') ?? []
-                    })}
+                    value={
+                        Array.isArray(answerValue)
+                            ? getMultiSelectedOptions({
+                                  options,
+                                  fieldValue: answerValue || []
+                              })
+                            : undefined
+                    }
                     onChange={(_, selectedOptions) => {
                         if (
                             selectedOptions == null ||
@@ -96,9 +100,7 @@ export const AnswerInputField = ({
                             return;
                         onAnswerClick({
                             key: parentKey,
-                            value: selectedOptions
-                                .map(option => option.value)
-                                .join(', ')
+                            value: selectedOptions.map(option => option.value)
                         });
                     }}
                 />
@@ -135,7 +137,7 @@ export const AnswerInputField = ({
                 <Box sx={{ position: 'relative' }}>
                     <TextArea
                         onChange={e => setValue(e.target.value)}
-                        value={value}
+                        value={!Array.isArray(value) ? value : ''}
                         placeholder=""
                         color={theme.palette.chatBot.color.questionInput}
                     />
@@ -198,7 +200,7 @@ export const AnswerInputField = ({
                                 )
                             });
                         }}
-                        value={value}
+                        value={!Array.isArray(value) ? value : ''}
                     />
                 </Box>
             );

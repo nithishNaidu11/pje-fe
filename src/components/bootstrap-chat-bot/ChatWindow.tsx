@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import Card from '@mui/material/Card';
@@ -15,7 +16,7 @@ import { ChatHeader } from './ChatHeader';
 
 import { QUESTION_TYPE } from 'Enum';
 
-import { type ConversationsProps } from 'interfaces';
+import { OptionProps, type ConversationsProps } from 'interfaces';
 
 type ConversationKeysProps = Array<keyof ConversationsProps>;
 
@@ -60,7 +61,13 @@ export const ChatWindow = ({
         }
     };
 
-    const onAnswerClick = ({ key, value }: { key: string; value: string }) => {
+    const onAnswerClick = ({
+        key,
+        value
+    }: {
+        key: string;
+        value: string | string[];
+    }) => {
         const currentQuestion = currentConversation[key];
 
         const modifiedConversation = {
@@ -92,6 +99,35 @@ export const ChatWindow = ({
         if (QUESTION_TYPE.FILE_UPLOAD_LINK) {
             onSubmit(modifiedConversation);
         }
+    };
+
+    const getDisplayAnswer = (currentQuestion: any) => {
+        let answer = currentQuestion.question.answer;
+        if (
+            [QUESTION_TYPE.SINGLE_SELECT, QUESTION_TYPE.YES_NO].includes(
+                currentQuestion.type
+            )
+        ) {
+            answer = currentQuestion.question.options.find(
+                (option: OptionProps) =>
+                    option.value === currentQuestion.question.answer
+            )?.label;
+        } else if (
+            [QUESTION_TYPE.MULTI_SELECT].includes(currentQuestion.type)
+        ) {
+            answer = currentQuestion.question.answer
+                .map((datum: string) => {
+                    const obj = currentQuestion.question.options.find(
+                        (option: OptionProps) => {
+                            return option.value === datum;
+                        }
+                    );
+                    return obj.label;
+                })
+                .join(',');
+        }
+
+        return answer;
     };
 
     React.useEffect(() => {
@@ -153,6 +189,7 @@ export const ChatWindow = ({
                         {currentConversationKeys.map((questionKey, index) => {
                             const currentQuestion =
                                 currentConversation[questionKey];
+
                             return (
                                 <React.Fragment key={index}>
                                     <Question
@@ -171,9 +208,9 @@ export const ChatWindow = ({
                                     />
                                     {currentQuestion.question.answer && (
                                         <AnswerBadge
-                                            answer={
-                                                currentQuestion.question.answer
-                                            }
+                                            answer={getDisplayAnswer(
+                                                currentQuestion
+                                            )}
                                         />
                                     )}
                                 </React.Fragment>

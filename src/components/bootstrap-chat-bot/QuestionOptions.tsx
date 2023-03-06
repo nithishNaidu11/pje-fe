@@ -7,7 +7,7 @@ interface QuestionOptionsProps {
     options: QuestionOptionProps[];
     parentKey: string;
     onAnswerClick: (_: { key: string; value: string }) => void;
-    answerValue?: string;
+    answerValue?: string | string[];
 }
 
 export const QuestionOptions = ({

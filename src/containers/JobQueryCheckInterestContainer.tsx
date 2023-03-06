@@ -104,18 +104,12 @@ export const JobQueryCheckInterestContainer = () => {
                     if (profileQuestionIds.find(id => id === val.id)) {
                         acc.profileUpdateAnswers = {
                             ...acc.profileUpdateAnswers,
-                            [val.key]:
-                                val.type == QUESTION_TYPE.MULTI_SELECT
-                                    ? val.question.answer.split(', ')
-                                    : val.question.answer
+                            [val.key]: val.question.answer
                         };
                     } else {
                         acc.qualificationAnswers = {
                             ...acc.qualificationAnswers,
-                            [val.key]:
-                                val.type == QUESTION_TYPE.MULTI_SELECT
-                                    ? val.question.answer.split(', ')
-                                    : val.question.answer
+                            [val.key]: val.question.answer
                         };
                     }
                 }

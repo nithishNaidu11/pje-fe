@@ -6,18 +6,26 @@ type Params = {
     companyId: string;
     jobQueryId: string;
     shortcode: string;
-    answers: { [key: string]: string };
+    profileUpdateAnswers: Record<string, string>;
+    qualificationAnswers: Record<string, string>;
 };
 
 export const useSubmitAnswers = () => {
     return useMutation<unknown, ApiError, Params>(
-        ({ companyId, jobQueryId, shortcode, answers }: Params) => {
+        ({
+            companyId,
+            jobQueryId,
+            shortcode,
+            profileUpdateAnswers,
+            qualificationAnswers
+        }: Params) => {
             return submitAnswers
                 .post({
                     params: { jobQueryId, companyId },
                     body: {
                         shortcode,
-                        answers
+                        profileUpdateAnswers,
+                        qualificationAnswers
                     }
                 })
                 .then((response: unknown) => {

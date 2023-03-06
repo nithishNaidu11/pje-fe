@@ -11,7 +11,7 @@ import { PushNotification } from 'containers';
 import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
-import { Conversations } from 'interfaces';
+import { Conversations, QuestionsProps } from 'interfaces';
 import { FIELD_TYPE, FORM_FIELD } from 'Enum';
 import { DataUtils } from 'utils';
 
@@ -51,23 +51,40 @@ export const JobQueryCheckInterestContainer = () => {
         enabled: !!shortcode
     });
 
+    const profileQuestionIds = React.useMemo(
+        () =>
+            jobQuery ? Object.keys(jobQuery.profileUpdateQuestions).sort() : [],
+        [jobQuery]
+    );
+
+    const qualificationQuestionIds = React.useMemo(
+        () => (jobQuery ? Object.keys(jobQuery.questions).sort() : []),
+        [jobQuery]
+    );
+
     const questions = React.useMemo(() => {
-        if (!jobQuery || !formFields) return {};
-        return Object.entries(jobQuery.profileUpdateQuestions).reduce(
-            (acc, [key, val]) => {
-                if (val.question.optionsKey) {
-                    val.question.options =
-                        formFields[
-                            DataUtils.toCamel(
-                                val.question.optionsKey
-                            ) as FORM_FIELD
-                        ];
-                }
-                return { ...acc, [key]: val };
-            },
-            {}
-        );
-    }, [formFields, jobQuery]);
+        if (!jobQuery || !formFields) return;
+        const result: QuestionsProps = {
+            ...Object.entries(jobQuery.profileUpdateQuestions).reduce(
+                (acc, [key, val]) => {
+                    if (val.question.optionsKey) {
+                        val.question.options =
+                            formFields[
+                                DataUtils.toCamel(
+                                    val.question.optionsKey
+                                ) as FORM_FIELD
+                            ];
+                    }
+                    return { ...acc, [key]: val };
+                },
+                {}
+            ),
+            ...jobQuery.questions
+        };
+        result[profileQuestionIds[profileQuestionIds.length - 1]].next =
+            result[qualificationQuestionIds[0]].id;
+        return result;
+    }, [formFields, jobQuery, profileQuestionIds, qualificationQuestionIds]);
 
     const handleClose = () => {
         setShowLoader(false);
@@ -76,15 +93,31 @@ export const JobQueryCheckInterestContainer = () => {
     const onSubmitAnswers = (currentConversation: Conversations) => {
         const answers = Object.values(currentConversation).reduce(
             (acc, val) => {
-                if (val.type.toUpperCase() === FIELD_TYPE.FILE_UPLOAD_LINK) {
-                    return acc;
+                if (
+                    val.question.answer &&
+                    val.type.toUpperCase() !== FIELD_TYPE.FILE_UPLOAD_LINK
+                ) {
+                    if (profileQuestionIds.find(id => id === val.id)) {
+                        acc.profileUpdateAnswers = {
+                            ...acc.profileUpdateAnswers,
+                            [val.key]:
+                                val.type == FIELD_TYPE.MULTI_SELECT
+                                    ? val.question.answer.split(', ')
+                                    : val.question.answer
+                        };
+                    } else {
+                        acc.qualificationAnswers = {
+                            ...acc.qualificationAnswers,
+                            [val.key]:
+                                val.type == FIELD_TYPE.MULTI_SELECT
+                                    ? val.question.answer.split(', ')
+                                    : val.question.answer
+                        };
+                    }
                 }
-                return {
-                    ...acc,
-                    [val.key]: val.question.answer
-                };
+                return acc;
             },
-            {}
+            { profileUpdateAnswers: {}, qualificationAnswers: {} }
         );
 
         if (shortcode && jobQuery) {
@@ -93,7 +126,7 @@ export const JobQueryCheckInterestContainer = () => {
                     companyId: jobQuery.companyId,
                     jobQueryId: jobQuery.jobQueryId,
                     shortcode,
-                    answers: answers
+                    ...answers
                 },
                 {
                     onSuccess: () => {
@@ -192,7 +225,7 @@ export const JobQueryCheckInterestContainer = () => {
                                 )}
                             </>
                         )}
-                        {showChat && (
+                        {showChat && questions && (
                             <ChatWindow
                                 setOpen={setShowChat}
                                 conversation={questions}

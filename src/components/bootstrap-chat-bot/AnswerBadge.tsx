@@ -20,7 +20,8 @@ export const AnswerBadge = ({ answer }: AnswerBadgeProps) => {
                     backgroundColor: chatBot.bgColor.answer,
                     borderBottomRightRadius: 0,
                     border: `1px solid ${chatBot.color.answer}`,
-                    maxWidth: '80%'
+                    maxWidth: '80%',
+                    overflow: 'hidden'
                 }}
             >
                 <Typography

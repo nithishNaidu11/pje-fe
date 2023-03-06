@@ -5,19 +5,16 @@ import IconButton from '@mui/material/IconButton';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { ALLOWED_EXTENSION, FIELD_TYPE } from 'Enum';
-import { Options, QuestionOptionProps } from 'interfaces';
+import { QuestionOptionProps } from 'interfaces';
 import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
 import { QuestionOptions } from './QuestionOptions';
 import { TimeUtils } from 'utils';
 import { useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useFormUtils } from 'hooks';
 
-const getSelectedOption = (options: Options, value: string | undefined) => {
-    return value ? options.find(option => option.value === value) : null;
-};
-
-const DROPDOWN_LIMIT = 2;
+const DROPDOWN_LIMIT = 5;
 
 interface AnswerInputFieldProps {
     options: QuestionOptionProps[];
@@ -38,6 +35,7 @@ export const AnswerInputField = ({
     isFileUploading,
     answerValue
 }: AnswerInputFieldProps) => {
+    const { getSelectedOption, getMultiSelectedOptions } = useFormUtils();
     const [value, setValue] = React.useState(answerValue);
     const theme = useTheme();
 
@@ -57,7 +55,10 @@ export const AnswerInputField = ({
                     options={options}
                     sx={{ minWidth: '50%' }}
                     label=""
-                    value={getSelectedOption(options, answerValue)}
+                    value={getSelectedOption({
+                        options,
+                        fieldValue: answerValue
+                    })}
                     onChange={(_, selectedOptions) => {
                         if (selectedOptions == null) return;
                         const value = Array.isArray(selectedOptions)
@@ -70,6 +71,33 @@ export const AnswerInputField = ({
                     }}
                 />
             );
+        case FIELD_TYPE.MULTI_SELECT:
+            return (
+                <Select
+                    size="small"
+                    multiple
+                    options={options}
+                    sx={{ minWidth: '50%' }}
+                    label=""
+                    value={getMultiSelectedOptions({
+                        options,
+                        fieldValue: answerValue?.split(', ') ?? []
+                    })}
+                    onChange={(_, selectedOptions) => {
+                        if (selectedOptions == null) return;
+                        const value = Array.isArray(selectedOptions)
+                            ? selectedOptions
+                                  .map(option => option.value)
+                                  .join(', ')
+                            : selectedOptions.value;
+                        onAnswerClick({
+                            key: parentKey,
+                            value
+                        });
+                    }}
+                />
+            );
+
         case FIELD_TYPE.TEXT:
             return (
                 <OutlinedInput

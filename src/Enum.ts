@@ -124,6 +124,7 @@ export enum JOB_QUERY_MARK_STATUS {
 
 export enum FIELD_TYPE {
     SINGLE_SELECT = 'SINGLE_SELECT',
+    MULTI_SELECT = 'MULTI_SELECT',
     TEXT_AREA = 'TEXT_AREA',
     TEXT = 'TEXT',
     YES_NO = 'YES_NO',

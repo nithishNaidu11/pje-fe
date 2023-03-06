@@ -12,7 +12,7 @@ import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { Conversations, QuestionsProps } from 'interfaces';
-import { FIELD_TYPE, FORM_FIELD } from 'Enum';
+import { QUESTION_TYPE, FORM_FIELD } from 'Enum';
 import { DataUtils } from 'utils';
 
 import {
@@ -95,13 +95,13 @@ export const JobQueryCheckInterestContainer = () => {
             (acc, val) => {
                 if (
                     val.question.answer &&
-                    val.type.toUpperCase() !== FIELD_TYPE.FILE_UPLOAD_LINK
+                    val.type.toUpperCase() !== QUESTION_TYPE.FILE_UPLOAD_LINK
                 ) {
                     if (profileQuestionIds.find(id => id === val.id)) {
                         acc.profileUpdateAnswers = {
                             ...acc.profileUpdateAnswers,
                             [val.key]:
-                                val.type == FIELD_TYPE.MULTI_SELECT
+                                val.type == QUESTION_TYPE.MULTI_SELECT
                                     ? val.question.answer.split(', ')
                                     : val.question.answer
                         };
@@ -109,7 +109,7 @@ export const JobQueryCheckInterestContainer = () => {
                         acc.qualificationAnswers = {
                             ...acc.qualificationAnswers,
                             [val.key]:
-                                val.type == FIELD_TYPE.MULTI_SELECT
+                                val.type == QUESTION_TYPE.MULTI_SELECT
                                     ? val.question.answer.split(', ')
                                     : val.question.answer
                         };

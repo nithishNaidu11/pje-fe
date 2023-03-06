@@ -14,7 +14,7 @@ import { ChatHeader } from './ChatHeader';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { FIELD_TYPE } from 'Enum';
+import { QUESTION_TYPE } from 'Enum';
 
 type ConversationKeysProps = Array<keyof Conversations>;
 
@@ -63,8 +63,8 @@ export const ChatWindow = ({
         const currentQuestion = currentConversation[key];
         let answer = undefined;
         if (
-            currentQuestion.type === FIELD_TYPE.SINGLE_SELECT ||
-            currentQuestion.type === FIELD_TYPE.YES_NO
+            currentQuestion.type === QUESTION_TYPE.SINGLE_SELECT ||
+            currentQuestion.type === QUESTION_TYPE.YES_NO
         ) {
             answer = currentQuestion.question.options.find(
                 option => option.value === value
@@ -100,7 +100,8 @@ export const ChatWindow = ({
             setOpen(false);
         }
         if (
-            currentQuestion.type.toUpperCase() !== FIELD_TYPE.FILE_UPLOAD_LINK
+            currentQuestion.type.toUpperCase() !==
+            QUESTION_TYPE.FILE_UPLOAD_LINK
         ) {
             onSubmit(modifiedConversation);
         }

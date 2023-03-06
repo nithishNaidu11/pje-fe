@@ -1,5 +1,5 @@
 import { Option } from './option.interface';
-import { JOBQUERY_WORKER_STATUS, FIELD_TYPE } from 'Enum';
+import { JOBQUERY_WORKER_STATUS, QUESTION_TYPE } from 'Enum';
 
 export interface QuestionOptionProps extends Option {
     next?: string | null;
@@ -17,7 +17,7 @@ export interface QuestionsProps {
         key: string;
         next: string | null;
         question: QuestionProps;
-        type: FIELD_TYPE;
+        type: QUESTION_TYPE;
     };
 }
 

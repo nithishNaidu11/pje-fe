@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { ALLOWED_EXTENSION, FIELD_TYPE } from 'Enum';
+import { ALLOWED_EXTENSION, QUESTION_TYPE } from 'Enum';
 import { QuestionOptionProps } from 'interfaces';
 import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
 import { QuestionOptions } from './QuestionOptions';
@@ -18,7 +18,7 @@ const DROPDOWN_LIMIT = 5;
 
 interface AnswerInputFieldProps {
     options: QuestionOptionProps[];
-    questionType: FIELD_TYPE;
+    questionType: QUESTION_TYPE;
     parentKey: string;
     onAnswerClick: (_: { key: string; value: string }) => void;
     onFileUpload: (_: File) => void;
@@ -40,8 +40,8 @@ export const AnswerInputField = ({
     const theme = useTheme();
 
     switch (questionType.toUpperCase()) {
-        case FIELD_TYPE.YES_NO:
-        case FIELD_TYPE.SINGLE_SELECT:
+        case QUESTION_TYPE.YES_NO:
+        case QUESTION_TYPE.SINGLE_SELECT:
             return options.length <= DROPDOWN_LIMIT ? (
                 <QuestionOptions
                     options={options}
@@ -71,7 +71,7 @@ export const AnswerInputField = ({
                     }}
                 />
             );
-        case FIELD_TYPE.MULTI_SELECT:
+        case QUESTION_TYPE.MULTI_SELECT:
             return (
                 <Select
                     size="small"
@@ -98,7 +98,7 @@ export const AnswerInputField = ({
                 />
             );
 
-        case FIELD_TYPE.TEXT:
+        case QUESTION_TYPE.TEXT:
             return (
                 <OutlinedInput
                     size="small"
@@ -124,7 +124,7 @@ export const AnswerInputField = ({
                     onChange={e => setValue(e.target.value)}
                 />
             );
-        case FIELD_TYPE.TEXT_AREA:
+        case QUESTION_TYPE.TEXT_AREA:
             return (
                 <Box sx={{ position: 'relative' }}>
                     <TextArea
@@ -149,7 +149,7 @@ export const AnswerInputField = ({
                     </IconButton>
                 </Box>
             );
-        case FIELD_TYPE.FILE_UPLOAD_LINK:
+        case QUESTION_TYPE.FILE_UPLOAD_LINK:
             return (
                 <UploadButton
                     color={theme.palette.chatBot.color.questionInput}
@@ -169,7 +169,7 @@ export const AnswerInputField = ({
                     ]}
                 />
             );
-        case FIELD_TYPE.DATE:
+        case QUESTION_TYPE.DATE:
             return (
                 <Box sx={{ maxWidth: '120px' }}>
                     <DatePicker

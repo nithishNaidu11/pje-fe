@@ -1,9 +1,9 @@
-import { FIELD_TYPE } from 'Enum';
+import { QUESTION_TYPE } from 'Enum';
 import { Conversations } from './interfaces/chatBot.interface';
 
 export const data: Conversations = {
     bikeCreate: {
-        type: FIELD_TYPE.SINGLE_SELECT,
+        type: QUESTION_TYPE.SINGLE_SELECT,
         id: 'bike-create',
         key: 'custom_key_1',
         question: {
@@ -24,7 +24,7 @@ export const data: Conversations = {
         next: 'aadhaarCard'
     },
     aadhaarCard: {
-        type: FIELD_TYPE.SINGLE_SELECT,
+        type: QUESTION_TYPE.SINGLE_SELECT,
         key: 'custom_key_2',
         id: 'aadhaar_card',
         question: {
@@ -45,7 +45,7 @@ export const data: Conversations = {
         next: 'start'
     },
     start: {
-        type: FIELD_TYPE.SINGLE_SELECT,
+        type: QUESTION_TYPE.SINGLE_SELECT,
         key: 'startNow',
         id: 'startNow',
         question: {

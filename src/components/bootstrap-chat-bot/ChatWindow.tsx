@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import Card from '@mui/material/Card';
@@ -81,8 +80,17 @@ export const ChatWindow = ({
             }
         };
 
-        const nextQuestionKey: string | null = currentQuestion.next;
+        let nextQuestionKey: string | null = currentQuestion.next;
 
+        if (currentQuestion.type === QUESTION_TYPE.YES_NO) {
+            if (value === 'YES') {
+                nextQuestionKey =
+                    currentQuestion.question.options[0].next || null;
+            } else {
+                nextQuestionKey =
+                    currentQuestion.question.options[1].next || null;
+            }
+        }
         if (nextQuestionKey) {
             const nextQuestion = {
                 [nextQuestionKey]: conversation[nextQuestionKey]
@@ -189,29 +197,95 @@ export const ChatWindow = ({
                         {currentConversationKeys.map((questionKey, index) => {
                             const currentQuestion =
                                 currentConversation[questionKey];
+                            const prevQuestionKey =
+                                currentConversationKeys[index - 1];
 
                             return (
                                 <React.Fragment key={index}>
-                                    <Question
-                                        msg={currentQuestion.question.msg}
-                                        type={currentQuestion.type}
-                                        options={
-                                            currentQuestion.question.options
-                                        }
-                                        onAnswerClick={onAnswerClick}
-                                        onFileUpload={onFileUpload}
-                                        isFileUploading={isFileUploading}
-                                        answerValue={
-                                            currentQuestion.question.answer
-                                        }
-                                        parentKey={questionKey as string}
-                                    />
-                                    {currentQuestion.question.answer && (
-                                        <AnswerBadge
-                                            answer={getDisplayAnswer(
-                                                currentQuestion
+                                    {prevQuestionKey &&
+                                    currentConversation[prevQuestionKey]
+                                        .type === QUESTION_TYPE.YES_NO ? (
+                                        <>
+                                            {currentConversation[
+                                                prevQuestionKey
+                                            ].question.answer === 'YES' ? (
+                                                <>
+                                                    <Question
+                                                        msg={
+                                                            currentQuestion
+                                                                .question.msg
+                                                        }
+                                                        type={
+                                                            currentQuestion.type
+                                                        }
+                                                        options={
+                                                            currentQuestion
+                                                                .question
+                                                                .options
+                                                        }
+                                                        onAnswerClick={
+                                                            onAnswerClick
+                                                        }
+                                                        onFileUpload={
+                                                            onFileUpload
+                                                        }
+                                                        isFileUploading={
+                                                            isFileUploading
+                                                        }
+                                                        answerValue={
+                                                            currentQuestion
+                                                                .question.answer
+                                                        }
+                                                        parentKey={
+                                                            questionKey as string
+                                                        }
+                                                    />
+                                                    {currentQuestion.question
+                                                        .answer && (
+                                                        <AnswerBadge
+                                                            answer={getDisplayAnswer(
+                                                                currentQuestion
+                                                            )}
+                                                        />
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <></>
                                             )}
-                                        />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Question
+                                                msg={
+                                                    currentQuestion.question.msg
+                                                }
+                                                type={currentQuestion.type}
+                                                options={
+                                                    currentQuestion.question
+                                                        .options
+                                                }
+                                                onAnswerClick={onAnswerClick}
+                                                onFileUpload={onFileUpload}
+                                                isFileUploading={
+                                                    isFileUploading
+                                                }
+                                                answerValue={
+                                                    currentQuestion.question
+                                                        .answer
+                                                }
+                                                parentKey={
+                                                    questionKey as string
+                                                }
+                                            />
+                                            {currentQuestion.question
+                                                .answer && (
+                                                <AnswerBadge
+                                                    answer={getDisplayAnswer(
+                                                        currentQuestion
+                                                    )}
+                                                />
+                                            )}
+                                        </>
                                     )}
                                 </React.Fragment>
                             );

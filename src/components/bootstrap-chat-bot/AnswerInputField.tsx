@@ -9,7 +9,9 @@ import { Options, QuestionOptionProps } from 'interfaces';
 import { DatePicker, Select, UploadButton, TextArea } from 'components/common';
 import { QuestionOptions } from './QuestionOptions';
 import { TimeUtils } from 'utils';
-import { useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 const getSelectedOption = (options: Options, value: string | undefined) => {
     return value ? options.find(option => option.value === value) : null;
@@ -68,7 +70,33 @@ export const AnswerInputField = ({
                     }}
                 />
             );
-        case FIELD_TYPE.FREE_TEXT:
+        case FIELD_TYPE.TEXT:
+            return (
+                <OutlinedInput
+                    size="small"
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="submit answer"
+                                sx={{
+                                    color: theme.palette.chatBot.color
+                                        .questionInput
+                                }}
+                                onClick={() => {
+                                    if (!value) return;
+                                    onAnswerClick({ key: parentKey, value });
+                                }}
+                                edge="end"
+                            >
+                                <CheckBoxIcon />
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                />
+            );
+        case FIELD_TYPE.TEXT_AREA:
             return (
                 <Box sx={{ position: 'relative' }}>
                     <TextArea

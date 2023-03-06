@@ -7,27 +7,30 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import AddIcon from '@mui/icons-material/Add';
 
-import type { Options, Option } from 'interfaces';
+import type { OptionsProps, OptionProps } from 'interfaces';
 import { useWidth } from 'hooks';
 import { SxProps } from '@mui/system';
 import Button from '@mui/material/Button';
 
 interface Props {
     id?: string;
-    options: Options;
+    options: OptionsProps;
     defaultValue?: unknown;
     variant?: 'standard' | 'filled' | 'outlined' | undefined;
     multiple?: boolean;
     label: string;
     name?: string;
     placeholder?: string;
-    value?: Option | Options | null;
-    onChange?: (_: React.SyntheticEvent, __: Option | Options | null) => void;
+    value?: OptionProps | OptionsProps | null;
+    onChange?: (
+        _: React.SyntheticEvent,
+        __: OptionProps | OptionsProps | null
+    ) => void;
     required?: boolean;
     error?: boolean;
     helperText?: string;
     autoFocus?: boolean;
-    disabledOptions?: Options;
+    disabledOptions?: OptionsProps;
     disableClearable?: boolean;
     clearOnBlur?: boolean;
     disabled?: boolean;
@@ -93,7 +96,7 @@ export const Select = ({
             ListboxProps={ListboxProps}
             getOptionDisabled={option =>
                 !!disabledOptions.find(
-                    (element: Option) => element.value === option.value
+                    (element: OptionProps) => element.value === option.value
                 )
             }
             filterOptions={!isFilterable ? options => options : undefined}

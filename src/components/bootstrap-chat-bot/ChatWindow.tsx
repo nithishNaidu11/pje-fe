@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnswerBadge } from './AnswerBadge';
 import { Question } from './Question';
-import { type Conversations } from 'interfaces';
+import { type ConversationsProps } from 'interfaces';
 import { getViewport } from './helper';
 import { ConfirmationDialog } from './ConfirmationDialog';
 
@@ -16,22 +16,22 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { QUESTION_TYPE } from 'Enum';
 
-type ConversationKeysProps = Array<keyof Conversations>;
+type ConversationKeysProps = Array<keyof ConversationsProps>;
 
 export interface ChatWindowProps {
-    setOpen: (_: boolean) => void;
-    conversation: Conversations;
+    conversation: ConversationsProps;
     isFileUploading: boolean;
-    onSubmit: (currentConversation: Conversations) => void;
+    onSubmit: (currentConversation: ConversationsProps) => void;
     onFileUpload: (_: File) => void;
+    setOpen: (_: boolean) => void;
 }
 
 export const ChatWindow = ({
-    setOpen,
     conversation,
     isFileUploading,
     onSubmit,
-    onFileUpload
+    onFileUpload,
+    setOpen
 }: ChatWindowProps) => {
     const conversationKeys: ConversationKeysProps = Object.keys(conversation);
     const firstQuestion = {
@@ -40,7 +40,7 @@ export const ChatWindow = ({
 
     const [showChatBody, setShowChatBody] = React.useState(true);
     const [currentConversation, setCurrentConversation] =
-        React.useState<Conversations>({
+        React.useState<ConversationsProps>({
             ...firstQuestion
         });
     const [areQuestionsOver, setAreQuestionsOver] = React.useState(false);
@@ -66,6 +66,7 @@ export const ChatWindow = ({
             currentQuestion.type === QUESTION_TYPE.SINGLE_SELECT ||
             currentQuestion.type === QUESTION_TYPE.YES_NO
         ) {
+            console.log(currentQuestion);
             answer = currentQuestion.question.options.find(
                 option => option.value === value
             )?.value;

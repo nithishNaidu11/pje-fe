@@ -26,7 +26,8 @@ export const useSubmitAnswers = () => {
                         shortcode,
                         profileUpdateAnswers,
                         qualificationAnswers
-                    }
+                    },
+                    exclude: 'profile_update_answers'
                 })
                 .then((response: unknown) => {
                     return response;

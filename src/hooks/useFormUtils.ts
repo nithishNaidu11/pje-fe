@@ -1,9 +1,9 @@
 import React from 'react';
 
-import type { Options } from 'interfaces';
+import type { OptionsProps } from 'interfaces';
 
 interface GetSelectedOption {
-    options?: Options;
+    options?: OptionsProps;
     fieldValue: unknown;
 }
 
@@ -20,7 +20,7 @@ export const useFormUtils = () => {
             options = [],
             fieldValue
         }: {
-            options?: Options;
+            options?: OptionsProps;
             fieldValue: string[] | undefined;
         }) => {
             const selectedOptions =
@@ -33,7 +33,7 @@ export const useFormUtils = () => {
                           })
                           .filter(val => !!val)
                     : [];
-            return selectedOptions as Options;
+            return selectedOptions as OptionsProps;
         },
         []
     );

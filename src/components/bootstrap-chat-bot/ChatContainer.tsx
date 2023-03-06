@@ -1,10 +1,10 @@
 import React from 'react';
 import { data } from 'data';
-import { Conversations } from 'interfaces';
+import { ConversationsProps } from 'interfaces';
 import { ChatIcon } from './ChatIcon';
 import { ChatWindow } from './ChatWindow';
 
-const conversation: Conversations = data;
+const conversation: ConversationsProps = data;
 
 interface ChatContainerProps {
     icon: string;

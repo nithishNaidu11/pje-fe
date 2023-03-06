@@ -1,7 +1,7 @@
-import { Option } from './option.interface';
+import { OptionProps } from './option.interface';
 import { JOBQUERY_WORKER_STATUS, QUESTION_TYPE } from 'Enum';
 
-export interface QuestionOptionProps extends Option {
+export interface QuestionOptionProps extends OptionProps {
     next?: string | null;
 }
 

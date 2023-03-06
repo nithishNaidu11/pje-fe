@@ -8,7 +8,7 @@ export type SingleConversation = QuestionsProps[string] & {
     question: QuestionAnswerProps;
 };
 
-export type Conversations = Record<string, SingleConversation>;
+export type ConversationsProps = Record<string, SingleConversation>;
 
 export type Position =
     | 'bottomLeft'

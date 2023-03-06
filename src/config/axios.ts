@@ -20,7 +20,7 @@ Axios.interceptors.request.use(
             data:
                 config.headers?.['Content-Type'] === 'multipart/form-data'
                     ? config.data
-                    : DataUtils.snakize(config.data, config?.exclude)
+                    : DataUtils.snakizeWithSeparator(config.data)
         };
     },
     error => {

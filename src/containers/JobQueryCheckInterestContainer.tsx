@@ -11,7 +11,7 @@ import { PushNotification } from 'containers';
 import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
-import { Conversations, QuestionsProps } from 'interfaces';
+import { ConversationsProps, QuestionsProps } from 'interfaces';
 import { QUESTION_TYPE, FORM_FIELD } from 'Enum';
 import { DataUtils } from 'utils';
 
@@ -81,8 +81,9 @@ export const JobQueryCheckInterestContainer = () => {
             ),
             ...jobQuery.questions
         };
-        result[profileQuestionIds[profileQuestionIds.length - 1]].next =
-            result[qualificationQuestionIds[0]].id;
+        if (result[profileQuestionIds[profileQuestionIds.length - 1]])
+            result[profileQuestionIds[profileQuestionIds.length - 1]].next =
+                result[qualificationQuestionIds[0]]?.id || null;
         return result;
     }, [formFields, jobQuery, profileQuestionIds, qualificationQuestionIds]);
 
@@ -90,7 +91,7 @@ export const JobQueryCheckInterestContainer = () => {
         setShowLoader(false);
     };
 
-    const onSubmitAnswers = (currentConversation: Conversations) => {
+    const onSubmitAnswers = (currentConversation: ConversationsProps) => {
         const answers = Object.values(currentConversation).reduce(
             (acc, val) => {
                 if (

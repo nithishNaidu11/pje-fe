@@ -1,4 +1,4 @@
-export { type Option, type Options } from './option.interface';
+export { type OptionProps, type OptionsProps } from './option.interface';
 export {
     type FormFields,
     type FormattedFieldMap,
@@ -22,7 +22,7 @@ export { type Worker, type ShortlistWorkerProps } from './worker.interface';
 
 export {
     type SingleConversation,
-    type Conversations,
+    type ConversationsProps,
     type Position,
     type ChatIconProps,
     type PositionClassMapProps

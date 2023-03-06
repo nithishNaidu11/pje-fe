@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-    type Options,
+    type OptionsProps,
     type FormFields,
     type FormattedFieldMap,
     type Worker
@@ -26,7 +26,7 @@ export const useWorkerDataActions = ({ formFields }: FormActionsProps) => {
         return formFields
             ? formFieldKeys.reduce(
                   (formFieldMap: any, field: keyof typeof formFields) => {
-                      const fieldArray: Options = formFields[field];
+                      const fieldArray: OptionsProps = formFields[field];
                       const fieldMapObj = fieldArray.reduce(
                           (
                               fieldMap: any,

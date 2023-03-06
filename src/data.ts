@@ -1,7 +1,7 @@
 import { QUESTION_TYPE } from 'Enum';
-import { Conversations } from './interfaces/chatBot.interface';
+import { ConversationsProps } from './interfaces/chatBot.interface';
 
-export const data: Conversations = {
+export const data: ConversationsProps = {
     bikeCreate: {
         type: QUESTION_TYPE.SINGLE_SELECT,
         id: 'bike-create',

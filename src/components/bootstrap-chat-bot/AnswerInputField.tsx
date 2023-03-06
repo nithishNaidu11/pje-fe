@@ -53,7 +53,7 @@ export const AnswerInputField = ({
                 <Select
                     size="small"
                     options={options}
-                    sx={{ minWidth: '50%' }}
+                    sx={{ minWidth: '50%', width: '80%' }}
                     label=""
                     value={getSelectedOption({
                         options,
@@ -77,7 +77,7 @@ export const AnswerInputField = ({
                     size="small"
                     multiple
                     options={options}
-                    sx={{ minWidth: '50%' }}
+                    sx={{ minWidth: '50%', width: '80%' }}
                     label=""
                     value={getMultiSelectedOptions({
                         options,
@@ -120,7 +120,7 @@ export const AnswerInputField = ({
                             </IconButton>
                         </InputAdornment>
                     }
-                    value={value}
+                    value={value || ''}
                     onChange={e => setValue(e.target.value)}
                 />
             );

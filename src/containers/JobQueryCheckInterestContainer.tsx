@@ -9,7 +9,12 @@ import Grid from '@mui/material/Grid';
 
 import { PushNotification } from 'containers';
 
-import { useGetFormFields, useGetOpenJobQuery, useSubmitAnswers } from 'hooks';
+import {
+    useGetFormFields,
+    useGetOpenJobQuery,
+    useSubmitAnswers,
+    useUploadJQDocument
+} from 'hooks';
 
 import { ChatWindow } from '../components/bootstrap-chat-bot';
 import { ConversationsProps, QuestionsProps } from 'interfaces';
@@ -21,7 +26,6 @@ import {
     JobQueryShortlistWorkerForm,
     JobQuerySuccessView
 } from 'components/jobQuery';
-import { useUploadDocument } from 'hooks/apiHooks/jobQuery/useUploadDocument';
 
 export const JobQueryCheckInterestContainer = () => {
     const { shortcode } = useParams();
@@ -52,7 +56,7 @@ export const JobQueryCheckInterestContainer = () => {
         shortcode,
         enabled: !!shortcode
     });
-    const uploadDocument = useUploadDocument();
+    const uploadDocument = useUploadJQDocument();
 
     const profileQuestionIds = React.useMemo(
         () =>
@@ -139,23 +143,30 @@ export const JobQueryCheckInterestContainer = () => {
         }
     };
 
-    const onFileUpload = (_file: File) => {
-        // uploadDocument.mutate(
-        //     {
-        //         companyId,
-        //         documentType: DOCUMENT_TYPE.CV,
-        //         file: file,
-        //         workerId: workerData?.workerId
-        //     },
-        //     {
-        //         onSuccess() {
-        //             setIsFileUploaded(true);
-        //         },
-        //         onError(err) {
-        //             showError({ message: err.errors.displayError });
-        //         }
-        //     }
-        // );
+    const onFileUpload = (file: File) => {
+        if (shortcode && jobQuery) {
+            setShowLoader(true);
+            uploadDocument.mutate(
+                {
+                    params: {
+                        companyId: jobQuery.companyId,
+                        jobQueryId: jobQuery.jobQueryId
+                    },
+
+                    documentType: DOCUMENT_TYPE.CV,
+                    file: file,
+                    shortcode
+                },
+                {
+                    onSuccess(data) {
+                        setShowLoader(false);
+                    },
+                    onError(err) {
+                        setShowLoader(false);
+                    }
+                }
+            );
+        }
     };
 
     return (

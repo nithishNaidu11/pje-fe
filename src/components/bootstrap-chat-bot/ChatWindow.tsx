@@ -15,7 +15,11 @@ import { ChatHeader } from './ChatHeader';
 
 import { QUESTION_TYPE } from 'Enum';
 
-import { OptionProps, type ConversationsProps } from 'interfaces';
+import {
+    OptionProps,
+    SingleConversationProps,
+    type ConversationsProps
+} from 'interfaces';
 
 type ConversationKeysProps = Array<keyof ConversationsProps>;
 
@@ -60,6 +64,26 @@ export const ChatWindow = ({
         }
     };
 
+    const getUpdatedNextConversation = (
+        modifiedConversation: ConversationsProps,
+        currentQuestion: SingleConversationProps
+    ): ConversationsProps => {
+        const updated = { ...modifiedConversation };
+        const questionKeys = Object.keys(updated);
+        if (
+            questionKeys.indexOf(currentQuestion.id) <
+            questionKeys.length - 1
+        ) {
+            let startIndex = questionKeys.indexOf(currentQuestion.id);
+            const endIndex = questionKeys.length - 1;
+            while (startIndex !== endIndex) {
+                startIndex++;
+                delete updated[questionKeys[startIndex]];
+            }
+        }
+        return updated;
+    };
+
     const onAnswerClick = ({
         key,
         value
@@ -69,7 +93,7 @@ export const ChatWindow = ({
     }) => {
         const currentQuestion = currentConversation[key];
 
-        const modifiedConversation = {
+        let modifiedConversation = {
             ...currentConversation,
             [key]: {
                 ...currentQuestion,
@@ -95,6 +119,14 @@ export const ChatWindow = ({
             const nextQuestion = {
                 [nextQuestionKey]: conversation[nextQuestionKey]
             };
+
+            modifiedConversation = {
+                ...getUpdatedNextConversation(
+                    modifiedConversation,
+                    currentQuestion
+                )
+            };
+
             setCurrentConversation({
                 ...modifiedConversation,
                 ...nextQuestion
@@ -109,28 +141,36 @@ export const ChatWindow = ({
         }
     };
 
-    const getDisplayAnswer = (currentQuestion: any) => {
-        let answer = currentQuestion.question.answer;
+    const getDisplayAnswer = (
+        currentQuestion: SingleConversationProps
+    ): string => {
+        let answer = '';
+        if (typeof currentQuestion.question.answer === 'string') {
+            answer = currentQuestion.question.answer;
+        }
         if (
             [QUESTION_TYPE.SINGLE_SELECT, QUESTION_TYPE.YES_NO].includes(
                 currentQuestion.type
-            )
+            ) &&
+            typeof currentQuestion.question.answer === 'string'
         ) {
-            answer = currentQuestion.question.options.find(
-                (option: OptionProps) =>
-                    option.value === currentQuestion.question.answer
-            )?.label;
+            answer =
+                currentQuestion.question.options.find(
+                    (option: OptionProps) =>
+                        option.value === currentQuestion.question.answer
+                )?.label || currentQuestion.question.answer;
         } else if (
-            [QUESTION_TYPE.MULTI_SELECT].includes(currentQuestion.type)
+            [QUESTION_TYPE.MULTI_SELECT].includes(currentQuestion.type) &&
+            Array.isArray(currentQuestion.question.answer)
         ) {
             answer = currentQuestion.question.answer
-                .map((datum: string) => {
+                ?.map((datum: string) => {
                     const obj = currentQuestion.question.options.find(
                         (option: OptionProps) => {
                             return option.value === datum;
                         }
                     );
-                    return obj.label;
+                    return obj?.label || datum;
                 })
                 .join(',');
         }
@@ -195,97 +235,31 @@ export const ChatWindow = ({
                         </Grid>
 
                         {currentConversationKeys.map((questionKey, index) => {
-                            const currentQuestion =
+                            const currentQuestion: SingleConversationProps =
                                 currentConversation[questionKey];
-                            const prevQuestionKey =
-                                currentConversationKeys[index - 1];
 
                             return (
                                 <React.Fragment key={index}>
-                                    {prevQuestionKey &&
-                                    currentConversation[prevQuestionKey]
-                                        .type === QUESTION_TYPE.YES_NO ? (
-                                        <>
-                                            {currentConversation[
-                                                prevQuestionKey
-                                            ].question.answer === 'YES' ? (
-                                                <>
-                                                    <Question
-                                                        msg={
-                                                            currentQuestion
-                                                                .question.msg
-                                                        }
-                                                        type={
-                                                            currentQuestion.type
-                                                        }
-                                                        options={
-                                                            currentQuestion
-                                                                .question
-                                                                .options
-                                                        }
-                                                        onAnswerClick={
-                                                            onAnswerClick
-                                                        }
-                                                        onFileUpload={
-                                                            onFileUpload
-                                                        }
-                                                        isFileUploading={
-                                                            isFileUploading
-                                                        }
-                                                        answerValue={
-                                                            currentQuestion
-                                                                .question.answer
-                                                        }
-                                                        parentKey={
-                                                            questionKey as string
-                                                        }
-                                                    />
-                                                    {currentQuestion.question
-                                                        .answer && (
-                                                        <AnswerBadge
-                                                            answer={getDisplayAnswer(
-                                                                currentQuestion
-                                                            )}
-                                                        />
-                                                    )}
-                                                </>
-                                            ) : (
-                                                <></>
+                                    <Question
+                                        msg={currentQuestion.question.msg}
+                                        type={currentQuestion.type}
+                                        options={
+                                            currentQuestion.question.options
+                                        }
+                                        onAnswerClick={onAnswerClick}
+                                        onFileUpload={onFileUpload}
+                                        isFileUploading={isFileUploading}
+                                        answerValue={
+                                            currentQuestion.question.answer
+                                        }
+                                        parentKey={questionKey as string}
+                                    />
+                                    {currentQuestion.question.answer && (
+                                        <AnswerBadge
+                                            answer={getDisplayAnswer(
+                                                currentQuestion
                                             )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Question
-                                                msg={
-                                                    currentQuestion.question.msg
-                                                }
-                                                type={currentQuestion.type}
-                                                options={
-                                                    currentQuestion.question
-                                                        .options
-                                                }
-                                                onAnswerClick={onAnswerClick}
-                                                onFileUpload={onFileUpload}
-                                                isFileUploading={
-                                                    isFileUploading
-                                                }
-                                                answerValue={
-                                                    currentQuestion.question
-                                                        .answer
-                                                }
-                                                parentKey={
-                                                    questionKey as string
-                                                }
-                                            />
-                                            {currentQuestion.question
-                                                .answer && (
-                                                <AnswerBadge
-                                                    answer={getDisplayAnswer(
-                                                        currentQuestion
-                                                    )}
-                                                />
-                                            )}
-                                        </>
+                                        />
                                     )}
                                 </React.Fragment>
                             );

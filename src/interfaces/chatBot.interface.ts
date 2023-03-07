@@ -4,13 +4,13 @@ export type QuestionAnswerProps = QuestionProps & {
     answer?: string | string[];
 };
 
-export type SingleConversation = QuestionsProps[string] & {
+export type SingleConversationProps = QuestionsProps[string] & {
     question: QuestionAnswerProps;
 };
 
-export type ConversationsProps = Record<string, SingleConversation>;
+export type ConversationsProps = Record<string, SingleConversationProps>;
 
-export type Position =
+export type PositionProps =
     | 'bottomLeft'
     | 'bottomRight'
     | 'bottom'
@@ -21,9 +21,9 @@ export type Position =
 export interface ChatIconProps {
     icon: string;
     size?: 'sm' | 'lg';
-    position?: Position;
+    position?: PositionProps;
     open: boolean;
     onClick: any;
 }
 
-export type PositionClassMapProps = { [key in Position]: string };
+export type PositionClassMapProps = { [key in PositionProps]: string };

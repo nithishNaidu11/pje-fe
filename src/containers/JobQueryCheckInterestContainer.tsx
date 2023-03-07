@@ -234,15 +234,18 @@ export const JobQueryCheckInterestContainer = () => {
                                 )}
                             </>
                         )}
-                        {showChat && questions && (
-                            <ChatWindow
-                                setOpen={setShowChat}
-                                conversation={questions}
-                                onSubmit={onSubmitAnswers}
-                                onFileUpload={onFileUpload}
-                                isFileUploading={false}
-                            />
-                        )}
+                        {showChat &&
+                            questions &&
+                            (!!profileQuestionIds.length ||
+                                !!qualificationQuestionIds.length) && (
+                                <ChatWindow
+                                    setOpen={setShowChat}
+                                    conversation={questions}
+                                    onSubmit={onSubmitAnswers}
+                                    onFileUpload={onFileUpload}
+                                    isFileUploading={false}
+                                />
+                            )}
                     </Grid>
                 </Grid>
             )}

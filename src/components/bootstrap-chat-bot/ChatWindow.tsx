@@ -136,7 +136,7 @@ export const ChatWindow = ({
             setAreQuestionsOver(true);
             setOpen(false);
         }
-        if (QUESTION_TYPE.FILE_UPLOAD_LINK) {
+        if (currentQuestion.type !== QUESTION_TYPE.FILE_UPLOAD_LINK) {
             onSubmit(modifiedConversation);
         }
     };

@@ -243,7 +243,7 @@ export const JobQueryCheckInterestContainer = () => {
                                     conversation={questions}
                                     onSubmit={onSubmitAnswers}
                                     onFileUpload={onFileUpload}
-                                    isFileUploading={false}
+                                    isFileUploading={uploadDocument.isLoading}
                                 />
                             )}
                     </Grid>

@@ -2,7 +2,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Breakpoint, Theme, useTheme } from '@mui/material/styles';
 
 type BreakpointOrNull = Breakpoint | null;
-export const useWidth = (): string => {
+export const useWidth = (): Breakpoint => {
     const theme: Theme = useTheme();
     const keys: readonly Breakpoint[] = [...theme.breakpoints.keys].reverse();
     return (

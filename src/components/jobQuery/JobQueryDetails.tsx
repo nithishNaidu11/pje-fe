@@ -60,7 +60,24 @@ export const JobQueryDetails = ({
         <>
             {mapObj && Object.keys(mapObj).length && (
                 <Grid container width={isDialog ? '540px' : 'inherit'}>
-                    <Grid item md={12} mt={3}>
+                    <Grid item mt={3}>
+                        <Typography
+                            gutterBottom={false}
+                            variant="h6"
+                            fontWeight={600}
+                        >
+                            Job Description
+                        </Typography>
+                        <Typography
+                            gutterBottom={false}
+                            paragraph
+                            component="span"
+                            variant="body2"
+                        >
+                            {jobQuery.description}
+                        </Typography>
+                    </Grid>
+                    <Grid item md={12} mt={2}>
                         {/* <JobQueryDetailsField
                             fieldName={'Customer'}
                             fieldValue={jobQuery.customer.legalEntityName}
@@ -178,16 +195,6 @@ export const JobQueryDetails = ({
                                 );
                             }
                         })}
-                    </Grid>
-                    <Grid item mt={3}>
-                        <Typography
-                            gutterBottom={false}
-                            paragraph
-                            component="span"
-                            variant="body2"
-                        >
-                            {jobQuery.description}
-                        </Typography>
                     </Grid>
                 </Grid>
             )}

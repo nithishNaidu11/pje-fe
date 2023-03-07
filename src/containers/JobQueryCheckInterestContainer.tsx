@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
 import Backdrop from '@mui/material/Backdrop';
-
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
 
 import { PushNotification } from 'containers';
 
@@ -26,6 +23,7 @@ import {
     JobQueryShortlistWorkerForm,
     JobQuerySuccessView
 } from 'components/jobQuery';
+import { CenteredContainer } from 'components/common';
 
 export const JobQueryCheckInterestContainer = () => {
     const { shortcode } = useParams();
@@ -143,6 +141,8 @@ export const JobQueryCheckInterestContainer = () => {
         }
     };
 
+    if (!jobQuery) return <></>;
+
     const onFileUpload = (file: File) => {
         if (shortcode && jobQuery) {
             setShowLoader(true);
@@ -158,10 +158,10 @@ export const JobQueryCheckInterestContainer = () => {
                     shortcode
                 },
                 {
-                    onSuccess(data) {
+                    onSuccess() {
                         setShowLoader(false);
                     },
-                    onError(err) {
+                    onError() {
                         setShowLoader(false);
                     }
                 }
@@ -171,84 +171,59 @@ export const JobQueryCheckInterestContainer = () => {
 
     return (
         <>
-            {jobQuery && (
-                <Grid
-                    id="parent"
-                    container
-                    justifyContent="center"
-                    alignContent="center"
-                    height={'calc(100vh - 40px)'}
-                >
-                    <Grid item md={5} xs={12}>
-                        {showSuccessMessage ? (
-                            <>
-                                <JobQuerySuccessView />
-                                <PushNotification shortcode={shortcode} />
-                            </>
-                        ) : (
-                            <>
-                                {showLoader && (
-                                    <Backdrop
-                                        sx={{
-                                            color: '#fff',
-                                            zIndex: theme =>
-                                                theme.zIndex.drawer + 1
-                                        }}
-                                        open={showLoader}
-                                        onClick={handleClose}
-                                    >
-                                        <CircularProgress color="inherit" />
-                                    </Backdrop>
-                                )}
-                                {isWorkerShortlisted && shortcode ? (
-                                    <JobQueryCheckInterestForm
-                                        jobQuery={jobQuery}
-                                        shortcode={shortcode}
-                                        setShowLoader={setShowLoader}
-                                        setShowSuccessMessage={
-                                            setShowSuccessMessage
-                                        }
-                                        setShowChat={setShowChat}
-                                    />
-                                ) : (
-                                    <>
-                                        {jobQuery && (
-                                            <JobQueryShortlistWorkerForm
-                                                companyName={
-                                                    jobQuery.companyName ||
-                                                    'Hunar'
-                                                }
-                                                companyLogo={
-                                                    jobQuery.companyLogo ||
-                                                    'https://storage.googleapis.com/public_bocket/hunar-logo512.png'
-                                                }
-                                                companyId={jobQuery.companyId}
-                                                jobQueryId={jobQuery.jobQueryId}
-                                                setIsWorkerShortlisted={
-                                                    setIsWorkerShortlisted
-                                                }
-                                                setShowLoader={setShowLoader}
-                                            />
-                                        )}
-                                    </>
-                                )}
-                            </>
-                        )}
-                        {showChat &&
-                            questions &&
-                            (!!profileQuestionIds.length ||
-                                !!qualificationQuestionIds.length) && (
-                                <ChatWindow
-                                    setOpen={setShowChat}
-                                    conversation={questions}
-                                    onSubmit={onSubmitAnswers}
-                                    onFileUpload={onFileUpload}
-                                    isFileUploading={uploadDocument.isLoading}
-                                />
-                            )}
-                    </Grid>
-                </Grid>
+            <Backdrop
+                sx={{
+                    color: '#fff',
+                    zIndex: theme => theme.zIndex.drawer + 1
+                }}
+                open={showLoader}
+                onClick={handleClose}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            {showSuccessMessage ? (
+                <CenteredContainer>
+                    <JobQuerySuccessView />
+                    <PushNotification shortcode={shortcode} />
+                </CenteredContainer>
+            ) : isWorkerShortlisted ? (
+                <CenteredContainer>
+                    {shortcode && (
+                        <JobQueryCheckInterestForm
+                            jobQuery={jobQuery}
+                            shortcode={shortcode}
+                            setShowLoader={setShowLoader}
+                            setShowSuccessMessage={setShowSuccessMessage}
+                            setShowChat={setShowChat}
+                        />
+                    )}
+                </CenteredContainer>
+            ) : (
+                <JobQueryShortlistWorkerForm
+                    companyName={jobQuery.companyName || 'Hunar'}
+                    jobTitle={jobQuery.title}
+                    companyLogo={
+                        jobQuery.companyLogo ||
+                        'https://storage.googleapis.com/public_bocket/hunar-logo512.png'
+                    }
+                    companyId={jobQuery.companyId}
+                    jobQueryId={jobQuery.jobQueryId}
+                    setIsWorkerShortlisted={setIsWorkerShortlisted}
+                    setShowLoader={setShowLoader}
+                />
             )}
+            {showChat &&
+                questions &&
+                (!!profileQuestionIds.length ||
+                    !!qualificationQuestionIds.length) && (
+                    <ChatWindow
+                        setOpen={setShowChat}
+                        conversation={jobQuery.questions}
+                        onSubmit={onSubmitAnswers}
+                        onFileUpload={onFileUpload}
+                        isFileUploading={uploadDocument.isLoading}
+                    />
+                )}
         </>
     );
 };

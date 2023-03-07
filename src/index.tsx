@@ -3,6 +3,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorTracker } from 'utils';
 
+import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

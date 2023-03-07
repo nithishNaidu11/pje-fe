@@ -3,7 +3,7 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 
 import { JobQueryCheckInterestFooter } from './JobQueryCheckInterestFooter';
-import { JobQueryCheckInterestHeader } from './JobQueryCheckInterestHeader';
+import { JobQueryCompanyDetails } from './JobQueryCompanyDetails';
 import { JobQueryDetails } from './JobQueryDetails';
 
 import { JOB_QUERY_MARK_STATUS } from 'Enum';
@@ -56,14 +56,12 @@ export const JobQueryCheckInterestForm = ({
 
     return (
         <Paper sx={{ p: 2 }} elevation={isMobile ? 0 : 2}>
-            <JobQueryCheckInterestHeader
+            <JobQueryCompanyDetails
                 companyName={jobQuery.companyName || 'Hunar'}
                 companyLogo={
                     jobQuery.companyLogo ||
                     'https://storage.googleapis.com/public_bocket/hunar-logo512.png'
                 }
-                title={jobQuery.title}
-                header={jobQuery.header}
             />
             {formFields?.data && (
                 <JobQueryDetails

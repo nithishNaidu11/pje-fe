@@ -1,17 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import { ShortlistWorkerProps, Worker } from 'interfaces';
 import Alert from '@mui/material/Alert';
-import { useNavigate } from 'react-router-dom';
-import { useShortlistedWorkers } from 'hooks';
+
+import HiringLg from 'hiring_lg.png';
+import HiringSm from 'hiring_sm.png';
+
+import { ShortlistWorkerProps, Worker } from 'interfaces';
+import { useIsMobile, useShortlistedWorkers } from 'hooks';
 import { JobQueryCompanyDetails } from './JobQueryCompanyDetails';
+import { Typography } from '@mui/material';
 
 interface JobQueryShortlistWorkerFormProps {
     companyId: string;
     jobQueryId: string;
+    jobTitle: string;
     setIsWorkerShortlisted: (_: boolean) => void;
     setShowLoader: (_: boolean) => void;
     companyName: string;
@@ -21,6 +27,7 @@ interface JobQueryShortlistWorkerFormProps {
 export const JobQueryShortlistWorkerForm = ({
     companyId,
     jobQueryId,
+    jobTitle,
     setIsWorkerShortlisted,
     setShowLoader,
     companyName,
@@ -28,6 +35,7 @@ export const JobQueryShortlistWorkerForm = ({
 }: JobQueryShortlistWorkerFormProps) => {
     const navigate = useNavigate();
     const shortlistWorkers = useShortlistedWorkers();
+    const isMobile = useIsMobile();
 
     const [worker, setWorker] = React.useState({
         fullName: '',
@@ -69,53 +77,127 @@ export const JobQueryShortlistWorkerForm = ({
         );
     };
     return (
-        <Grid container spacing={2} justifyContent="center">
-            <Grid item md={12} xs={8}>
-                <JobQueryCompanyDetails
-                    companyName={companyName}
-                    companyLogo={companyLogo}
-                />
-            </Grid>
-            <Grid item md={12} xs={8}>
-                <TextField
-                    required
-                    fullWidth
-                    label="Full name"
-                    name="fullName"
-                    value={worker.fullName || ''}
-                    onChange={(e: React.BaseSyntheticEvent) => {
-                        onChange({
-                            fullName: e.target.value
-                        });
-                    }}
-                />
-            </Grid>
-            <Grid item md={12} xs={8}>
-                <TextField
-                    required
-                    fullWidth
-                    label="Mobile Number"
-                    name="mobileNumber"
-                    value={worker.mobileNumber || ''}
-                    onChange={e => {
-                        onChange({
-                            mobileNumber: e.target.value
-                        });
-                    }}
-                />
-            </Grid>
-            <Grid item md={12} xs={8}>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={onShortlistWorker}
-                    disabled={!worker.fullName || !worker.mobileNumber}
+        <Grid container>
+            {isMobile ? (
+                <Grid
+                    item
+                    xs={12}
+                    md={0}
+                    style={{ backgroundColor: '#0F284E', height: '30vh' }}
+                    container
+                    justifyContent="center"
+                    alignItems="center"
                 >
-                    SUBMIT
-                </Button>
-            </Grid>
-            <Grid item md={12} xs={8}>
-                {error && <Alert severity="error">{error}</Alert>}
+                    <img
+                        src={HiringSm}
+                        style={{
+                            maxHeight: '100%',
+                            maxWidth: '100%'
+                        }}
+                    />
+                </Grid>
+            ) : (
+                <Grid
+                    md={6}
+                    item
+                    style={{ backgroundColor: '#0F284E', height: '100vh' }}
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <img
+                        src={HiringLg}
+                        style={{
+                            maxHeight: '100%',
+                            maxWidth: '100%'
+                        }}
+                    />
+                </Grid>
+            )}
+            <Grid
+                xs={12}
+                md={6}
+                item
+                sx={{
+                    clear: 'both',
+                    paddingX: { md: 12 },
+                    paddingY: { xs: 4, md: 20 }
+                }}
+            >
+                <Grid container spacing={2} justifyContent="center">
+                    <Grid item md={12} xs={8}>
+                        <JobQueryCompanyDetails
+                            companyName={companyName}
+                            companyLogo={companyLogo}
+                        />
+                    </Grid>
+                    <Grid item md={12} xs={10}>
+                        <Typography
+                            variant="h6"
+                            mb={2}
+                            textAlign="center"
+                            display="flex"
+                            justifyContent="center"
+                        >
+                            {jobTitle}
+                        </Typography>
+                    </Grid>
+                    <Grid
+                        item
+                        md={12}
+                        xs={10}
+                        textAlign="center"
+                        marginBottom={2}
+                    >
+                        <Typography variant="h6" fontWeight={600}>
+                            Free Job Registration
+                        </Typography>
+                        <Typography>
+                            Enter info view job details & apply
+                        </Typography>
+                    </Grid>
+                    <Grid item md={12} xs={10}>
+                        <TextField
+                            required
+                            fullWidth
+                            label="Full name"
+                            name="fullName"
+                            value={worker.fullName || ''}
+                            onChange={(e: React.BaseSyntheticEvent) => {
+                                onChange({
+                                    fullName: e.target.value
+                                });
+                            }}
+                        />
+                    </Grid>
+                    <Grid item md={12} xs={10}>
+                        <TextField
+                            required
+                            fullWidth
+                            label="Mobile Number"
+                            name="mobileNumber"
+                            value={worker.mobileNumber || ''}
+                            onChange={e => {
+                                onChange({
+                                    mobileNumber: e.target.value
+                                });
+                            }}
+                        />
+                    </Grid>
+                    <Grid item md={12} xs={10}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            onClick={onShortlistWorker}
+                            disabled={!worker.fullName || !worker.mobileNumber}
+                        >
+                            SUBMIT
+                        </Button>
+                    </Grid>
+                    <Grid item md={12} xs={10}>
+                        {error && <Alert severity="error">{error}</Alert>}
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     );

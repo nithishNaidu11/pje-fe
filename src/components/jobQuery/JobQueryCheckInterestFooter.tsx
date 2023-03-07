@@ -16,7 +16,7 @@ export const JobQueryCheckInterestFooter = ({
 
     return (
         <>
-            <Typography variant="h6" my={2}>
+            <Typography variant="h6" fontWeight={600} my={2}>
                 Are you interested?
             </Typography>
 

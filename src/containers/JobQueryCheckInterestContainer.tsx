@@ -148,13 +148,14 @@ export const JobQueryCheckInterestContainer = () => {
                                 )}
                             </>
                         )}
-                        {showChat && (
-                            <ChatWindow
-                                setOpen={setShowChat}
-                                conversation={jobQuery.questions}
-                                onSubmit={onSubmitAnswers}
-                            />
-                        )}
+                        {showChat &&
+                            !!Object.keys(jobQuery.questions || {}).length && (
+                                <ChatWindow
+                                    setOpen={setShowChat}
+                                    conversation={jobQuery.questions}
+                                    onSubmit={onSubmitAnswers}
+                                />
+                            )}
                     </Grid>
                 </Grid>
             )}

@@ -22,6 +22,7 @@ export const JobQueryCompanyDetails = ({
                     gutterBottom={false}
                     display="flex"
                     justifyContent="center"
+                    textAlign="center"
                 >
                     {companyName}
                 </Typography>

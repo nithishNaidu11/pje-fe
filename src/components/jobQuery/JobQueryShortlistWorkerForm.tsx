@@ -5,14 +5,15 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import Typography from '@mui/material/Typography';
 
 import HiringLg from 'hiring_lg.png';
 import HiringSm from 'hiring_sm.png';
 
-import { ShortlistWorkerProps, Worker } from 'interfaces';
+import type { ShortlistWorkerProps, Worker } from 'interfaces';
 import { useIsMobile, useShortlistedWorkers } from 'hooks';
 import { JobQueryCompanyDetails } from './JobQueryCompanyDetails';
-import { Typography } from '@mui/material';
+import { RegExUtil } from 'utils';
 
 interface JobQueryShortlistWorkerFormProps {
     companyId: string;
@@ -174,6 +175,7 @@ export const JobQueryShortlistWorkerForm = ({
                         <TextField
                             required
                             fullWidth
+                            type="number"
                             label="Mobile Number"
                             name="mobileNumber"
                             value={worker.mobileNumber || ''}
@@ -189,7 +191,10 @@ export const JobQueryShortlistWorkerForm = ({
                             fullWidth
                             variant="contained"
                             onClick={onShortlistWorker}
-                            disabled={!worker.fullName || !worker.mobileNumber}
+                            disabled={
+                                !RegExUtil.isName(worker.fullName) ||
+                                !RegExUtil.isMobileNumber(worker.mobileNumber)
+                            }
                         >
                             SUBMIT
                         </Button>

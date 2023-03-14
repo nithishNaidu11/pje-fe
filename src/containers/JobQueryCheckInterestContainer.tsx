@@ -218,7 +218,7 @@ export const JobQueryCheckInterestContainer = () => {
                     !!qualificationQuestionIds.length) && (
                     <ChatWindow
                         setOpen={setShowChat}
-                        conversation={jobQuery.questions}
+                        conversation={questions}
                         onSubmit={onSubmitAnswers}
                         onFileUpload={onFileUpload}
                         isFileUploading={uploadDocument.isLoading}

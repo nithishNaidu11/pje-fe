@@ -60,7 +60,7 @@ export const JobQueryDetails = ({
         <>
             {mapObj && Object.keys(mapObj).length && (
                 <Grid container width={isDialog ? '540px' : 'inherit'}>
-                    <Grid item mt={3}>
+                    <Grid item xs={12} mt={3}>
                         <Typography
                             gutterBottom={false}
                             variant="h6"
@@ -77,15 +77,15 @@ export const JobQueryDetails = ({
                             {jobQuery.description}
                         </Typography>
                     </Grid>
-                    <Grid item md={12} mt={2}>
+                    <Grid item xs={12} mt={2}>
                         {/* <JobQueryDetailsField
                             fieldName={'Customer'}
                             fieldValue={jobQuery.customer.legalEntityName}
                         /> */}
-                        {!!jobQuery.jobRole && (
+                        {!!jobQuery.customJobRole && (
                             <JobQueryDetailsField
                                 fieldName={'Role'}
-                                fieldValue={mapObj.jobRoles[jobQuery.jobRole]}
+                                fieldValue={jobQuery.customJobRole}
                             />
                         )}
                         {!!jobQuery.numberOfOpenings && (
@@ -94,12 +94,10 @@ export const JobQueryDetails = ({
                                 fieldValue={jobQuery.numberOfOpenings}
                             />
                         )}
-                        {!!jobQuery.jobDistrict && (
+                        {!!jobQuery.customJobDistrict && (
                             <JobQueryDetailsField
                                 fieldName={'Job district'}
-                                fieldValue={
-                                    mapObj.district[jobQuery.jobDistrict]
-                                }
+                                fieldValue={jobQuery.customJobDistrict}
                             />
                         )}
                         {jobQuery.perks && !!jobQuery.perks.length && (

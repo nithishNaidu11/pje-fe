@@ -83,10 +83,12 @@ export interface JobQueryFields {
     maxSalary: number | null;
     jobState: string | null;
     jobDistrict: string | null;
+    customJobDistrict: string | null;
     jobLocality: string | null;
     interviewDate: string | null;
     perks: string[];
     jobRole: string | null;
+    customJobRole: string | null;
     numberOfOpenings: number | null;
     inHandSalary: number | null;
     ctcSalary: number | null;

@@ -184,6 +184,15 @@ export const JobQueryShortlistWorkerForm = ({
                                     mobileNumber: e.target.value
                                 });
                             }}
+                            sx={{
+                                // hide increment decrement buttons
+                                '& .MuiInputBase-input': {
+                                    '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button':
+                                        {
+                                            display: 'none'
+                                        }
+                                }
+                            }}
                         />
                     </Grid>
                     <Grid item md={12} xs={10}>

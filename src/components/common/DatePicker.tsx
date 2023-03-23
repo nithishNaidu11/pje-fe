@@ -2,6 +2,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
+import { SxProps } from '@mui/material';
 
 interface DatePickerProps {
     name?: string;
@@ -15,6 +16,7 @@ interface DatePickerProps {
     inputFormat: string;
     error?: boolean;
     helperText?: string;
+    sx: SxProps;
 }
 export const DatePicker = (props: DatePickerProps) => {
     const {
@@ -28,7 +30,8 @@ export const DatePicker = (props: DatePickerProps) => {
         id = 'date-picker',
         size,
         error,
-        helperText
+        helperText,
+        sx = {}
     } = props;
     const errorProp = value == '' ? false : error;
 
@@ -50,6 +53,7 @@ export const DatePicker = (props: DatePickerProps) => {
                         helperText={helperText}
                         name={name}
                         id={id}
+                        sx={sx}
                     />
                 )}
             />

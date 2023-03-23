@@ -149,6 +149,7 @@ export const Select = ({
                         fullWidth
                         label={label}
                         autoFocus={autoFocus}
+                        sx={sx}
                     />
                 );
             }}

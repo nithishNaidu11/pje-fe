@@ -56,7 +56,13 @@ export const AnswerInputField = ({
                 <Select
                     size="small"
                     options={options}
-                    sx={{ minWidth: '50%', width: '80%' }}
+                    sx={{
+                        minWidth: '50%',
+                        width: '80%',
+                        '> .MuiAutocomplete-inputRoot': {
+                            borderRadius: 3
+                        }
+                    }}
                     label=""
                     value={getSelectedOption({
                         options,
@@ -82,7 +88,13 @@ export const AnswerInputField = ({
                     size="small"
                     multiple
                     options={options}
-                    sx={{ minWidth: '50%', width: '80%' }}
+                    sx={{
+                        minWidth: '50%',
+                        width: '80%',
+                        '> .MuiAutocomplete-inputRoot': {
+                            borderRadius: 3
+                        }
+                    }}
                     label=""
                     value={
                         Array.isArray(answerValue)
@@ -110,6 +122,9 @@ export const AnswerInputField = ({
             return (
                 <OutlinedInput
                     size="small"
+                    sx={{
+                        borderRadius: 15
+                    }}
                     endAdornment={
                         <InputAdornment position="end">
                             <IconButton
@@ -136,6 +151,7 @@ export const AnswerInputField = ({
             return (
                 <Box sx={{ position: 'relative' }}>
                     <TextArea
+                        style={{ borderRadius: 15 }}
                         onChange={e => setValue(e.target.value)}
                         value={!Array.isArray(value) ? value : ''}
                         placeholder=""
@@ -160,6 +176,7 @@ export const AnswerInputField = ({
         case QUESTION_TYPE.FILE_UPLOAD_LINK:
             return (
                 <UploadButton
+                    sx={{ borderRadius: 15 }}
                     color={theme.palette.chatBot.color.questionInput}
                     name="file_upload"
                     isLoading={isFileUploading}
@@ -181,6 +198,11 @@ export const AnswerInputField = ({
             return (
                 <Box sx={{ width: '80%' }}>
                     <DatePicker
+                        sx={{
+                            ' .MuiInputBase-root': {
+                                borderRadius: '15px'
+                            }
+                        }}
                         label=""
                         size="small"
                         inputFormat="yyyy-MM-dd"

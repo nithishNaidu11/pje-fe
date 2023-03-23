@@ -24,7 +24,7 @@ export const QuestionOption = ({
             <Button
                 variant="outlined"
                 style={{
-                    borderRadius: '5px',
+                    borderRadius: 15,
                     borderColor: chatBot.color.questionInput,
                     color: isAnswer ? 'white' : chatBot.color.questionInput,
                     backgroundColor: isAnswer

@@ -5,7 +5,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography';
 
 import styled from '@emotion/styled';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, useTheme } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
@@ -22,6 +22,7 @@ interface UploadButtonProps {
     onRemove?: (_: string) => void;
     disabled?: boolean;
     acceptFileType?: Array<ALLOWED_EXTENSION>;
+    sx?: SxProps;
 }
 
 export const UploadButton = ({
@@ -75,10 +76,12 @@ export const UploadButton = ({
                             <Box
                                 sx={{
                                     ' > label': {
+                                        borderRadius: '15px',
                                         display: 'inline-block',
                                         cursor: 'pointer',
                                         width: '100%'
-                                    }
+                                    },
+                                    borderRadius: '15px'
                                 }}
                             >
                                 <label htmlFor={`${name}-button-file`}>
@@ -90,13 +93,13 @@ export const UploadButton = ({
                                         accept={acceptFileType?.join(',')}
                                     />
                                     <Grid
+                                        borderRadius={15}
                                         container
                                         alignItems="center"
                                         justifyContent="start"
                                         sx={{
                                             py: 1,
-
-                                            borderRadius: 1
+                                            borderRadius: '15px'
                                         }}
                                     >
                                         <>
@@ -114,6 +117,7 @@ export const UploadButton = ({
                             </Box>
                         ) : (
                             <Grid
+                                borderRadius={15}
                                 container
                                 justifyContent="space-between"
                                 alignItems="center"
@@ -173,7 +177,7 @@ export const UploadButton = ({
                                         textTransform: 'uppercase',
                                         py: 1,
                                         px: 2,
-                                        borderRadius: 1,
+                                        borderRadius: 15,
                                         backgroundColor: disabled
                                             ? grey[300]
                                             : 'inherit'

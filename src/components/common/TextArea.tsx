@@ -21,6 +21,7 @@ interface TextAreaProps {
     helpText?: string;
     resize?: 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline';
     color?: string;
+    style?: any;
 }
 
 export const TextArea = ({
@@ -37,7 +38,8 @@ export const TextArea = ({
     error,
     helpText = '',
     resize = 'both',
-    color
+    color,
+    style
 }: TextAreaProps) => {
     const theme = useTheme();
 
@@ -88,7 +90,8 @@ export const TextArea = ({
                     padding: '12px',
                     fontFamily: 'Lato',
                     fontSize: 16,
-                    resize
+                    resize,
+                    ...style
                 }}
                 name={name}
                 onChange={onChange}

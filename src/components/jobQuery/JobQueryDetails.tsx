@@ -110,28 +110,40 @@ export const JobQueryDetails = ({
                                 )}
                             />
                         )}
-                        {!!jobQuery.inHandSalary && (
+                        {!!jobQuery.inHandSalary || !!jobQuery.ctcSalary ? (
+                            <>
+                                {!!jobQuery.inHandSalary && (
+                                    <JobQueryDetailsField
+                                        fieldName={'In hand salary'}
+                                        fieldValue={jobQuery.inHandSalary}
+                                    />
+                                )}
+                                {!!jobQuery.ctcSalary && (
+                                    <JobQueryDetailsField
+                                        fieldName={'CTC salary'}
+                                        fieldValue={jobQuery.ctcSalary}
+                                    />
+                                )}
+                            </>
+                        ) : !!jobQuery.minSalary || !!jobQuery.maxSalary ? (
+                            <>
+                                {!!jobQuery.minSalary && (
+                                    <JobQueryDetailsField
+                                        fieldName={'Minimum salary'}
+                                        fieldValue={jobQuery.minSalary}
+                                    />
+                                )}
+                                {!!jobQuery.maxSalary && (
+                                    <JobQueryDetailsField
+                                        fieldName={'Maximum salary'}
+                                        fieldValue={jobQuery.maxSalary}
+                                    />
+                                )}
+                            </>
+                        ) : (
                             <JobQueryDetailsField
-                                fieldName={'In hand salary'}
-                                fieldValue={jobQuery.inHandSalary}
-                            />
-                        )}
-                        {!!jobQuery.ctcSalary && (
-                            <JobQueryDetailsField
-                                fieldName={'CTC salary'}
-                                fieldValue={jobQuery.ctcSalary}
-                            />
-                        )}
-                        {!!jobQuery.minSalary && (
-                            <JobQueryDetailsField
-                                fieldName={'Minimum salary'}
-                                fieldValue={jobQuery.minSalary}
-                            />
-                        )}
-                        {!!jobQuery.maxSalary && (
-                            <JobQueryDetailsField
-                                fieldName={'Maximum salary'}
-                                fieldValue={jobQuery.maxSalary}
+                                fieldName={'Salary'}
+                                fieldValue={'Negotiable'}
                             />
                         )}
                         {!!jobQuery.interviewDate && (

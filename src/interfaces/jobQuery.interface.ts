@@ -104,7 +104,7 @@ export interface JobQueryFields {
         alias: string;
     };
     questions: QuestionsProps;
-    profileUpdateQuestions: QuestionsProps;
+    profileUpdateQuestions: QuestionsProps | null;
 }
 
 export interface CreateSingleJobQuery extends CreateJobQueryFields {

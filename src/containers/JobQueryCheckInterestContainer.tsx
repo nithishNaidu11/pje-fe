@@ -58,7 +58,9 @@ export const JobQueryCheckInterestContainer = () => {
 
     const profileQuestionIds = React.useMemo(
         () =>
-            jobQuery ? Object.keys(jobQuery.profileUpdateQuestions).sort() : [],
+            jobQuery
+                ? Object.keys(jobQuery.profileUpdateQuestions ?? {}).sort()
+                : [],
         [jobQuery]
     );
 
@@ -70,7 +72,7 @@ export const JobQueryCheckInterestContainer = () => {
     const questions = React.useMemo(() => {
         if (!jobQuery || !formFields) return;
         const result: QuestionsProps = {
-            ...Object.entries(jobQuery.profileUpdateQuestions).reduce(
+            ...Object.entries(jobQuery.profileUpdateQuestions ?? {}).reduce(
                 (acc, [key, val]) => {
                     if (val.question.optionsKey) {
                         val.question.options =

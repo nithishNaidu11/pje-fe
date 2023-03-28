@@ -39,9 +39,13 @@ export const ChatWindow = ({
     setOpen
 }: ChatWindowProps) => {
     const conversationKeys: ConversationKeysProps = Object.keys(conversation);
-    const firstQuestion = {
-        [conversationKeys[0]]: conversation[conversationKeys[0]]
-    };
+
+    const firstQuestion =
+        conversationKeys.length > 0
+            ? {
+                  [conversationKeys[0]]: conversation[conversationKeys[0]]
+              }
+            : {};
 
     const [showChatBody, setShowChatBody] = React.useState(true);
     const [currentConversation, setCurrentConversation] =
@@ -53,8 +57,9 @@ export const ChatWindow = ({
 
     const ref = React.useRef<HTMLDivElement>();
 
-    const currentConversationKeys: ConversationKeysProps =
-        Object.keys(currentConversation);
+    const currentConversationKeys: ConversationKeysProps = Object.keys(
+        currentConversation || {}
+    );
 
     const toggleCollapseChatBody = () => setShowChatBody(!showChatBody);
 

@@ -1,31 +1,43 @@
-import React from 'react';
+import { JobQueryCheckInterestContainer } from 'containers/JobQueryCheckInterestContainer';
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { NotFound } from './containers';
+import { Grid, Typography } from '@mui/material';
+import { PushNotification } from 'containers';
 
 const RoutesContainer = () => {
-    // const isProduction = process.env.REACT_APP_BUILD_ENV === 'production';
-    const isProduction = false;
     const renderRoutes = () => {
         return (
             <Routes>
-                {isProduction ? (
-                    <>
-                        <Route path=":chekInterestCode/apply" element={<></>} />
-                    </>
-                ) : (
-                    <>
-                        <Route
-                            path="*"
-                            element={<Navigate to="/not-found" replace />}
-                        />
-                        <Route path="/not-found" element={<NotFound />} />
+                <>
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route
+                        path="/"
+                        element={
+                            <Grid
+                                container
+                                justifyContent="center"
+                                alignItems="center"
+                                height="100vh"
+                            >
+                                <Grid>
+                                    <Typography variant="h4">
+                                        Welcome to Hunar Job Portal
+                                    </Typography>
+                                    <PushNotification />
+                                </Grid>
+                            </Grid>
+                        }
+                    />
 
-                        <Route
-                            path="company/:companyId/:chekInterestCode/apply"
-                            element={<></>}
-                        />
-                    </>
-                )}
+                    <Route
+                        path=":shortcode/"
+                        element={<JobQueryCheckInterestContainer />}
+                    />
+                    <Route
+                        path="job/:shortcode/"
+                        element={<JobQueryCheckInterestContainer />}
+                    />
+                </>
             </Routes>
         );
     };

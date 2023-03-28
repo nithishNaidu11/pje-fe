@@ -120,7 +120,7 @@ const request = <T>(
 
 const catchError = (error: Response) => {
     if (error.status === 401) {
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
         window.location.reload();
     } else {
         ErrorTracker.captureException(error);
@@ -221,11 +221,11 @@ const getUrlWithQueryParameters = (endpoint: string) => {
 };
 
 const getHeaders = (): Auth => {
-    if (localStorage.token) {
-        return {
-            Authorization: `Token ${JSON.parse(localStorage.token)}`
-        };
-    }
+    // if (localStorage.token) {
+    //     return {
+    //         Authorization: `Token ${JSON.parse(localStorage.token)}`
+    //     };
+    // }
     return {};
 };
 

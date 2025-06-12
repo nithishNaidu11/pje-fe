@@ -2,7 +2,6 @@ import { JobQueryCheckInterestContainer } from 'containers/JobQueryCheckInterest
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Grid, Typography } from '@mui/material';
-import { PushNotification } from 'containers';
 
 const RoutesContainer = () => {
     const renderRoutes = () => {
@@ -23,7 +22,6 @@ const RoutesContainer = () => {
                                     <Typography variant="h4">
                                         Welcome to Hunar Job Portal
                                     </Typography>
-                                    <PushNotification />
                                 </Grid>
                             </Grid>
                         }

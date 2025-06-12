@@ -11,7 +11,7 @@ Axios.interceptors.request.use(
         //     ? { Authorization: `Token ${JSON.parse(localStorage.token)}` }
         //     : {};
         return {
-            baseURL: process.env.REACT_APP_API_ENDPPOINT,
+            baseURL: import.meta.env.VITE_API_ENDPPOINT,
             ...config,
             headers: {
                 // ...authHeaders,

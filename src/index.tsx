@@ -8,9 +8,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ErrorTracker.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-    environment: process.env.REACT_APP_ENVIRONMENT,
-    release: process.env.REACT_APP_VERSION
+    dsn: import.meta.env.VITE_SENTRY_DSN,
+    environment: import.meta.env.VITE_ENVIRONMENT,
+    release: import.meta.env.VITE__VERSION
 });
 
 const container = document.getElementById('root');

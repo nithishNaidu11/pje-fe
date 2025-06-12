@@ -4,8 +4,6 @@ import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { PushNotification } from 'containers';
-
 import {
     useGetFormFields,
     useGetOpenJobQuery,
@@ -186,7 +184,6 @@ export const JobQueryCheckInterestContainer = () => {
             {showSuccessMessage ? (
                 <CenteredContainer>
                     <JobQuerySuccessView />
-                    <PushNotification shortcode={shortcode} />
                 </CenteredContainer>
             ) : isWorkerShortlisted ? (
                 <CenteredContainer>

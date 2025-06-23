@@ -251,6 +251,13 @@ export const DataUtils = {
     toSnake(str: string): string {
         return _.snakeCase(str);
     },
+    toSnakeWrapper(str: string): string {
+        const splitStrings = str.split('.');
+        const snakizedSplitStrings = splitStrings.map(datum =>
+            _.snakeCase(datum)
+        );
+        return snakizedSplitStrings.join('.');
+    },
     sortKeyToSnake(str: string): string {
         const splitStrings = str.split('.');
         const snakizedSplitStrings = splitStrings.map(datum =>

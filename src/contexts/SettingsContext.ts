@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { type FormFields, type Company, type PersonnelProps } from 'interfaces';
-import { InterviewSchedulingSettingsInitState } from 'components/jobQuery/JQConstants';
 import { PERSONNEL_TYPE } from 'Enum';
 
 interface SettingsContextType {
@@ -36,57 +35,10 @@ export const settingsInitialState: SettingsContextType = {
     handleCloseMenu: () => undefined,
     handleOpenMenu: () => undefined,
     formFields: {
-        gender: [],
-        educationalQualificationType: [],
-        educationalQualificationDetail: [],
-        district: [],
-        preferredLanguages: [],
-        willingToMove: [],
-        englishProficiency: [],
-        vehicleOptions: [],
-        maritalStatus: [],
-        jobRoles: [],
-        state: [],
-        perkOptions: [],
-        workerStatus: [],
-        jobQueryWorkerStatus: [],
-        employerJobQueryWorkerStatus: [],
-        referrerType: [],
-        logoPlacement: [],
-        documentType: [],
-        jobQueryWorkerCommentStatus: [],
-        jobQueryWorkerCommunicationStatus: [],
-        verificationStatus: [],
-        channelType: [],
-        channel: [],
-        matchLabel: [],
-        candidateStatus: [],
-        interviewScheduleStatus: [],
-        interviewTurnUpStatus: [],
-        interviewSelectionStatus: [],
-        interviewMode: []
+        gender: []
     },
     company: {
-        name: '',
-        settings: {
-            workerSettings: {
-                bulkRequiredFields: [],
-                onboardingRequiredFields: [],
-                singleWorkerRequiredFields: []
-            },
-            dashboardSettings: {
-                onboarding: {
-                    disableAadhaarOtpVerification: false,
-                    disableFormTemplateCreation: false,
-                    disableWorkspaceCreation: false,
-                    editableFields: []
-                },
-                vendor: {
-                    disableVerification: false
-                },
-                interviewCommunication: InterviewSchedulingSettingsInitState
-            }
-        }
+        name: ''
     },
     loggedInPersonnel: {
         personnelId: '',

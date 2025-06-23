@@ -1,39 +1,72 @@
 import { createTheme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
-interface ChatBotTheme {
-    bgColor: {
-        question: string;
-        answer: string;
-    };
-    color: {
-        questionInput: string;
-        answer: string;
-    };
-}
+// export interface ButtonColorsProps {
+//     primary: string;
+//     success: string;
+//     danger: string;
+// }
 
-declare module '@mui/material/styles' {
-    interface Palette {
-        chatBot: ChatBotTheme;
-    }
-    interface PaletteOptions {
-        chatBot: ChatBotTheme;
-    }
-}
+// interface ABCBrandPaletteProps {
+//     button: {
+//         primary: string;
+//         disabled: string;
+//     };
+//     bgColor: {
+//         light: string;
+//         warmIvory: string;
+//     };
+//     font: {
+//         success: string;
+//         error: string;
+//         disabled: string;
+//     };
+// }
+
+// declare module '@mui/material/styles' {
+//     interface Palette {
+//         button: ButtonColorsProps;
+//         quiz: ABCBrandPaletteProps;
+//     }
+//     interface PaletteOptions {
+//         button: ButtonColorsProps;
+//         quiz: ABCBrandPaletteProps;
+//     }
+// }
+
+export const asteriskStyle = {
+    color: red[600],
+    fontSize: '20px',
+    fontFamily: '"Anek Latin", sans-serif'
+};
 
 export const theme = createTheme({
-    typography: {
-        fontFamily: 'Lato, Arial'
-    },
-    palette: {
-        chatBot: {
-            bgColor: {
-                question: 'rgb(104,134,255,.2)',
-                answer: '#fbfbfb'
-            },
-            color: {
-                questionInput: '#3445a2',
-                answer: '#bdbdbd'
-            }
-        }
-    }
+    // typography: {
+    //     fontFamily: '"Anek Latin", sans-serif'
+    // },
+    // palette: {
+    //     button: { danger: '#E50000', primary: '#4081DD', success: '#51B642' },
+    //     quiz: {
+    //         button: {
+    //             primary: '#C7222A',
+    //             disabled: '#9E9E9E'
+    //         },
+    //         bgColor: {
+    //             light: '#FFFFFF',
+    //             warmIvory: '#FFF4D9'
+    //         },
+    //         font: {
+    //             success: '#70B865',
+    //             error: '#C7222A',
+    //             disabled: '#00000061'
+    //         }
+    //     }
+    // },
+    // components: {
+    //     MuiFormLabel: {
+    //         styleOverrides: {
+    //             asterisk: asteriskStyle
+    //         }
+    //     }
+    // }
 });

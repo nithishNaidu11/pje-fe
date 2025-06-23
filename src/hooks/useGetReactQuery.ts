@@ -1,27 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ApiError, FormFields } from 'interfaces';
+import { ApiError } from 'interfaces';
 import ErrorTracker from 'utils/ErrorTracker';
 
-type SuccessData = FormFields;
-
-interface GetReactQueryProps {
+interface GetReactQueryProps<TSuccessData> {
     queryKey: string[];
     requestUrl: any;
     params?: { [key: string]: string | null | undefined };
     enabled?: boolean;
-    onSuccess?: (data: SuccessData) => void;
+    onSuccess?: (data: TSuccessData) => void;
     onError?: (error: ApiError) => void;
 }
-export const useGetReactQuery = ({
+export const useGetReactQuery = <TSuccessData>({
     queryKey,
     requestUrl,
     params,
     enabled = true,
     onSuccess,
     onError
-}: GetReactQueryProps) => {
-    return useQuery<SuccessData, ApiError>({
+}: GetReactQueryProps<TSuccessData>) => {
+    return useQuery<TSuccessData, ApiError>({
         queryKey,
         queryFn: () => {
             return requestUrl

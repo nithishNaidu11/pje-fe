@@ -1,14 +1,12 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-
-import LoadingButton from '@mui/lab/LoadingButton';
-import Typography from '@mui/material/Typography';
-
 import styled from '@emotion/styled';
+
+import { Box, Grid, Typography, IconButton } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { SxProps, useTheme } from '@mui/material/styles';
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
+import ClearIcon from '@mui/icons-material/Clear';
+
+
 import { ALLOWED_EXTENSION } from 'Enum';
 
 interface UploadButtonProps {

@@ -1,0 +1,29 @@
+export interface PJEProps {
+    fullName: string;
+    email: string;
+    dateOfBirth: string;
+    gender: string;
+    department: string;
+    source: string;
+    applicantCode: string;
+    employeeStatus: string;
+    alternateNumber: string;
+    alternateContactPersonName: string;
+    jobBandOffered: string;
+    offerAcceptedDate: string;
+    entity: string;
+    subFunction: string;
+    subDepartment: string;
+    branchName: string;
+    branchCode: string;
+    branchAddress: string;
+    zone: string;
+    l1ManagerName: string;
+    l1ManagerCode: string;
+    hrManagerName: string;
+    hrManagerCode: string;
+    jobBandDesignation: string;
+    dateOfJoining: string;
+    payrollType: string;
+    company_id: string;
+}

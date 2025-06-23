@@ -28,31 +28,58 @@ export default () => {
             //     }
             // ]
             alias: {
-                '@': path.resolve(__dirname, 'src'),
-                containers: path.resolve(__dirname, 'src/containers'),
-                // components: path.resolve(__dirname, './src/components'),
-                components: '/src/components',
-                'components/*': path.resolve(__dirname, './src/components/*'),
-                Enum: path.resolve(__dirname, 'src/Enum'),
-                enums: path.resolve(__dirname, 'src/enums'),
-                utils: path.resolve(__dirname, 'src/utils'),
-                hooks: path.resolve(__dirname, 'src/hooks'),
-                contexts: path.resolve(__dirname, 'src/contexts'),
-                api: path.resolve(__dirname, 'src/api'),
-                useValidationHelper: path.resolve(
-                    __dirname,
-                    'src/useValidationHelper'
-                ),
-                middleware: path.resolve(__dirname, 'src/middleware'),
-                interfaces: path.resolve(__dirname, 'src/interfaces'),
-                App: path.resolve(__dirname, 'src/App'),
-                Constants: path.resolve(__dirname, 'src/Constants'),
-                useHelper: path.resolve(__dirname, 'src/useHelper'),
-                'components/common/': path.resolve(
-                    __dirname,
-                    'src/components/common/'
-                )
+                '@': path.resolve(__dirname, 'src')
+                // '@': path.resolve(__dirname, 'src'),
+                // containers: path.resolve(__dirname, 'src/containers'),
+                // // components: path.resolve(__dirname, './src/components'),
+                // components: '/src/components',
+                // '@/components/*': path.resolve(__dirname, './src/components/*'),
+                // Enum: path.resolve(__dirname, 'src/Enum'),
+                // enums: path.resolve(__dirname, 'src/enums'),
+                // utils: path.resolve(__dirname, 'src/utils'),
+                // hooks: path.resolve(__dirname, 'src/hooks'),
+                // contexts: path.resolve(__dirname, 'src/contexts'),
+                // api: path.resolve(__dirname, 'src/api'),
+                // useValidationHelper: path.resolve(
+                //     __dirname,
+                //     'src/useValidationHelper'
+                // ),
+                // middleware: path.resolve(__dirname, 'src/middleware'),
+                // interfaces: path.resolve(__dirname, 'src/interfaces'),
+                // App: path.resolve(__dirname, 'src/App'),
+                // Constants: path.resolve(__dirname, 'src/Constants'),
+                // useHelper: path.resolve(__dirname, 'src/useHelper'),
+                // '@/components/common/': path.resolve(
+                //     __dirname,
+                //     'src/components/common/'
+                // )
             }
+            // alias: {
+            //     '@': path.resolve(__dirname, 'src'),
+            //     containers: path.resolve(__dirname, 'src/containers'),
+            //     // components: path.resolve(__dirname, './src/components'),
+            //     components: '/src/components',
+            //     'components/*': path.resolve(__dirname, './src/components/*'),
+            //     Enum: path.resolve(__dirname, 'src/Enum'),
+            //     enums: path.resolve(__dirname, 'src/enums'),
+            //     utils: path.resolve(__dirname, 'src/utils'),
+            //     hooks: path.resolve(__dirname, 'src/hooks'),
+            //     contexts: path.resolve(__dirname, 'src/contexts'),
+            //     api: path.resolve(__dirname, 'src/api'),
+            //     useValidationHelper: path.resolve(
+            //         __dirname,
+            //         'src/useValidationHelper'
+            //     ),
+            //     middleware: path.resolve(__dirname, 'src/middleware'),
+            //     interfaces: path.resolve(__dirname, 'src/interfaces'),
+            //     App: path.resolve(__dirname, 'src/App'),
+            //     Constants: path.resolve(__dirname, 'src/Constants'),
+            //     useHelper: path.resolve(__dirname, 'src/useHelper'),
+            //     'components/common/': path.resolve(
+            //         __dirname,
+            //         'src/components/common/'
+            //     )
+            // }
         },
 
         server: {

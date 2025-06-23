@@ -1,10 +1,9 @@
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
 
+import { Grid, Typography, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import Box from '@mui/material/Box';
-import { Grid, Typography } from '@mui/material';
 
 interface TextAreaProps {
     minRows?: number;

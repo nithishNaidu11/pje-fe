@@ -16,8 +16,8 @@ export const QuizContainer = () => {
                 path="welcome/:preJoiningLeadId"
                 element={<QuizWelcomeView />}
             />
-            <Route path="quiz/:quizId" element={<QuizQuestionView />} />
-            <Route path="quiz/:quizId/result" element={<QuizResultView />} />
+            <Route path=":quizId" element={<QuizQuestionView />} />
+            <Route path=":quizId/result" element={<QuizResultView />} />
             <Route path="video/:videoCode" element={<QuizVideoPlayer />} />
         </Routes>
     );

@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { AppContainer } from 'containers';
+import { AppContainer, QuizContainer } from 'containers';
 
 const RoutesContainer = () => {
     const renderRoutes = () => {
@@ -12,6 +12,7 @@ const RoutesContainer = () => {
                         path="/"
                         element={<PreJoiningEngagementContainer />}
                     /> */}
+                    <Route path="quiz/*" element={<QuizContainer />} />
                     <Route path="*" element={<AppContainer />} />
                 </>
             </Routes>

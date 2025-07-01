@@ -3,12 +3,12 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
-import { QuizQuestionOptions, LabelWithHighlight } from '@/components/quiz';
+import { QuizQuestionOptions, LabelWithHighlight } from 'components/quiz';
 
 import type {
     QuizQuestionAnswerProps,
     QuizQuestionProps as IQuizQuestionProps
-} from '@/interfaces';
+} from 'interfaces';
 
 interface QuizQuestionProps {
     id: number;

@@ -7,12 +7,7 @@ const RoutesContainer = () => {
         return (
             <Routes>
                 <>
-                    {/* <Route path="*" element={<Navigate to="/" replace />} />
-                    <Route
-                        path="/"
-                        element={<PreJoiningEngagementContainer />}
-                    /> */}
-                    <Route path="quiz/*" element={<QuizContainer />} />
+                    <Route path="abc/*" element={<QuizContainer />} />
                     <Route path="*" element={<AppContainer />} />
                 </>
             </Routes>

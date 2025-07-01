@@ -10,8 +10,6 @@ import { useIsMobile } from 'hooks/useIsMobile';
 import { useAuth } from 'hooks/useAuth';
 import { SettingsContext } from 'contexts';
 
-// import { PERSONNEL_ROLE, PERSONNEL_TYPE } from 'Enum';
-
 export const Sidebar = () => {
     const { menuDrawerOpen, handleCloseMenu } =
         React.useContext(SettingsContext);
@@ -39,7 +37,6 @@ export const Sidebar = () => {
         //     {
         //         onSuccess: () => {
         //             signout();
-
         //             if (loggedInPersonnel?.role === PERSONNEL_ROLE.VENDOR) {
         //                 navigate(`${baseURL}vendor/${supportedId}/signin`);
         //             } else if (isInterviewerLoggedIn) {
@@ -80,10 +77,8 @@ export const Sidebar = () => {
                 <SidebarMenuList onMenuClick={onMenuClick} />
                 {loggedInPersonnel && (
                     <SidebarFooter
-                        personnelType={loggedInPersonnel.type}
                         personnelEmail={loggedInPersonnel.email}
                         handleLogout={handleLogout}
-                        onMenuClick={onMenuClick}
                     />
                 )}
             </Grid>

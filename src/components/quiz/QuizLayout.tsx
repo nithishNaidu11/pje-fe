@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 
-import { QuizOverlay, QuizBanner } from '@/components/quiz';
+import { QuizOverlay, QuizBanner } from 'components/quiz';
 
 interface QuizLayoutProps {
     children: React.ReactNode;

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { QuizLogin, QuizOtpForm } from '@/components/quiz';
+import { QuizLogin, QuizOtpForm } from 'components/quiz';
 
 export const QuizAuthContainer = () => {
     return (

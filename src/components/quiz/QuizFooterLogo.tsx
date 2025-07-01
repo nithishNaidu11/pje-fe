@@ -2,7 +2,7 @@ import { Box, useMediaQuery, useTheme } from '@mui/material';
 
 import { PoweredByText } from '@components/common';
 
-import { useGetOpenCompany } from '@/hooks/apiHooks/useGetOpenCompany';
+import { useGetOpenCompany } from 'hooks/apiHooks/useGetOpenCompany';
 
 const ABC_COMPANY_ID: string = import.meta.env.VITE_ABC_COMPANY_ID;
 

@@ -30,10 +30,7 @@ export { type Error, type ApiError } from './error.interface';
 
 export type { CompanyProps } from './company.interface';
 
-export type {
-    PersonnelProps,
-    PersonnelFiltersProps
-} from './personnel.interface';
+export type { PersonnelProps } from './personnel.interface';
 
 export * from './quiz.interface';
 
@@ -45,6 +42,6 @@ export {
     type OrderedInputFields
 } from './inputFields.interface';
 
-export { type QueryResult } from './react-query.interface';
+export { type QueryResultProps } from './react-query.interface';
 
 export * from './sidebar.interface';

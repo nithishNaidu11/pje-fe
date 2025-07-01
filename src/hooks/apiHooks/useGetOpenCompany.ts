@@ -1,4 +1,4 @@
-import { companyDetails } from '../../api/settings';
+import { companyDetails } from '../../api/company';
 
 import { useGetReactQuery } from 'hooks/useGetReactQuery';
 

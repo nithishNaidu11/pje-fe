@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 import { IconContext } from '@phosphor-icons/react';
 
-import { AppTooltip } from '@/components/common';
+import { AppTooltip } from 'components/common';
 import { getMenuButtonSx, getMenuIconSx } from './SidebarStyles';
 
-import { SettingsContext } from '@/contexts';
+import { SettingsContext } from 'contexts';
 
 interface SidebarMenuProps {
     menuId: string;

@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { submitAnswers } from '@/api/quiz';
+import { submitAnswers } from 'api/quiz';
 
 import {
     ApiError,
     SubmitQuizAnswersResponseProps,
     QuizQuestionAnswerMapProps
-} from '@/interfaces';
+} from 'interfaces';
 
 interface SubmitQuizAnswersProps {
     params: {

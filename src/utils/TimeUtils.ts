@@ -33,6 +33,9 @@ export const TimeUtils = {
         }
         return moment(dateString, format).toDate();
     },
+    getDateFromUtcISOString: (date: string) => {
+        return moment.utc(date).toDate();
+    },
     timeSince: (date: string) => {
         const utcMoment = moment.utc(date);
         return moment(utcMoment).local().fromNow();

@@ -1,7 +1,6 @@
 import { PJEMasterTable } from '@components/preJoiningEngagement';
 import { ColumnModifier, PageLayout } from '@components/common';
 
-// import { useCompanyId } from 'hooks/useCompanyId';
 import { useGlobalActionsHook } from 'hooks/useGlobalActionsHook';
 import { usePaginatedReactTable } from 'hooks/usePaginatedReactTable';
 import { useGetPJE } from 'hooks/apiHooks/preJoiningEngagement/useGetPJE';
@@ -17,9 +16,7 @@ export const PreJoiningEngagementContainer = () => {
         handleOpenColumnModifier
     } = useGlobalActionsHook();
 
-    const { data: dynamicColumns } = useGetPJEColumnStructure({
-        companyId: companyId
-    });
+    const { data: dynamicColumns } = useGetPJEColumnStructure();
 
     const columns = PJEColumns({
         templateFields: dynamicColumns?.templateDict ?? {}
@@ -53,7 +50,6 @@ export const PreJoiningEngagementContainer = () => {
         <PageLayout title="Pre Joining Engagement">
             <>
                 <PJEMasterTable
-                    companyId={companyId}
                     columns={tableDisplayColumns}
                     data={tableData?.data ?? []}
                     paginationInfo={tableData?.paginationInfo}

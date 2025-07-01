@@ -1,8 +1,8 @@
-import { useGetReactQuery } from '@/hooks/useGetReactQuery';
+import { useGetReactQuery } from 'hooks/useGetReactQuery';
 
-import { get } from '@/api/quiz';
+import { get } from 'api/quiz';
 
-import { ApiError, GetQuizResponseProps, QueryResultProps } from '@/interfaces';
+import { ApiError, GetQuizResponseProps, QueryResultProps } from 'interfaces';
 
 interface GetQuizProps {
     enabled: boolean;

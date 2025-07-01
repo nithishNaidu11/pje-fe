@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
-import { AppTooltip } from '@/components/common';
+import { AppTooltip } from 'components/common';
 
 interface TextOverFlowProps {
     value?: string;

@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Grid, Box, IconButton, AppBar, Toolbar } from '@mui/material';
 import { ListIcon } from '@phosphor-icons/react';
 
-// import Logo from 'components/common/LogoFull.svg?react';
 import {
     logoHeaderAppBarSx,
     logoHeaderButtonSx

@@ -16,7 +16,6 @@ import { useExportWrapper } from 'hooks/useExportWrapper';
 import { PaginationInfo } from 'interfaces';
 
 interface PJEMasterTableProps {
-    companyId: string;
     isLoading: boolean;
     columns: Column[];
     data: Data[];
@@ -37,7 +36,6 @@ const paginationInfoInitialState: PaginationInfo = {
 };
 
 export const PJEMasterTable = ({
-    companyId,
     isLoading,
     columns,
     data,
@@ -58,9 +56,7 @@ export const PJEMasterTable = ({
 
     const { exportMutation, handleExportMutation } = useExportWrapper({
         exportTableId: 'preJoiningEngagement',
-        params: {
-            companyId
-        },
+        params: {},
         body: {}
     });
 
@@ -86,9 +82,9 @@ export const PJEMasterTable = ({
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
                 isLoading={isLoading}
+                tableHeight="calc(100vh - 216px)"
                 tableHeaderCTA={
                     <PJETableHeader
-                        companyId={companyId}
                         onExportClickHandler={onExportClickHandler}
                         onBulkUploadClickHandler={toggleBulkUploadModal}
                         isColumnModifierVisible={isColumnModifierVisible}

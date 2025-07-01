@@ -4,10 +4,10 @@ import { Avatar, Fade, Grid, IconButton, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { SignOut } from '@phosphor-icons/react';
 
-import { AppTooltip } from '@/components/common';
+import { AppTooltip } from 'components/common';
 import { avatarSx } from './SidebarStyles';
 
-import { SettingsContext } from '@/contexts';
+import { SettingsContext } from 'contexts';
 
 interface SidebarLogoutBtnProps {
     email?: string;

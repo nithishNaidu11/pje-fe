@@ -1,13 +1,11 @@
 import * as React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
 import { useToken } from './useToken';
 
-import { SelecterState, setAuth, setUser, signoutUser } from 'config/authSlice';
-import { PERSONNEL_ROLE, PERSONNEL_TYPE } from 'Enum';
-
+import { SelecterState, setAuth } from 'config/authSlice';
+// import { SelecterState, setAuth, setUser, signoutUser } from 'config/authSlice';
 // import { useBaseURL } from '@/hooks/useBaseURL';
 // import { useGetAccessToken } from 'hooks/apiHooks/use';
 
@@ -64,7 +62,7 @@ export const useAuth = () => {
         // }
     };
 
-    const refreshAccessToken = async (userRole?: PERSONNEL_ROLE) => {
+    const refreshAccessToken = async () => {
         // const response = await accessToken.mutateAsync(
         //     { userType: userRole },
         //     {

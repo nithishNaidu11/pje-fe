@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { QuizQuestion } from '@/components/quiz';
+import { QuizQuestion } from 'components/quiz';
 
 import type {
     QuizQuestionProps,
     QuizQuestionAnswerMapProps,
     QuizQuestionAnswerProps
-} from '@/interfaces/quiz.interface';
+} from 'interfaces/quiz.interface';
 
 interface QuizQuestionListProps {
     quizQuestions: QuizQuestionProps[];

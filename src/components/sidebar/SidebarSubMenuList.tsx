@@ -3,7 +3,7 @@ import { Collapse } from '@mui/material';
 import { SidebarMenu } from './SidebarMenu';
 import { sectionCollapseSx } from './SidebarStyles';
 
-import type { SidebarMenuProps } from '@/interfaces';
+import type { SidebarMenuProps } from 'interfaces';
 
 interface SidebarSubMenuListProps {
     menuId: string;

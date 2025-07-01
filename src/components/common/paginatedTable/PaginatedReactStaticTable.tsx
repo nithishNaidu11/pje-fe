@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
     useTable,
     useBlockLayout,
@@ -58,7 +58,7 @@ const paginationInfoInitialState: PaginationInfo = {
 };
 
 interface Props<TData extends object> {
-    NoDataFound?: ReactElement;
+    NoDataFound?: ReactNode;
     activeSortColumn?: string;
     activeFilterColumns?: string[];
     data: TData[];
@@ -75,7 +75,7 @@ interface Props<TData extends object> {
     tableHeaderCTAPaddingLeft?: number | undefined;
     tableHeaderCTAPaddingRight?: number | undefined;
     subHeader?: { [key: string]: string };
-    footer?: ReactElement;
+    footer?: ReactNode;
     isPaginationEnabled?: boolean;
     tableHeight?: number | string;
     onColumnSearch: (searchInput: string, column: keyof TData) => void;
@@ -174,9 +174,9 @@ export default function StaticTable<TData extends object>({
                     height: tableHeight,
                     paddingBottom: '16px',
                     overflow: 'scroll',
-                    fontFamily: 'Lato',
+                    fontFamily: 'Anek Latin',
                     '.MuiTableCell-root': {
-                        fontFamily: 'Lato',
+                        fontFamily: 'Anek Latin',
                         '.MuiCheckbox-root': {
                             p: 0.8
                         },
@@ -204,7 +204,7 @@ export default function StaticTable<TData extends object>({
                                     {...headerGroup.getHeaderGroupProps()}
                                 >
                                     {headerGroup.headers.map(
-                                        (column, columnIndex) => (
+                                        (column: any, columnIndex) => (
                                             <React.Fragment key={columnIndex}>
                                                 <TableCell
                                                     {...column.getHeaderProps({
@@ -278,11 +278,6 @@ export default function StaticTable<TData extends object>({
                                                                             column.id as keyof TData
                                                                         );
                                                                     }}
-                                                                    onClick={() =>
-                                                                        onColumnSearchBoxClick(
-                                                                            column.id
-                                                                        )
-                                                                    }
                                                                 />
                                                             </Grid>
                                                         )}
@@ -357,7 +352,7 @@ export default function StaticTable<TData extends object>({
                                                 })}
                                             >
                                                 {row.cells.map(
-                                                    (cell, index) => {
+                                                    (cell: any, index) => {
                                                         return (
                                                             <React.Fragment
                                                                 key={index}

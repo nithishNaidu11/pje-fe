@@ -66,7 +66,7 @@ export const TextArea = ({
                 '> ::placeholder': {
                     color: grey['A700'],
                     opacity: 1,
-                    fontFamily: 'Lato',
+                    fontFamily: 'Anek Latin',
                     fontSize: 16
                 },
                 '.textarea': {},
@@ -87,7 +87,7 @@ export const TextArea = ({
                     borderColor: color ?? grey[400],
                     borderRadius: 4,
                     padding: '12px',
-                    fontFamily: 'Lato',
+                    fontFamily: 'Anek Latin',
                     fontSize: 16,
                     resize,
                     ...style

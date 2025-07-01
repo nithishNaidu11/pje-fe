@@ -4,11 +4,11 @@ import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import { Alert, Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { CustomButton } from '@hunar.ai/hunar-design-system';
 
-import { QuizLayout } from '@/components/quiz';
+import { QuizLayout } from 'components/quiz';
 
-import { useCreateQuiz } from '@/hooks/apiHooks/quiz/useCreateQuiz';
+import { useCreateQuiz } from 'hooks/apiHooks/quiz/useCreateQuiz';
 
-import { CreateQuizResponseProps, ApiError } from '@/interfaces';
+import { CreateQuizResponseProps, ApiError } from 'interfaces';
 
 export const QuizWelcomeView = () => {
     const theme = useTheme();
@@ -69,14 +69,14 @@ export const QuizWelcomeView = () => {
                     mb={isMobile ? 1 : 3}
                     textAlign={isMobile ? 'left' : 'center'}
                 >
-                    Hello {fullName},
+                    {`Hello ${fullName}`},
                 </Typography>
                 <Typography
                     variant={isMobile ? 'body1' : 'h5'}
                     fontWeight={400}
                     mb={4}
                 >
-                    Welcome to The Pre-Induction Assessment
+                    {`Welcome to The Pre-Induction Assessment`}
                 </Typography>
                 <Typography
                     variant={isMobile ? 'body1' : 'h5'}
@@ -84,8 +84,8 @@ export const QuizWelcomeView = () => {
                     textAlign={isMobile ? 'left' : 'center'}
                     mb={isMobile ? 4 : 8}
                 >
-                    This Pre-Induction Assessment contains 10 MCQ type
-                    questions, which usually take 10 minutes to complete.
+                    {`This Pre-Induction Assessment contains 10 MCQ type
+                    questions, which usually take 10 minutes to complete.`}
                 </Typography>
 
                 {errorMsg && (

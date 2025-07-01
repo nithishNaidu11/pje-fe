@@ -174,9 +174,9 @@ export default function StaticTable<TData extends object>({
                     height: tableHeight,
                     paddingBottom: '16px',
                     overflow: 'scroll',
-                    fontFamily: 'Lato',
+                    fontFamily: 'Anek Latin',
                     '.MuiTableCell-root': {
-                        fontFamily: 'Lato',
+                        fontFamily: 'Anek Latin',
                         '.MuiCheckbox-root': {
                             p: 0.8
                         },

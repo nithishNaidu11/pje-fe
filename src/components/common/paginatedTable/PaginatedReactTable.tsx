@@ -210,9 +210,9 @@ export const Table = ({
                     height: tableHeight,
                     paddingBottom: '16px',
                     overflow: 'scroll',
-                    fontFamily: 'Lato',
+                    fontFamily: 'Anek Latin',
                     '.MuiTableCell-root': {
-                        fontFamily: 'Lato',
+                        fontFamily: 'Anek Latin',
                         padding: size === 'medium' ? '10.5px 16px' : '4px 16px',
                         fontSize: '0.85rem',
                         '.MuiTypography-root': {

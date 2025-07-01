@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { type FormFields, type Company, type PersonnelProps } from 'interfaces';
-import { PERSONNEL_TYPE } from 'Enum';
+import { type Company, type PersonnelProps } from 'interfaces';
 
 interface SettingsContextType {
     showSidebar: boolean;
     menuDrawerOpen: boolean;
     handleCloseMenu: VoidFunction;
     handleOpenMenu: VoidFunction;
-    formFields: FormFields;
     company: Company;
     loggedInPersonnel?: {
         fullName?: string | null;
@@ -24,7 +22,6 @@ interface SettingsContextType {
                 }
             ];
         } | null;
-        type?: PERSONNEL_TYPE | null;
     };
     personnelData: PersonnelProps[];
 }
@@ -34,9 +31,6 @@ export const settingsInitialState: SettingsContextType = {
     menuDrawerOpen: true,
     handleCloseMenu: () => undefined,
     handleOpenMenu: () => undefined,
-    formFields: {
-        gender: []
-    },
     company: {
         name: ''
     },
@@ -45,8 +39,7 @@ export const settingsInitialState: SettingsContextType = {
         fullName: null,
         role: null,
         email: null,
-        mobileNumber: null,
-        type: null
+        mobileNumber: null
     },
     personnelData: []
 };

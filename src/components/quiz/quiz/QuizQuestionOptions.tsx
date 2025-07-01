@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { LabelWithHighlight } from 'components/quiz';
+import { optionRadioStyleSx, optionFormControlSx } from './quizStyles';
 
 import { useSubmitQuizAnswers } from 'hooks/apiHooks/quiz/useSubmitQuizAnswers';
 
@@ -122,9 +123,14 @@ export const QuizQuestionOptions = ({
                             <FormControlLabel
                                 key={option.label}
                                 value={option.value}
-                                control={<Radio color={radioColor} />}
+                                control={
+                                    <Radio
+                                        color={radioColor}
+                                        sx={optionRadioStyleSx}
+                                    />
+                                }
                                 label={option.label}
-                                sx={{ width: '280px', ml: 0, mb: 1.5 }}
+                                sx={optionFormControlSx}
                                 className={
                                     radioColor
                                         ? `MuiRadio-${radioColor}`

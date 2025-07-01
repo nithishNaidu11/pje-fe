@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Fade, Grid, IconButton } from '@mui/material';
+import { Fade, Grid, IconButton, Typography } from '@mui/material';
 import {
     CaretDoubleLeftIcon as CaretDoubleLeft,
     CaretDoubleRightIcon as CaretDoubleRight
@@ -45,7 +45,7 @@ export const SidebarHeader = () => {
         >
             {menuDrawerOpen ? (
                 <>
-                    {/* <LogoFull height={20} style={{ minWidth: 'fit-content' }} /> */}
+                    <Typography variant="h6">Succeedo Bot</Typography>
                     <IconButton
                         sx={drawerCloseButtonSx}
                         size="small"

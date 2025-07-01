@@ -1,10 +1,10 @@
-import { Grid } from '@mui/material';
+import { type ReactNode } from 'react';
 
-import { type ReactElement } from 'interfaces';
+import { Grid } from '@mui/material';
 
 interface PageLayoutProps {
     height?: number | string;
-    tableHeaderCTA?: ReactElement;
+    tableHeaderCTA?: ReactNode;
     pl?: number;
     pr?: number;
     pt?: number;
@@ -14,7 +14,7 @@ interface PageLayoutProps {
 
 export const PaginatedTableHeader = ({
     minHeight,
-    height = 36,
+    height = 48,
     tableHeaderCTA,
     pl = 1.5,
     pr = 2,

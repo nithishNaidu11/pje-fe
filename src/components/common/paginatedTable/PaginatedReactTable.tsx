@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { useSticky } from 'react-table-sticky';
 
@@ -96,7 +96,7 @@ interface Props {
     size?: 'small' | 'medium';
     tableHeaderCTA: ReactElement;
     subHeader?: { [key: string]: string };
-    footer?: ReactElement;
+    footer?: ReactNode;
     isPaginationEnabled?: boolean;
     tableHeight?: number | string;
 }
@@ -164,11 +164,6 @@ export const Table = ({
         },
         [activeFilterColumns, activeSortColumn]
     );
-
-    // const { rowsPerPageEvent, changePageEvent } = React.useMemo(
-    //     () => getTablePaginationGAEvent(),
-    //     [getTablePaginationGAEvent]
-    // );
 
     const getIsRowDisabled = React.useCallback(
         (rowId: string) => {
@@ -242,7 +237,7 @@ export const Table = ({
                                     {...headerGroup.getHeaderGroupProps()}
                                 >
                                     {headerGroup.headers.map(
-                                        (column, columnIndex) => (
+                                        (column: any, columnIndex) => (
                                             <React.Fragment key={columnIndex}>
                                                 <TableCell
                                                     {...column.getHeaderProps({
@@ -259,9 +254,12 @@ export const Table = ({
                                                             width: column.width,
                                                             maxWidth:
                                                                 column.maxWidth,
-                                                            zIndex:
-                                                                200 -
-                                                                columnIndex
+                                                            zIndex: column?.sticky
+                                                                ? 200
+                                                                : 200 -
+                                                                  columnIndex,
+                                                            backgroundColor:
+                                                                grey[100]
                                                         }
                                                     })}
                                                 >
@@ -379,6 +377,11 @@ export const Table = ({
                                                                 row.values.id,
                                                                 cell.column
                                                             );
+                                                        const zIndex =
+                                                            isForceEnabled
+                                                                ? row.cells
+                                                                      .length
+                                                                : 1 + index;
                                                         return (
                                                             <React.Fragment
                                                                 key={index}
@@ -398,12 +401,12 @@ export const Table = ({
                                                                                     cell
                                                                                         .column
                                                                                         .maxWidth,
-                                                                                zIndex: isForceEnabled
-                                                                                    ? row
-                                                                                          .cells
-                                                                                          .length
-                                                                                    : 1 +
-                                                                                      index,
+                                                                                zIndex: cell
+                                                                                    ?.column
+                                                                                    ?.sticky
+                                                                                    ? zIndex +
+                                                                                      1
+                                                                                    : zIndex,
                                                                                 borderBottomColor:
                                                                                     grey[200],
                                                                                 backgroundColor:
@@ -415,7 +418,7 @@ export const Table = ({
                                                                                     ) >
                                                                                         -1
                                                                                         ? '#cfdff6'
-                                                                                        : '',
+                                                                                        : '#fff',
                                                                                 pointerEvents:
                                                                                     isForceEnabled
                                                                                         ? 'auto'

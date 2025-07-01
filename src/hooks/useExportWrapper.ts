@@ -6,7 +6,6 @@ import { Column } from '../components/common';
 
 import { get as preJoiningEngagement } from 'api/preJoiningEngagement';
 
-import { TableFilters } from 'hooks/useTableFilters';
 import { useExport } from 'hooks/apiHooks/useExport';
 import { useToast } from 'hooks/useToast';
 
@@ -19,7 +18,6 @@ interface Params {
 interface Props {
     exportTableId: string;
     params: Params;
-    filters?: TableFilters;
     body?: {
         // actionSource?: JQ_ACTION_SOURCE;
         // candidateIds?: string[];
@@ -53,14 +51,9 @@ interface HandleExportMutationProps {
     onSuccess?: VoidFunction;
 }
 
-export const useExportWrapper = ({
-    exportTableId,
-    params,
-    filters,
-    body
-}: Props) => {
+export const useExportWrapper = ({ exportTableId, params, body }: Props) => {
     const apiClient = exportApis[exportTableId];
-    const exportMutation = useExport({ apiClient, params, filters, body });
+    const exportMutation = useExport({ apiClient, params, body });
     const { showError, showSuccess } = useToast();
 
     const getExportFields = React.useCallback((columns: Column[]) => {

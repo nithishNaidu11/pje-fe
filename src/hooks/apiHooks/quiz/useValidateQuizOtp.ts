@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { validateOTP } from '@/api/quiz';
+import { validateOTP } from 'api/quiz';
 
-import { ApiError, ValidateQuizOtpResponseProps } from '@/interfaces';
+import { ApiError, ValidateQuizOtpResponseProps } from 'interfaces';
 
 interface ValidateQuizOtpProps {
     body: {

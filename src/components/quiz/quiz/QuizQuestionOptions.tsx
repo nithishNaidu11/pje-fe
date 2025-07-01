@@ -11,14 +11,14 @@ import {
     useTheme
 } from '@mui/material';
 
-import { LabelWithHighlight } from '@/components/quiz';
+import { LabelWithHighlight } from 'components/quiz';
 
-import { useSubmitQuizAnswers } from '@/hooks/apiHooks/quiz/useSubmitQuizAnswers';
+import { useSubmitQuizAnswers } from 'hooks/apiHooks/quiz/useSubmitQuizAnswers';
 
 import type {
     QuizQuestionOptionProps,
     QuizQuestionAnswerProps
-} from '@/interfaces';
+} from 'interfaces';
 
 interface QuizQuestionOptionsProps {
     questionKey: string;

@@ -1,5 +1,4 @@
 import { SORT_ORDER } from 'Enum';
-import type { AuditMetadata } from './form.interface';
 
 export interface Sort {
     key: string;

@@ -42,6 +42,6 @@ export {
     type OrderedInputFields
 } from './inputFields.interface';
 
-export { type QueryResult } from './react-query.interface';
+export { type QueryResultProps } from './react-query.interface';
 
 export * from './sidebar.interface';

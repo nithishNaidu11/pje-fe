@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { submitQuiz } from '@/api/quiz';
+import { submitQuiz } from 'api/quiz';
 
-import { ApiError, SubmitQuizResponseProps } from '@/interfaces';
+import { ApiError, SubmitQuizResponseProps } from 'interfaces';
 
 interface SubmitQuizProps {
     params: {

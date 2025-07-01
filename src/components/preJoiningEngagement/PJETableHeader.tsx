@@ -7,7 +7,6 @@ import {
 } from 'components/common';
 
 interface PJETableHeaderProps {
-    companyId: string;
     onExportClickHandler: VoidFunction;
     onBulkUploadClickHandler: VoidFunction;
     isColumnModifierVisible: boolean;

@@ -106,15 +106,18 @@ export const ApiClient = ({ url }: ApiModelProps): any => {
         post: <T>({
             body,
             params,
-            exclude
+            exclude,
+            responseType
         }: {
             body: Body;
             params: Params;
             exclude?: string;
+            responseType?: string;
         }) => {
             let config = { ...params };
 
             if (exclude) config = { ...params, exclude };
+            if (responseType) config = { ...config, responseType };
 
             return Axios.post<T>(getUrl(url, params), body, {
                 ...config

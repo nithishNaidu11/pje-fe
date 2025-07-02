@@ -9,7 +9,7 @@ export default () => {
         optimizeDeps: {
             exclude: ['js-big-decimal']
         },
-        base: './',
+        base: '/',
         plugins: [
             viteTsconfigPaths(),
             react({

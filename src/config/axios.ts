@@ -32,7 +32,12 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
     (response: AxiosResponse) => {
         const updatedConfig = response.config as UpdatedAxiosRequestConfig;
-        return DataUtils.camelize(response.data, updatedConfig?.exclude);
+
+        if (response.headers['content-type'] === 'application/json') {
+            return DataUtils.camelize(response.data, updatedConfig?.exclude);
+        }
+
+        return response;
     },
     error => {
         ErrorTracker.captureException(error);

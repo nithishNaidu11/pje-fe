@@ -2,7 +2,7 @@ import { StringUtils } from 'utils/StringUtils';
 import { DataUtils, ErrorTracker } from 'utils';
 import _ from 'lodash';
 
-const BASE_URL = import.meta.env.VITE_API_ENDPPOINT;
+const BASE_URL = window.RUNTIME_CONFIG?.API_ENDPOINT;
 
 interface Body {
     [key: string]: any;
